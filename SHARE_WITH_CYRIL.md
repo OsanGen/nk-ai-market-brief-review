@@ -28,7 +28,7 @@ After repository setup, normal refreshes do not require manual pushes. The sched
 
 ## Live Review Link
 
-The private source repository's current GitHub plan does not support Pages for that private repo. To keep the source repo private, the generated static `site/` files are published to a public site-only Pages repository.
+The private source repository's current GitHub plan does not support Pages for that private repo. To keep the source repo private, the live page is published from a public workflow-capable Pages repository that rebuilds from RSS on schedule.
 
 Live review page:
 

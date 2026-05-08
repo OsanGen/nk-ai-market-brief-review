@@ -2,12 +2,12 @@
 
 ## 1. Snapshot header
 
-- UpdatedAt: 2026-05-08T18:22:46Z
+- UpdatedAt: 2026-05-08T18:26:09Z
 - RepoName: nk-ai-market-newsletter
 - Branch: main
-- HEAD commit hash: cd5272b2fdaa0af84127c03d233f0e61e5a10dfa
+- HEAD commit hash: 3714283b76ac6831279e17d62da5c6bab505d9da
 - Dirty state: yes
-- Dirty summary: `.github/workflows/newsletter.yml`, `FULL_TECH_BUILD.txt`, `README.md`, `SHARE_WITH_CYRIL.md`, `docs/FREE_DEPLOY.md`, `docs/RUNBOOK.md`, `final_build/*`, `scripts/check-deploy.mjs`, `src/automation-status.mjs`, `src/render-review-page.mjs`, `src/run-newsletter.mjs`, `test/automation-status.test.mjs`, `test/check-deploy.test.mjs`, `test/render.test.mjs`
+- Dirty summary: `FULL_TECH_BUILD.txt`
 - Primary languages: JavaScript ESM, JSON, Markdown, YAML
 - Package managers detected: npm (`package.json`, `package-lock.json`)
 
@@ -23,7 +23,7 @@ User-facing artifacts:
 - Outputs: `.newsletter-outbox/YYYY-MM-DD/newsletter.html`, `.newsletter-outbox/YYYY-MM-DD/newsletter.txt`, `.newsletter-outbox/YYYY-MM-DD/run.json`, `site/index.html`, `site/newsletter.txt`, `site/run.json`
 - GitHub repository: `https://github.com/OsanGen/nk-ai-market-newsletter` (private)
 - Live review page: `https://osangen.github.io/nk-ai-market-brief-review/`
-- Public site-only Pages repo: `https://github.com/OsanGen/nk-ai-market-brief-review`
+- Public workflow-capable Pages repo: `https://github.com/OsanGen/nk-ai-market-brief-review`
 - Cyril evidence pack: `CYRIL_VERIFICATION_PACK.md`
 - Share instructions: `SHARE_WITH_CYRIL.md`
 
@@ -105,7 +105,7 @@ Toolchain:
 
 Known risky areas:
 - Google News RSS is free but not an SLA-backed product API.
-- Private source-repo Pages is blocked by the current GitHub plan; live Pages is hosted from the public site-only repo.
+- Private source-repo Pages is blocked by the current GitHub plan; live Pages is hosted from the public workflow-capable repo.
 - Optional email requires careful secret and recipient setup.
 - Strict scheduled-daily filters may produce low item count; review mode uses a wider lookback and supplemental market scan sources to demonstrate 6-8 qualifying signals without admitting generic news.
 - GitHub Actions emitted a non-blocking hosted-runner warning that Node 20-backed actions are being deprecated; the manual preview workflow still passed and uploaded artifacts.
@@ -124,13 +124,15 @@ Implemented:
 - Shareable static review page at `site/index.html`, share instructions, Pages-gated workflow, deploy-check review-page marker validation, and live public Pages mirror.
 - Review-mode lookback, review readiness metadata, deploy-check `reviewReady` enforcement, client-facing source diagnostics, title suffix cleanup, and business-facing deterministic summary copy.
 - Automatic refresh metadata, workflow schedule checks, Pages deploy support checks, review-page Automation status section, and `site/run.json` `manualPushRequiredAfterSetup=false`.
+- Public live repo now contains the no-secret app and scheduled workflow; Pages is configured to GitHub Actions and deploys when `DEPLOY_GITHUB_PAGES=true`.
 
 Deferred:
 - Real email sending until explicit approval and secrets.
-- Source repo Pages until plan/settings support private repo Pages; public site-only Pages mirror is live.
+- Source repo Pages until plan/settings support private repo Pages; public workflow-capable Pages repo is live and auto-refresh enabled.
 
 ## 7. Recent change log, rolling last 10
 
+- 2026-05-08T18:25:06Z | Enabled automatic refresh on the public live repo: pushed the no-secret app/workflow, set `DEPLOY_GITHUB_PAGES=true`, switched Pages to workflow build type, ran workflow dispatch, and verified live `run.json` automation flags | public repo `nk-ai-market-brief-review`, `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__auto_refresh_deploy.txt`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T18:22:46Z | Implemented automatic refresh verification and Pages deploy support: workflow dispatch inputs, weekday cron checks, automation metadata in run JSON, review-page automation section, deploy-check workflow enforcement, docs, and tests | `.github/workflows/newsletter.yml`, `src/automation-status.mjs`, `src/run-newsletter.mjs`, `src/render-review-page.mjs`, `scripts/check-deploy.mjs`, `test/*`, `README.md`, `docs/*`, `SHARE_WITH_CYRIL.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T18:14:40Z | Published the polished 8-item review page to the public Pages mirror and verified the live URL returns `reviewReady=true` with no unsafe output matches | `final_build/CURRENT_GAPS.txt`, `FULL_TECH_BUILD.txt`, public repo `nk-ai-market-brief-review`
 - 2026-05-08T18:13:19Z | Polished the shareable review page before Cyril: widened review lookback, added review readiness, expanded review sources, cleaned title suffixes, improved summaries and why-it-matters copy, enforced ready-state deploy checks, and verified 8 selected signals | `.env.example`, `newsletter-sources.json`, `src/config.mjs`, `src/review-status.mjs`, `src/run-newsletter.mjs`, `src/summarize.mjs`, `src/render-review-page.mjs`, `scripts/check-deploy.mjs`, `test/*`, `docs/RUNBOOK.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
@@ -140,7 +142,6 @@ Deferred:
 - 2026-05-08T14:51:34Z | Published the private GitHub repository, verified the manual preview workflow, and recorded remaining deployment watch items | `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__newsletter_mvp.txt`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T14:50:06Z | Initialized local git repository on `main` and prepared the MVP for GitHub publish | `FULL_TECH_BUILD.txt`
 - 2026-05-08T14:08:22Z | Completed free deployability QA, tightened filter term matching, updated QA proof, state docs, and snapshot | `src/filter-score.mjs`, `test/filter-score.test.mjs`, `final_build/*`, `FULL_TECH_BUILD.txt`, `.newsletter-outbox/*`, `site/*`
-- 2026-05-08T14:04:40Z | Hardened send gates, recipient parsing tests, idempotency proof, malicious fixture rendering checks, explicit send failure messaging, and send-gating docs | `src/normalize.mjs`, `src/render-text.mjs`, `src/send-resend.mjs`, `scripts/send.mjs`, `test/send-gate.test.mjs`, `test/render.test.mjs`, `docs/FREE_DEPLOY.md`, `docs/RUNBOOK.md`, `README.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
 
 ## 8. Refresh procedure
 
@@ -162,7 +163,8 @@ grep -R "@.*\\." .env.example src scripts .github docs README.md 2>/dev/null || 
 
 Latest verification:
 - Remote repository: `https://github.com/OsanGen/nk-ai-market-newsletter` (private, default branch `main`).
-- Latest manual workflow run: `https://github.com/OsanGen/nk-ai-market-newsletter/actions/runs/25571893933`, conclusion `success`, artifact `nk-ai-market-brief`, send skipped with `send_disabled`, Pages steps skipped because `DEPLOY_GITHUB_PAGES` is not enabled for the private source repo.
+- Latest public live workflow run: `https://github.com/OsanGen/nk-ai-market-brief-review/actions/runs/25572283316`, conclusion `success`, artifact `nk-ai-market-brief`, Pages deploy completed, head `76b271464ac3b2315cfd7b8646e2f5f0b6ccf27f`.
+- Public Pages settings: build type `workflow`, URL `https://osangen.github.io/nk-ai-market-brief-review/`, status `built`, repository variable `DEPLOY_GITHUB_PAGES=true`.
 - `git status --short || true`: dirty with review-page/share-pack changes listed in the snapshot header.
 - `node --version`: `v22.22.0`.
 - `npm --version`: `10.9.4`.
@@ -181,6 +183,10 @@ Latest verification:
 - Live `run.json`: pass, `reviewReady=true`, `mode=preview`, `itemCount=8`, `selectedItemCount=8`, `sourceCount=12`, `candidateItemCount=920`, `emailEnabled=false`, `send.sent=false`.
 - Source repo push: pass, `main` pushed through `cd5272b2fdaa0af84127c03d233f0e61e5a10dfa`.
 - Public Pages mirror push: pass, `nk-ai-market-brief-review` pushed through `f9daf45`.
+- Source repo automation push: pass, `main` pushed through `0691b3a2113f28444d0806c7ba911dbf6ddeba90`.
+- Public workflow-capable repo push: pass, `nk-ai-market-brief-review` pushed through `76b271464ac3b2315cfd7b8646e2f5f0b6ccf27f`.
+- Public live workflow run: pass, `25572283316` completed `npm ci`, `npm test`, build, deploy check, artifact upload, Pages artifact upload, and Pages deploy.
+- Live `run.json` automation check: pass, `automationConfigured=true`, `scheduledRefreshConfigured=true`, `githubPagesDeployConfigured=true`, `manualPushRequiredAfterSetup=false`.
 - Explicit no-secret send test: pass, send skipped safely with `missing_resend_api_key`.
 - Generated-output unsafe search: no matches.
 - Hard-coded recipient grep: safe matches only, CSS `@media` and email-validation regex.

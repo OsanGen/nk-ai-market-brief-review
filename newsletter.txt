@@ -1,5 +1,5 @@
 NK AI Market Brief
-Generated 2026-05-08T18:23:39.856Z
+Generated 2026-05-08T18:22:02.295Z
 
 AI, fashion, beauty, e-commerce, AI shopping, and agentic commerce signals.
 
@@ -58,21 +58,21 @@ Why it matters: This matters because try-on experiences can change how fashion a
 Read source: https://news.google.com/rss/articles/CBMilwFBVV95cUxOcnkwS19EWERrOUZ1VXlrUUhZRlpUcGJfcl85UjhZVFBNeG1CQzhUSWp6eWI1a2NaWERMOFdCUWFWeHFRVThzS1ptY3ZWQV93OXFvdFYzVFpUSEtIdWRqbWNrUWVTb1NNQ3d0dk9BY3FrUkR3M3ZDS19lVWt6NDlBZXpZamtRQXpfSTlNX2pha0swV1I1REo0?oc=5
 
 STORY 7
-R&B Fashion launches an AI fashion runway with Takumi AI - Campaign Middle East.
+OTB Group & Google Cloud launch AI-powered virtual try-on experiences.
 Source: AI Fashion and Beauty Market Scan
 Category: fashion
 Date: 2026-05-07
-Summary: Fashion and retail teams are testing AI as part of product discovery and customer decision-making.
-Why it matters: This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.
-Read source: https://news.google.com/rss/articles/CBMihgFBVV95cUxQdkwzZWk4czRzTVE1SkJlVDZTZ1hWaFl4R245WHNMUVJSOVlLLXBuekd6ZnkxWXVhMlpOTjMwa3ZadDJPSzNVcmZvODlqWEpyblRKU2Iwd245OFJEdkV6dVdjU0M0b2c4VU5pVTNfWVE1OTQ3c3BZOHZlSmVXdGI5MTlXT3VTdw?oc=5
+Summary: Virtual try-on is becoming a more visible AI layer for fashion and beauty discovery.
+Why it matters: This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.
+Read source: https://news.google.com/rss/articles/CBMi5gFBVV95cUxQVXl1Nzl3bmt3MmlTNElSZ0NIWjJrVXd6UnpEcm43alhObVB0em1DYVphcUx5bnVHQVd4Zm5OZUhwWjFSRFJBZ0NSaHN0d2dndzJsaTlyendBLWMtUE5kSHZoVHhwVnFUWUk0RDBqNlRXckVlNGNxVzZ6T0lBb0RhVkthRmwza1ZZNGR0Tzd2OEl2NXIzYXZfQmJWYlJaS29QSkZvVGlUSWVGX3oza3hGNDN2QnBBbmdEUDJvaDA3MmFhZ3RaVW1NZmVRczRHQlVFcm0wVEMyUVR5SzdLbWpsTGdqemtmZw?oc=5
 
 STORY 8
-Meta works on ‘Hatch’ AI agent and Instagram shopping assistant.
+Meta wants an AI agent to go Instagram shopping for you and pull the whole agent stunt.
 Source: Platform AI Shopping Market Scan
 Category: shopping
-Date: 2026-05-07
+Date: 2026-05-08
 Summary: This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.
 Why it matters: This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.
-Read source: https://news.google.com/rss/articles/CBMiwgFBVV95cUxPc2oyZ2F2ZUZNSlEtZ2ppQ0h0RVhuVmQ2TDByMHlwSTMwdGxINTlHVmFaV0NYNzZ5c0M0RWpsTTBoNjRpTFkxUjBTcHA1OUVPWnlnUTR0X0xJeWhCclpzSmFZWGpWRUNTcHg0WldPNnlxN3hhWndmaGR6M3VXc0hXMzJaSkhwVmtzY19hWnFGT21kaUZIVk5ZR0drLXNBeUlIT0djbkFHNWpUUm1Jb0VmXzIxOV85bHp4VFVIOXFCaUpsQdIBwgFBVV95cUxPc2oyZ2F2ZUZNSlEtZ2ppQ0h0RVhuVmQ2TDByMHlwSTMwdGxINTlHVmFaV0NYNzZ5c0M0RWpsTTBoNjRpTFkxUjBTcHA1OUVPWnlnUTR0X0xJeWhCclpzSmFZWGpWRUNTcHg0WldPNnlxN3hhWndmaGR6M3VXc0hXMzJaSkhwVmtzY19hWnFGT21kaUZIVk5ZR0drLXNBeUlIT0djbkFHNWpUUm1Jb0VmXzIxOV85bHp4VFVIOXFCaUpsQQ?oc=5
+Read source: https://news.google.com/rss/articles/CBMixgFBVV95cUxPX3hha1d5RGJaaTVQZEYyNE94Q2tWaFNwSHRQalBvMURtc2hITWMzY19QRzhBMUtLNmp3M0pzVU1DSE1iNDNnMUItcTdfOUMwNkJSTDYwbkI4SUVWeVBlYzI0Z2lyM0pHZmlGQ1NqeWF0NWFsY0ZmSEd0bk5DNzJXNWlGczBvanZ4LTJEZlZyRldsTFdhSFVyMEFxTmNNLWpWWXFUYmZuZ01OcnlXOS1jVzJGeUJMZ2JZS29qQ0VLT0pwOE9xRUE?oc=5
 
 Internal NK market brief. Summaries are deterministic and based on RSS metadata only.

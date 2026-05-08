@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-08T18:23:39.856Z",
+  "generatedAt": "2026-05-08T18:22:02.295Z",
   "mode": "preview",
   "skipped": false,
   "outputDir": ".newsletter-outbox/2026-05-08",
@@ -98,13 +98,13 @@
   "sourceErrorCount": 0,
   "fetchedItemCount": 920,
   "candidateItemCount": 920,
-  "acceptedItemCount": 55,
-  "rejectedItemCount": 865,
+  "acceptedItemCount": 52,
+  "rejectedItemCount": 868,
   "selectedItemCount": 8,
   "itemCount": 8,
   "rejectedReasonCounts": {
     "outside_lookback": 782,
-    "not_relevant": 83
+    "not_relevant": 86
   },
   "sendStatus": "send_disabled",
   "reviewReasons": [],
@@ -218,31 +218,31 @@
       "score": 66
     },
     {
-      "id": "10fvyoh",
+      "id": "z4cnld",
       "sourceId": "review_ai_fashion_beauty_market_scan",
       "sourceName": "AI Fashion and Beauty Market Scan",
-      "title": "R&B Fashion launches an AI fashion runway with Takumi AI - Campaign Middle East",
-      "headline": "R&B Fashion launches an AI fashion runway with Takumi AI - Campaign Middle East.",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQdkwzZWk4czRzTVE1SkJlVDZTZ1hWaFl4R245WHNMUVJSOVlLLXBuekd6ZnkxWXVhMlpOTjMwa3ZadDJPSzNVcmZvODlqWEpyblRKU2Iwd245OFJEdkV6dVdjU0M0b2c4VU5pVTNfWVE1OTQ3c3BZOHZlSmVXdGI5MTlXT3VTdw?oc=5",
-      "publishedAt": "2026-05-07T17:19:49.000Z",
-      "summary": "Fashion and retail teams are testing AI as part of product discovery and customer decision-making.",
-      "whyItMatters": "This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.",
+      "title": "OTB Group & Google Cloud launch AI-powered virtual try-on experiences",
+      "headline": "OTB Group & Google Cloud launch AI-powered virtual try-on experiences.",
+      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQVXl1Nzl3bmt3MmlTNElSZ0NIWjJrVXd6UnpEcm43alhObVB0em1DYVphcUx5bnVHQVd4Zm5OZUhwWjFSRFJBZ0NSaHN0d2dndzJsaTlyendBLWMtUE5kSHZoVHhwVnFUWUk0RDBqNlRXckVlNGNxVzZ6T0lBb0RhVkthRmwza1ZZNGR0Tzd2OEl2NXIzYXZfQmJWYlJaS29QSkZvVGlUSWVGX3oza3hGNDN2QnBBbmdEUDJvaDA3MmFhZ3RaVW1NZmVRczRHQlVFcm0wVEMyUVR5SzdLbWpsTGdqemtmZw?oc=5",
+      "publishedAt": "2026-05-07T19:14:30.000Z",
+      "summary": "Virtual try-on is becoming a more visible AI layer for fashion and beauty discovery.",
+      "whyItMatters": "This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.",
       "category": "fashion",
       "categories": [
         "fashion",
         "beauty",
         "commerce"
       ],
-      "score": 61
+      "score": 62
     },
     {
-      "id": "155enjo",
+      "id": "1jj7x3l",
       "sourceId": "review_platform_ai_shopping_market_scan",
       "sourceName": "Platform AI Shopping Market Scan",
-      "title": "Meta works on ‘Hatch’ AI agent and Instagram shopping assistant",
-      "headline": "Meta works on ‘Hatch’ AI agent and Instagram shopping assistant.",
-      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPc2oyZ2F2ZUZNSlEtZ2ppQ0h0RVhuVmQ2TDByMHlwSTMwdGxINTlHVmFaV0NYNzZ5c0M0RWpsTTBoNjRpTFkxUjBTcHA1OUVPWnlnUTR0X0xJeWhCclpzSmFZWGpWRUNTcHg0WldPNnlxN3hhWndmaGR6M3VXc0hXMzJaSkhwVmtzY19hWnFGT21kaUZIVk5ZR0drLXNBeUlIT0djbkFHNWpUUm1Jb0VmXzIxOV85bHp4VFVIOXFCaUpsQdIBwgFBVV95cUxPc2oyZ2F2ZUZNSlEtZ2ppQ0h0RVhuVmQ2TDByMHlwSTMwdGxINTlHVmFaV0NYNzZ5c0M0RWpsTTBoNjRpTFkxUjBTcHA1OUVPWnlnUTR0X0xJeWhCclpzSmFZWGpWRUNTcHg0WldPNnlxN3hhWndmaGR6M3VXc0hXMzJaSkhwVmtzY19hWnFGT21kaUZIVk5ZR0drLXNBeUlIT0djbkFHNWpUUm1Jb0VmXzIxOV85bHp4VFVIOXFCaUpsQQ?oc=5",
-      "publishedAt": "2026-05-07T05:44:27.000Z",
+      "title": "Meta wants an AI agent to go Instagram shopping for you and pull the whole agent stunt",
+      "headline": "Meta wants an AI agent to go Instagram shopping for you and pull the whole agent stunt.",
+      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPX3hha1d5RGJaaTVQZEYyNE94Q2tWaFNwSHRQalBvMURtc2hITWMzY19QRzhBMUtLNmp3M0pzVU1DSE1iNDNnMUItcTdfOUMwNkJSTDYwbkI4SUVWeVBlYzI0Z2lyM0pHZmlGQ1NqeWF0NWFsY0ZmSEd0bk5DNzJXNWlGczBvanZ4LTJEZlZyRldsTFdhSFVyMEFxTmNNLWpWWXFUYmZuZ01OcnlXOS1jVzJGeUJMZ2JZS29qQ0VLT0pwOE9xRUE?oc=5",
+      "publishedAt": "2026-05-08T13:20:59.000Z",
       "summary": "This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.",
       "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
       "category": "shopping",
@@ -251,7 +251,7 @@
         "platform",
         "ecommerce"
       ],
-      "score": 61
+      "score": 56
     }
   ],
   "send": {

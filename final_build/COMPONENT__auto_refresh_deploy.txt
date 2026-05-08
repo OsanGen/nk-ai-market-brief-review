@@ -19,6 +19,7 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 - Optional GitHub Pages deployment of generated `site/`
 - Automation metadata in `site/run.json`
 - Automation status section in `site/index.html`
+- Live Pages URL: `https://osangen.github.io/nk-ai-market-brief-review/`
 
 ## Schedule Behavior
 
@@ -34,6 +35,7 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 - Workflow includes `actions/configure-pages@v5`, `actions/upload-pages-artifact@v3`, and `actions/deploy-pages@v4`.
 - Pages deployment is gated by repository variable `DEPLOY_GITHUB_PAGES=true`.
 - Repository Settings -> Pages must use Source: GitHub Actions.
+- The public Pages repository is configured with Pages build type `workflow` and repository variable `DEPLOY_GITHUB_PAGES=true`.
 
 ## Artifact Fallback Behavior
 
@@ -56,7 +58,5 @@ The default workflow sets `NEWSLETTER_SEND_ENABLED=false`. Email cannot send fro
 
 ## Remaining Setup Steps
 
-- Push the workflow-capable app to the live Pages repository.
-- Set repository Settings -> Pages -> Source to GitHub Actions.
-- Set repository variable `DEPLOY_GITHUB_PAGES=true`.
-- Verify a manual workflow run succeeds and deploys the live page.
+- Keep email disabled until sender, recipients, and explicit approval are provided.
+- Monitor GitHub's Node 20 action runtime deprecation warning and move actions to Node 24-compatible versions if needed.

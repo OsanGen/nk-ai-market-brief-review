@@ -21,11 +21,11 @@ Provide a static, no-login review page for Cyril, Faneeza, and Norma to inspect 
 - GitHub Actions artifact: `nk-ai-market-brief`
 - `SHARE_WITH_CYRIL.md`: handoff instructions and copy/paste message
 - Live URL: `https://osangen.github.io/nk-ai-market-brief-review/`
-- Public site-only repository: `https://github.com/OsanGen/nk-ai-market-brief-review`
+- Public workflow-capable repository: `https://github.com/OsanGen/nk-ai-market-brief-review`
 
 ## GitHub Pages Behavior
 
-The source workflow always builds `site/` and uploads it as an artifact. The private source repository's current GitHub plan does not support Pages, so the static `site/` files were published to a separate public site-only repo. The page includes `<meta name="robots" content="noindex,nofollow">` because it is a review page, not a public SEO page.
+The source workflow always builds `site/` and uploads it as an artifact. The private source repository's current GitHub plan does not support Pages, so the live page is hosted from a public workflow-capable repo that contains the no-secret app and deploys generated `site/` through GitHub Actions. The page includes `<meta name="robots" content="noindex,nofollow">` because it is a review page, not a public SEO page.
 
 The page is shareable only when `site/run.json` has `"reviewReady": true`. Review mode targets 6-8 selected stories when enough qualifying RSS items exist; if fewer than 5 stories are selected, the page labels itself as needing source tuning. If fewer than 3 are selected, deploy check fails unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
 
@@ -33,7 +33,7 @@ The page includes a lower Automation status section showing scheduled refresh, G
 
 ## Artifact Fallback
 
-If the live review page needs to be rebuilt, publish the latest local `site/` files to the public site-only repo. If Pages is unavailable, reviewers can use the latest GitHub Actions artifact:
+If Pages is unavailable, reviewers can use the latest GitHub Actions artifact:
 
 `Actions -> NK AI Market Brief -> latest run -> artifact nk-ai-market-brief`
 

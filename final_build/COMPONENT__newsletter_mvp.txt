@@ -1,0 +1,67 @@
+# Component: Newsletter MVP
+
+## Purpose
+
+Generate a weekday internal NK AI Market Brief focused only on AI plus fashion, beauty, e-commerce, agentic commerce, AI shopping, and AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands.
+
+## Inputs
+
+- `NK_NEWSLETTER_MVP_CONTEXT.txt`
+- `newsletter-sources.json`
+- Optional environment variables listed in `.env.example`
+- Google News RSS responses
+
+## Outputs
+
+- `.newsletter-outbox/YYYY-MM-DD/newsletter.html`
+- `.newsletter-outbox/YYYY-MM-DD/newsletter.txt`
+- `.newsletter-outbox/YYYY-MM-DD/run.json`
+- `site/index.html`
+- `site/newsletter.txt`
+- `site/run.json`
+- GitHub Actions artifact: `nk-ai-market-brief`
+- Cyril evidence pack: `CYRIL_VERIFICATION_PACK.md`
+- Cyril share instructions: `SHARE_WITH_CYRIL.md`
+
+## State
+
+No database and no durable remote state. Every run creates a dated outbox and refreshes the latest static `site/` output.
+
+Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` with a 168-hour default so the share page can demonstrate enough current signals. Scheduled `auto` mode keeps the normal daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
+
+## Edge Cases
+
+- One source can fail without failing the whole run.
+- Preview/build work without secrets.
+- Auto mode outside the target window writes a safe static skip state and exits successfully.
+- Send mode fails safely when send gates are not met.
+- No raw feed HTML is rendered.
+- Rejected raw items are not exposed in public output.
+- Generic fashion, beauty, e-commerce, AI, retail, and platform stories are rejected unless the story title/summary itself contains an allowed AI-plus-market signal.
+- Preview mode cannot send, even if send env vars are present.
+- Auto mode without secrets generates artifacts and records a skipped send.
+- Explicit send without required env vars exits safely with a skipped reason and no secret values.
+- Malicious feed text cannot inject `<script>`, event handler attributes, or `javascript:` URLs into generated HTML/text.
+- GitHub Actions preview runs upload generated outbox and site files as an artifact without enabling email by default.
+- QA evidence is captured in `final_build/QA__newsletter_mvp.txt` and the Cyril-facing share pack.
+- `site/index.html` is a static review page, while `.newsletter-outbox/YYYY-MM-DD/newsletter.html` remains the email-style newsletter HTML.
+- Review readiness is recorded in `site/run.json`; `npm run check:deploy` fails when `reviewReady` is false unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
+- Automation readiness is recorded in `site/run.json`; `npm run check:deploy` fails when scheduled refresh or workflow-backed Pages support is missing.
+
+## Dependencies
+
+- Node 20+
+- `rss-parser`
+- Built-in `fetch`
+- Built-in `node:test`
+
+## Acceptance Checks
+
+- `npm install`
+- `npm run preview`
+- `npm test`
+- `npm run build`
+- `npm run check:deploy`
+- `NEWSLETTER_SEND_ENABLED=true npm run send || true`
+- `gh workflow run newsletter.yml -f mode=preview --ref main`
+- `env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true`

@@ -1,0 +1,222 @@
+NK NEWSLETTER MVP CONTEXT
+Version: 2026-05-08
+Use: Put this file in the repo root as NK_NEWSLETTER_MVP_CONTEXT.txt before running Codex Prompt 1.
+
+PROJECT GOAL
+Build a free, standalone internal newsletter MVP for NK.
+
+The newsletter should produce a weekday internal market brief focused only on:
+- AI + fashion
+- AI + beauty
+- AI + e-commerce
+- agentic commerce
+- AI shopping
+- AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands
+
+This is not a generic fashion newsletter.
+This is not a generic e-commerce newsletter.
+This is not a generic AI newsletter.
+
+CALL-DERIVED REQUIREMENT
+Cyril described:
+- a simple daily RSS/news scrape;
+- around 8 a.m.;
+- likely weekdays, not weekends;
+- small internal recipient list, roughly five people;
+- simple HTML newsletter;
+- not too many images;
+- main big titles;
+- one large lead story and then a simple grid/two-column layout;
+- example source categories: Vogue Business, Business of Fashion, AI + fashion, AI + beauty, AI + e-commerce, agentic commerce;
+- example alert type: if Nike has a new agent, the team should know.
+
+FREE MVP ARCHITECTURE
+Use the simplest free architecture:
+- Standalone Node 20 ESM CLI.
+- Google News RSS query feeds as primary ingestion.
+- rss-parser as the only dependency.
+- Built-in fetch.
+- Built-in node:test.
+- Deterministic filtering and summaries.
+- No LLM.
+- No database.
+- No paid APIs.
+- No page scraping in v1.
+- Local HTML/text/run.json output.
+- Static site output in site/.
+- GitHub Actions weekday scheduler.
+- GitHub Actions artifact upload by default.
+- Optional GitHub Pages static preview.
+- Optional Resend free-tier email only after preview approval.
+
+DEFAULT DISTRIBUTION
+Default distribution is free and credential-free:
+- Generate .newsletter-outbox/YYYY-MM-DD/newsletter.html
+- Generate .newsletter-outbox/YYYY-MM-DD/newsletter.txt
+- Generate .newsletter-outbox/YYYY-MM-DD/run.json
+- Generate site/index.html
+- Generate site/newsletter.txt
+- Generate site/run.json
+- Upload .newsletter-outbox and site as GitHub Actions artifacts.
+
+OPTIONAL EMAIL
+Email must be optional and disabled by default.
+Never send unless:
+- NEWSLETTER_SEND_ENABLED=true
+- RESEND_API_KEY exists
+- NEWSLETTER_FROM exists
+- NEWSLETTER_TO has at least one valid email
+- mode is send or auto inside the target time window
+- item count >= NEWSLETTER_MIN_ITEMS
+
+Do not hard-code recipient emails.
+Do not hard-code API keys.
+Do not log secrets.
+Do not log full recipient lists.
+
+SOURCES
+Use this initial source registry:
+
+1. Vogue Business AI
+Query:
+site:vogue.com/business/technology/artificial-intelligence ("AI fashion" OR "AI beauty" OR "AI shopping" OR "agentic commerce" OR "virtual try-on")
+Homepage:
+https://www.vogue.com/business/technology/artificial-intelligence
+Weight: 10
+Categories: fashion, beauty, technology
+
+2. Business of Fashion AI
+Query:
+site:businessoffashion.com/topics/technology/artificial-intelligence ("AI fashion" OR "AI beauty" OR "AI shopping" OR "agentic commerce" OR "virtual try-on")
+Homepage:
+https://www.businessoffashion.com/topics/technology/artificial-intelligence/
+Weight: 10
+Categories: fashion, beauty, luxury, technology
+
+3. Glossy AI Fashion and Beauty
+Query:
+site:glossy.co (fashion OR beauty OR luxury) (AI OR "artificial intelligence" OR "AI shopping" OR agentic OR "virtual try-on" OR "AI search")
+Homepage:
+https://www.glossy.co/
+Weight: 9
+Categories: fashion, beauty, luxury, commerce
+
+4. BeautyMatter AI
+Query:
+site:beautymatter.com (beauty AND (AI OR "artificial intelligence" OR "AI shopping" OR "AI discovery" OR agentic OR recommendations))
+Homepage:
+https://beautymatter.com/
+Weight: 9
+Categories: beauty, technology, commerce
+
+5. Retail TouchPoints AI Shopping
+Query:
+site:retailtouchpoints.com ("AI shopping" OR "agentic commerce" OR "generative AI" OR OpenAI OR Shopify OR Google OR Meta OR Amazon) (retail OR ecommerce OR commerce OR shopping)
+Homepage:
+https://www.retailtouchpoints.com/tag/ai-shopping/
+Weight: 9
+Categories: retail, ecommerce, agentic_commerce
+
+6. Shopify Agentic Commerce
+Query:
+site:shopify.com/news ("agentic commerce" OR "AI commerce" OR "Agentic Storefronts" OR "Shopify Catalog" OR "AI shopping" OR OpenAI OR Google)
+Homepage:
+https://www.shopify.com/news
+Weight: 10
+Categories: ecommerce, agentic_commerce, platform
+
+7. OpenAI Commerce
+Query:
+site:openai.com (shopping OR commerce OR "agentic commerce" OR "Instant Checkout" OR "Agentic Commerce Protocol" OR merchants)
+Homepage:
+https://openai.com/news/
+Weight: 10
+Categories: agentic_commerce, platform, technology
+
+8. Google Shopping AI
+Query:
+site:blog.google/products-and-platforms/products/shopping ("AI shopping" OR "AI Mode" OR "virtual try-on" OR "agentic checkout" OR "Universal Commerce Protocol" OR Gemini)
+Homepage:
+https://blog.google/products-and-platforms/products/shopping/
+Weight: 9
+Categories: shopping, platform, agentic_commerce
+
+9. Brand Watchlist AI Agents
+Query:
+(Nike OR "Ralph Lauren" OR Sephora OR Ulta OR LVMH OR Kering OR Zara OR "H&M" OR Revolve OR Walmart OR Target OR Amazon) ("AI agent" OR "AI assistant" OR "AI stylist" OR "AI shopping" OR "virtual try-on" OR "product discovery" OR "agentic commerce")
+Homepage:
+none
+Weight: 10
+Categories: fashion, beauty, retail, agentic_commerce
+
+INCLUSION RULES
+Include an item if:
+- it contains a high-priority phrase, OR
+- it contains at least one AI/agentic term and at least one fashion/beauty/retail/shopping/ecommerce/commerce/brand term.
+
+High-priority phrases:
+- agentic commerce
+- AI shopping
+- AI stylist
+- AI search
+- AI product discovery
+- AI recommendations
+- AI retail
+- AI beauty
+- AI fashion
+- virtual try-on
+- instant checkout
+- commerce protocol
+- product feed
+- catalog data
+- Shopify Catalog
+- Agentic Storefronts
+
+EXCLUSION RULES
+Exclude:
+- generic fashion news without AI
+- generic beauty news without AI
+- generic e-commerce news without AI
+- generic AI news without fashion, beauty, retail, shopping, commerce, or brand relevance
+- celebrity or runway-only stories
+- tariffs, earnings, operations, or supply-chain stories unless AI is central
+
+OUTPUT STYLE
+HTML newsletter:
+- white background
+- black text
+- system font
+- no external CSS
+- no external images in v1
+- one lead story
+- remaining stories in responsive two-column cards
+- source name, category, date, and Read source link
+- footer: Internal NK market brief. Summaries are deterministic and based on RSS metadata only.
+
+SAFETY
+- Internal-only.
+- No customer emails.
+- No Shopify customer data.
+- No public signup flow.
+- No full article scraping.
+- No raw feed HTML rendering.
+- No invented article facts.
+- No invented NK, Norma, product, policy, archive, or customer claims.
+- No UGC, avatar, or virtual try-on implementation.
+- Real email disabled by default.
+
+REQUIRED COMMANDS
+The build must pass:
+npm install
+npm run preview
+npm test
+npm run build
+npm run check:deploy
+
+REQUIRED STATE FILES
+Codex should create:
+- FULL_TECH_BUILD.txt
+- final_build/BUILD_MAP.txt
+- final_build/CURRENT_GAPS.txt
+- final_build/COMPONENT__newsletter_mvp.txt
+- final_build/QA__newsletter_mvp.txt after QA prompt

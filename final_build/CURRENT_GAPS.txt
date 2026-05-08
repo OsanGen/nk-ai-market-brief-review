@@ -1,0 +1,6 @@
+- email | deferred | Keep real email disabled until internal recipients, verified sender, Resend API key, and explicit preview approval are provided.
+- pages | configure | Push the workflow-capable app to the public Pages repo, set Pages Source to GitHub Actions, set `DEPLOY_GITHUB_PAGES=true`, and verify a workflow deployment refreshes `https://osangen.github.io/nk-ai-market-brief-review/`.
+- auto-refresh | implemented-local | Source workflow, run metadata, review-page automation section, deploy checks, and tests are implemented locally; publish and verify on GitHub before marking enabled.
+- source-yield | monitor | Review mode now uses a 168-hour lookback and supplemental market-scan RSS queries to show 6-8 qualifying signals; scheduled daily mode remains strict with 36-hour and Monday 84-hour lookbacks.
+- github-actions | watch | Manual preview workflow passed after push; monitor GitHub action runtime deprecation warnings before Node 20-backed actions are removed from hosted runners.
+- cyril-review | ready | Share `SHARE_WITH_CYRIL.md` and the GitHub Pages link; ask Cyril to confirm recipients plus source URLs/domains to add or prioritize.

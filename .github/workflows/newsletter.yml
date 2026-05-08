@@ -1,0 +1,79 @@
+name: NK AI Market Brief
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "preview, send, or auto"
+        required: false
+        default: "preview"
+  schedule:
+    - cron: "17 12 * * 1-5"
+    - cron: "17 13 * * 1-5"
+
+concurrency:
+  group: nk-ai-market-brief-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  newsletter:
+    runs-on: ubuntu-latest
+    env:
+      NEWSLETTER_SEND_ENABLED: "false"
+      NEWSLETTER_TIMEZONE: America/New_York
+      NEWSLETTER_TARGET_HOUR_LOCAL: "8"
+      NEWSLETTER_REVIEW_LOOKBACK_HOURS: "168"
+      RUN_MODE: ${{ github.event.inputs.mode }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - run: npm test
+
+      - name: Build newsletter page
+        run: |
+          MODE="${RUN_MODE:-auto}"
+          if [ "$MODE" = "send" ]; then
+            npm run send
+          elif [ "$MODE" = "auto" ]; then
+            node -e "import('./src/run-newsletter.mjs').then(m => m.runNewsletter({ mode: 'auto' })).then(r => console.log(JSON.stringify(r, null, 2))).catch(e => { console.error(e); process.exit(1); })"
+          else
+            npm run preview
+          fi
+
+      - run: npm run build
+
+      - run: npm run check:deploy
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nk-ai-market-brief
+          path: |
+            .newsletter-outbox
+            site
+
+      - name: Configure Pages
+        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        id: deployment
+        uses: actions/deploy-pages@v4

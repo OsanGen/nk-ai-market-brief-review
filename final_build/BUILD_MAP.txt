@@ -1,0 +1,30 @@
+# Build Map
+
+This repo is a standalone Node 20 ESM app for the free NK AI Market Brief MVP.
+
+## Components
+
+- Context: `NK_NEWSLETTER_MVP_CONTEXT.txt` controls scope, source categories, output rules, and safety constraints.
+- Source registry: `newsletter-sources.json` defines the nine original enabled Google News RSS source queries plus three review-yield market scan queries.
+- Config: `src/config.mjs` loads no-secret defaults, optional send env vars, normal daily lookback windows, and a wider review lookback window.
+- Source loading: `src/sources.mjs` validates the source registry and ignores disabled sources.
+- Google News RSS: `src/google-news.mjs` builds query feed URLs.
+- Feed fetching: `src/fetch-feeds.mjs` uses `rss-parser`, built-in `fetch`, and per-source timeout/error capture.
+- Normalization: `src/normalize.mjs` strips RSS HTML from summaries and produces stable item metadata.
+- Filtering/scoring: `src/filter-score.mjs` enforces AI-plus-market inclusion from story title/summary text, uses word/phrase-boundary term matching, and scores by priority phrases, title/summary matches, source weight, and recency.
+- Dedupe: `src/dedupe.mjs` removes tracking-param URL duplicates and near-identical title duplicates.
+- Summaries: `src/summarize.mjs` creates deterministic summary fields from RSS title/summary only.
+- Automation status: `src/automation-status.mjs` inspects `.github/workflows/newsletter.yml` and records workflow, schedule, Pages, artifact, and manual-push status in run output.
+- Rendering: `src/render-html.mjs` and `src/render-text.mjs` create escaped HTML/text newsletter outputs.
+- Review status: `src/review-status.mjs` marks review readiness and limited-yield states from selected item counts.
+- Review page: `src/render-review-page.mjs` creates the static `site/index.html` review page with noindex metadata, status badges, review status, selected-signal label, lead story, story grid when available, compact diagnostics, source health details, and `newsletter.txt` link.
+- Send gate: `src/send-resend.mjs` keeps email off by default, validates comma-separated recipients after config parsing, requires minimum item count, and uses Resend HTTP API only when all gates pass.
+- Time guard: `src/time-guard.mjs` allows scheduled send only at 8 a.m. America/New_York on weekdays.
+- Orchestrator: `src/run-newsletter.mjs` runs the full pipeline, writes `.newsletter-outbox/YYYY-MM-DD/`, and writes the static review site.
+- Scripts: `scripts/*.mjs` expose preview, send, build, and deploy checks.
+- Share handoff: `SHARE_WITH_CYRIL.md` documents local preview, Actions artifact fallback, Pages enablement, expected live link, and copy/paste review message.
+- Auto refresh and deploy: `.github/workflows/newsletter.yml` runs manual dispatch plus weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`, runs `npm ci`, tests, build, deploy check, artifact upload, and optional Pages deploy gated by `DEPLOY_GITHUB_PAGES=true`.
+
+## Data Flow
+
+Sources -> Google News RSS URL -> RSS fetch/parse -> normalized metadata -> filter/score -> dedupe -> deterministic story summaries -> review-readiness and automation-status calculation -> email HTML/text render plus review-page render with event/protocol neutralization -> dated outbox + static review site -> deploy check enforcing `reviewReady` and scheduled automation -> artifact upload and optional GitHub Pages -> optional gated Resend email with idempotency header only outside default workflow.

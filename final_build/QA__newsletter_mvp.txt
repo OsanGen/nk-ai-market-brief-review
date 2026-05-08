@@ -1,0 +1,134 @@
+# QA: Newsletter MVP
+
+QA result: PASS
+
+## Shareable Review Page Addendum
+
+- `site/index.html` is now a static review page instead of raw email HTML: PASS.
+- Review page includes `NK AI Market Brief`, generated time, `Preview mode`, `Email disabled`, and `Internal review`: PASS.
+- Review page includes a lead story section and story grid section: PASS.
+- Review page links to `newsletter.txt`: PASS.
+- Review page includes `<meta name="robots" content="noindex,nofollow">`: PASS.
+- `SHARE_WITH_CYRIL.md` exists with local preview, artifact fallback, GitHub Pages enablement, expected URL format, and copy/paste message: PASS.
+- GitHub Actions runs `npm ci`, `npm test`, `npm run build`, `npm run check:deploy`, artifact upload, and optional Pages deploy gated by `DEPLOY_GITHUB_PAGES=true`: PASS.
+- Live Pages check: PASS, `https://osangen.github.io/nk-ai-market-brief-review/` returns HTTP 200 and includes `NK AI Market Brief`, `Internal review`, `Email disabled`, and `newsletter.txt`.
+
+## Exact Commands Run
+
+```bash
+npm install
+npm run preview
+npm test
+npm run build
+npm run check:deploy
+find .newsletter-outbox -maxdepth 3 -type f | sort | tail -20
+find site -maxdepth 2 -type f | sort
+cat site/run.json
+env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true
+grep -R "RESEND_API_KEY\|CRON_SECRET\|<script\|onerror\|onclick\|javascript:" .newsletter-outbox site 2>/dev/null || true
+grep -R "@.*\." .env.example src scripts .github docs README.md 2>/dev/null || true
+```
+
+Additional verification:
+
+```bash
+test -f .newsletter-outbox/2026-05-08/newsletter.html && test -f .newsletter-outbox/2026-05-08/newsletter.txt && test -f .newsletter-outbox/2026-05-08/run.json && test -f site/index.html && test -f site/newsletter.txt && test -f site/run.json
+```
+
+## Exact Results
+
+- `npm install`: PASS; packages up to date, 0 vulnerabilities.
+- `npm run preview`: PASS; generated `.newsletter-outbox/2026-05-08`, 1 selected item, 9 sources, 0 source errors, send skipped with `send_disabled`.
+- `npm test`: PASS; 24 tests passed, 0 failed.
+- `npm run build`: PASS; generated outbox and static site output.
+- `npm run check:deploy`: PASS; `Deploy check passed`.
+- Latest `npm run check:deploy`: PASS; verifies `SHARE_WITH_CYRIL.md` and review-page markers in `site/index.html`.
+- `find .newsletter-outbox -maxdepth 3 -type f | sort | tail -20`: PASS; found `newsletter.html`, `newsletter.txt`, and `run.json`.
+- `find site -maxdepth 2 -type f | sort`: PASS; found `site/index.html`, `site/newsletter.txt`, and `site/run.json`.
+- `cat site/run.json`: PASS; confirms `mode=preview`, `emailEnabled=false`, `send.sent=false`, 9 sources, 620 fetched items, 1 accepted item, 619 rejected items.
+- Required output `test -f` check: PASS; all six generated files exist.
+
+## Files Verified
+
+- `.newsletter-outbox/2026-05-08/newsletter.html`
+- `.newsletter-outbox/2026-05-08/newsletter.txt`
+- `.newsletter-outbox/2026-05-08/run.json`
+- `site/index.html`
+- `site/newsletter.txt`
+- `site/run.json`
+- `.github/workflows/newsletter.yml`
+- `.env.example`
+- `newsletter-sources.json`
+
+## Content-Scope Check Result
+
+PASS. The generated issue contains one selected story: `Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers - glossy.co` from `Glossy AI Fashion and Beauty`. This matches the Cyril scope because it is a luxury/fashion-commerce source and the story metadata centers on AI discovery.
+
+No runway-only, celebrity/style-only, generic fashion, generic e-commerce, generic AI, earnings, tariff, or supply-chain story was included.
+
+## Send-Gate Check Result
+
+PASS. The exact no-secret send-gate command:
+
+```bash
+env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true
+```
+
+Result: send skipped safely with `missing_resend_api_key`; `sent=false`; no email was sent; no secret value or recipient list was printed.
+
+## Unsafe-Output Check Result
+
+PASS. The generated-output search:
+
+```bash
+grep -R "RESEND_API_KEY\|CRON_SECRET\|<script\|onerror\|onclick\|javascript:" .newsletter-outbox site 2>/dev/null || true
+```
+
+Result: no matches.
+
+Hard-coded recipient search:
+
+```bash
+grep -R "@.*\." .env.example src scripts .github docs README.md 2>/dev/null || true
+```
+
+Result: safe matches only: CSS `@media` and the email-validation regex. No hard-coded real recipient addresses or secrets.
+
+## Source-Registry Check Result
+
+PASS. All required sources exist, are enabled, and use `google_news_rss` mode:
+
+- Vogue Business AI
+- Business of Fashion AI
+- Glossy AI Fashion and Beauty
+- BeautyMatter AI
+- Retail TouchPoints AI Shopping
+- Shopify Agentic Commerce
+- OpenAI Commerce
+- Google Shopping AI
+- Brand Watchlist AI Agents
+
+## GitHub Actions Check Result
+
+PASS. `.github/workflows/newsletter.yml` includes:
+
+- `workflow_dispatch`
+- weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`
+- `npm test` before newsletter generation/send
+- artifact upload for `.newsletter-outbox` and `site`
+- optional GitHub Pages gated by `DEPLOY_GITHUB_PAGES == 'true'`
+- optional email controlled by env/secrets
+- no hard-coded secrets or recipients
+
+Latest verified manual workflow run: `https://github.com/OsanGen/nk-ai-market-newsletter/actions/runs/25562347082`, result `success`.
+
+## Remaining Risks/Gaps
+
+- email | deferred | Keep real email disabled until internal recipients, verified sender, Resend API key, and explicit preview approval are provided.
+- pages | deferred | Keep GitHub Pages disabled unless `DEPLOY_GITHUB_PAGES=true` is intentionally set.
+- source-yield | watch | Strict relevance filters produced 1 item in the latest live RSS run; tune source queries only if the daily brief needs more volume without admitting generic news.
+- github-actions | watch | Manual preview workflow passed after push; monitor GitHub action runtime deprecation warnings before Node 20-backed actions are removed from hosted runners.
+
+## Required Next Action
+
+Share `CYRIL_VERIFICATION_PACK.md` with Cyril and ask him to confirm internal recipients plus any source URLs/domains to add or prioritize.

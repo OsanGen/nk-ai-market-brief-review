@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Malicious Summary</title>
+    <item>
+      <title><![CDATA[AI beauty assistant <img src=x onerror=alert(1)>]]></title>
+      <link>https://example.com/ai-beauty</link>
+      <pubDate>Fri, 08 May 2026 11:00:00 GMT</pubDate>
+      <description><![CDATA[Beauty shoppers test <script>alert(1)</script> AI recommendations.]]></description>
+    </item>
+  </channel>
+</rss>

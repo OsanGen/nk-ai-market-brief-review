@@ -1,0 +1,124 @@
+{
+  "sources": [
+    {
+      "id": "vogue_business_ai",
+      "name": "Vogue Business AI",
+      "mode": "google_news_rss",
+      "query": "site:vogue.com/business/technology/artificial-intelligence (\"AI fashion\" OR \"AI beauty\" OR \"AI shopping\" OR \"agentic commerce\" OR \"virtual try-on\")",
+      "homepageUrl": "https://www.vogue.com/business/technology/artificial-intelligence",
+      "weight": 10,
+      "enabled": true,
+      "categories": ["fashion", "beauty", "technology"]
+    },
+    {
+      "id": "business_of_fashion_ai",
+      "name": "Business of Fashion AI",
+      "mode": "google_news_rss",
+      "query": "site:businessoffashion.com/topics/technology/artificial-intelligence (\"AI fashion\" OR \"AI beauty\" OR \"AI shopping\" OR \"agentic commerce\" OR \"virtual try-on\")",
+      "homepageUrl": "https://www.businessoffashion.com/topics/technology/artificial-intelligence/",
+      "weight": 10,
+      "enabled": true,
+      "categories": ["fashion", "beauty", "luxury", "technology"]
+    },
+    {
+      "id": "glossy_ai_fashion_beauty",
+      "name": "Glossy AI Fashion and Beauty",
+      "mode": "google_news_rss",
+      "query": "site:glossy.co (fashion OR beauty OR luxury) (AI OR \"artificial intelligence\" OR \"AI shopping\" OR agentic OR \"virtual try-on\" OR \"AI search\")",
+      "homepageUrl": "https://www.glossy.co/",
+      "weight": 9,
+      "enabled": true,
+      "categories": ["fashion", "beauty", "luxury", "commerce"]
+    },
+    {
+      "id": "beautymatter_ai",
+      "name": "BeautyMatter AI",
+      "mode": "google_news_rss",
+      "query": "site:beautymatter.com (beauty AND (AI OR \"artificial intelligence\" OR \"AI shopping\" OR \"AI discovery\" OR agentic OR recommendations))",
+      "homepageUrl": "https://beautymatter.com/",
+      "weight": 9,
+      "enabled": true,
+      "categories": ["beauty", "technology", "commerce"]
+    },
+    {
+      "id": "retail_touchpoints_ai_shopping",
+      "name": "Retail TouchPoints AI Shopping",
+      "mode": "google_news_rss",
+      "query": "site:retailtouchpoints.com (\"AI shopping\" OR \"agentic commerce\" OR \"generative AI\" OR OpenAI OR Shopify OR Google OR Meta OR Amazon) (retail OR ecommerce OR commerce OR shopping)",
+      "homepageUrl": "https://www.retailtouchpoints.com/tag/ai-shopping/",
+      "weight": 9,
+      "enabled": true,
+      "categories": ["retail", "ecommerce", "agentic_commerce"]
+    },
+    {
+      "id": "shopify_agentic_commerce",
+      "name": "Shopify Agentic Commerce",
+      "mode": "google_news_rss",
+      "query": "site:shopify.com/news (\"agentic commerce\" OR \"AI commerce\" OR \"Agentic Storefronts\" OR \"Shopify Catalog\" OR \"AI shopping\" OR OpenAI OR Google)",
+      "homepageUrl": "https://www.shopify.com/news",
+      "weight": 10,
+      "enabled": true,
+      "categories": ["ecommerce", "agentic_commerce", "platform"]
+    },
+    {
+      "id": "openai_commerce",
+      "name": "OpenAI Commerce",
+      "mode": "google_news_rss",
+      "query": "site:openai.com (shopping OR commerce OR \"agentic commerce\" OR \"Instant Checkout\" OR \"Agentic Commerce Protocol\" OR merchants)",
+      "homepageUrl": "https://openai.com/news/",
+      "weight": 10,
+      "enabled": true,
+      "categories": ["agentic_commerce", "platform", "technology"]
+    },
+    {
+      "id": "google_shopping_ai",
+      "name": "Google Shopping AI",
+      "mode": "google_news_rss",
+      "query": "site:blog.google/products-and-platforms/products/shopping (\"AI shopping\" OR \"AI Mode\" OR \"virtual try-on\" OR \"agentic checkout\" OR \"Universal Commerce Protocol\" OR Gemini)",
+      "homepageUrl": "https://blog.google/products-and-platforms/products/shopping/",
+      "weight": 9,
+      "enabled": true,
+      "categories": ["shopping", "platform", "agentic_commerce"]
+    },
+    {
+      "id": "brand_watchlist_ai_agents",
+      "name": "Brand Watchlist AI Agents",
+      "mode": "google_news_rss",
+      "query": "(Nike OR \"Ralph Lauren\" OR Sephora OR Ulta OR LVMH OR Kering OR Zara OR \"H&M\" OR Revolve OR Walmart OR Target OR Amazon) (\"AI agent\" OR \"AI assistant\" OR \"AI stylist\" OR \"AI shopping\" OR \"virtual try-on\" OR \"product discovery\" OR \"agentic commerce\")",
+      "homepageUrl": null,
+      "weight": 10,
+      "enabled": true,
+      "categories": ["fashion", "beauty", "retail", "agentic_commerce"]
+    },
+    {
+      "id": "review_ai_fashion_beauty_market_scan",
+      "name": "AI Fashion and Beauty Market Scan",
+      "mode": "google_news_rss",
+      "query": "(\"AI fashion\" OR \"AI beauty\" OR \"AI stylist\" OR \"virtual try-on\" OR \"AI recommendations\") (fashion OR beauty OR retail OR shopping OR luxury)",
+      "homepageUrl": null,
+      "weight": 8,
+      "enabled": true,
+      "categories": ["fashion", "beauty", "commerce"]
+    },
+    {
+      "id": "review_agentic_commerce_market_scan",
+      "name": "Agentic Commerce Market Scan",
+      "mode": "google_news_rss",
+      "query": "(\"agentic commerce\" OR \"AI shopping\" OR \"AI product discovery\" OR \"instant checkout\" OR \"commerce protocol\") (retail OR ecommerce OR shopping OR Shopify OR OpenAI OR Google)",
+      "homepageUrl": null,
+      "weight": 8,
+      "enabled": true,
+      "categories": ["agentic_commerce", "ecommerce", "shopping"]
+    },
+    {
+      "id": "review_platform_ai_shopping_market_scan",
+      "name": "Platform AI Shopping Market Scan",
+      "mode": "google_news_rss",
+      "query": "(OpenAI OR Shopify OR Google OR Meta OR Amazon OR Walmart) (\"AI shopping\" OR \"AI search for shopping\" OR \"AI agent\" OR \"AI assistant\" OR \"product discovery\" OR \"virtual try-on\")",
+      "homepageUrl": null,
+      "weight": 8,
+      "enabled": true,
+      "categories": ["shopping", "platform", "ecommerce"]
+    }
+  ]
+}

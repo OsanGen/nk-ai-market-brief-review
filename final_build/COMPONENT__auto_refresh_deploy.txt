@@ -1,0 +1,62 @@
+# Component: Auto Refresh Deploy
+
+## Purpose
+
+Refresh the NK AI Market Brief page automatically through GitHub Actions and optional GitHub Pages so normal weekday updates do not require local builds or manual pushes after repository setup.
+
+## Inputs
+
+- `.github/workflows/newsletter.yml`
+- `newsletter-sources.json`
+- RSS metadata fetched by the newsletter pipeline
+- Repository variable `DEPLOY_GITHUB_PAGES`
+- Optional email variables, kept disabled by default
+
+## Outputs
+
+- Scheduled GitHub Actions run history
+- GitHub Actions artifact `nk-ai-market-brief`
+- Optional GitHub Pages deployment of generated `site/`
+- Automation metadata in `site/run.json`
+- Automation status section in `site/index.html`
+
+## Schedule Behavior
+
+- Manual `workflow_dispatch` remains available.
+- Weekday schedules:
+  - `17 12 * * 1-5`
+  - `17 13 * * 1-5`
+- The workflow runs from the latest default branch commit.
+- The runtime guard targets 8 a.m. America/New_York for auto mode.
+
+## GitHub Pages Behavior
+
+- Workflow includes `actions/configure-pages@v5`, `actions/upload-pages-artifact@v3`, and `actions/deploy-pages@v4`.
+- Pages deployment is gated by repository variable `DEPLOY_GITHUB_PAGES=true`.
+- Repository Settings -> Pages must use Source: GitHub Actions.
+
+## Artifact Fallback Behavior
+
+If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `site` as the `nk-ai-market-brief` artifact.
+
+## Email Disabled Behavior
+
+The default workflow sets `NEWSLETTER_SEND_ENABLED=false`. Email cannot send from scheduled refresh by default.
+
+## Acceptance Checks
+
+- `npm install`
+- `npm run preview`
+- `npm test`
+- `npm run build`
+- `npm run check:deploy`
+- `site/run.json` has `automationConfigured: true`
+- `site/run.json` has `manualPushRequiredAfterSetup: false`
+- Workflow has manual dispatch, both cron entries, artifact upload, Pages upload/deploy, and Pages permissions.
+
+## Remaining Setup Steps
+
+- Push the workflow-capable app to the live Pages repository.
+- Set repository Settings -> Pages -> Source to GitHub Actions.
+- Set repository variable `DEPLOY_GITHUB_PAGES=true`.
+- Verify a manual workflow run succeeds and deploys the live page.

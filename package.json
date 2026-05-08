@@ -1,0 +1,20 @@
+{
+  "name": "nk-ai-market-newsletter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Free internal NK AI market newsletter generator using RSS metadata only.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "preview": "node scripts/preview.mjs",
+    "send": "node scripts/send.mjs",
+    "build": "node scripts/build-site.mjs",
+    "test": "node --test",
+    "check:deploy": "node scripts/check-deploy.mjs"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}

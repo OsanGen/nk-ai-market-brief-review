@@ -40,7 +40,11 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; font-size: 13px; }
     .summary-cell { border: 1px solid #999; padding: 8px; }
     .summary-cell strong { display: block; color: #000; font-size: 16px; }
-    .debug { color: #444; font-size: 13px; }
+    .story-meta { color: #333; font-size: 13px; }
+    .story-meta span { display: inline-block; margin-right: 10px; }
+    .debug { color: #666; font-size: 12px; border-top-color: #ddd; margin-top: 30px; }
+    .debug h2 { font-size: 15px; color: #333; }
+    .debug .summary-cell { border-color: #ddd; }
     ul { margin: 8px 0 0; padding-left: 20px; }
     @media (max-width: 760px) { .story-grid, .summary-grid { grid-template-columns: 1fr; } h1 { font-size: 28px; } .lead-story h2 { font-size: 23px; } }
   </style>
@@ -64,13 +68,13 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     </section>
     ${lead ? renderLead(lead) : renderEmpty()}
     ${renderCards(rest)}
-    ${renderRunSummary(run, sendLabel)}
-    ${renderSourceHealth(sourceResults)}
-    ${renderAutomationStatus(run)}
     <section>
       <h2>Text version</h2>
       <p><a href="newsletter.txt">Open newsletter.txt</a></p>
     </section>
+    ${renderRunSummary(run, sendLabel)}
+    ${renderSourceHealth(sourceResults)}
+    ${renderAutomationStatus(run)}
     <footer>
       <p>${FOOTER}</p>
     </footer>
@@ -82,7 +86,8 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
 
 function renderLead(story) {
   return `<section class="lead-story">
-  <p class="meta">Lead story | ${escapeHtml(meta(story))}</p>
+  <p class="meta">Lead story</p>
+  ${renderStoryMeta(story)}
   <h2>${escapeHtml(story.headline)}</h2>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
@@ -106,7 +111,7 @@ ${stories.map(renderCard).join("\n")}
 
 function renderCard(story) {
   return `<article class="story-card">
-  <p class="meta">${escapeHtml(meta(story))}</p>
+  ${renderStoryMeta(story)}
   <h3>${escapeHtml(story.headline)}</h3>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
@@ -117,7 +122,7 @@ function renderCard(story) {
 function renderRunSummary(run, sendLabel) {
   const sourceErrorCount = Number(run.sourceErrorCount ?? (Array.isArray(run.sourceErrors) ? run.sourceErrors.length : 0));
   return `<section class="debug">
-  <h2>Review diagnostics</h2>
+  <h2>Technical diagnostics</h2>
   <div class="summary-grid">
     <div class="summary-cell"><strong>${escapeHtml(run.sourceCount ?? 0)}</strong>Sources scanned</div>
     <div class="summary-cell"><strong>${escapeHtml(run.candidateItemCount ?? run.fetchedItemCount ?? 0)}</strong>Candidate items fetched</div>
@@ -133,7 +138,7 @@ function renderSourceHealth(sourceResults) {
     ? sourceResults.map((source) => `<li>${escapeHtml(source.sourceName)} | ${escapeHtml(source.status)} | ${escapeHtml(source.itemCount ?? 0)} fetched</li>`).join("\n")
     : "<li>No source results recorded.</li>";
   return `<section class="debug">
-  <h2>Source health</h2>
+  <h2>Source fetch status</h2>
   <ul>
 ${items}
   </ul>
@@ -177,8 +182,15 @@ function readLink(story) {
   return url ? `<p><a href="${escapeHtml(url)}">Read source</a></p>` : "";
 }
 
-function meta(story) {
-  return `${story.sourceName} | ${story.category ?? "market"} | ${formatDate(story.publishedAt)}`;
+function renderStoryMeta(story) {
+  const source = story.sourceOutlet || story.sourceName || "source unavailable";
+  const scan = story.scanLabel || (story.sourceOutlet ? story.sourceName : "");
+  return `<p class="story-meta">
+    <span><strong>Source:</strong> ${escapeHtml(source)}</span>
+    <span><strong>Category:</strong> ${escapeHtml(story.category ?? "market")}</span>
+    ${scan ? `<span><strong>Scan:</strong> ${escapeHtml(scan)}</span>` : ""}
+    <span><strong>Date:</strong> ${escapeHtml(formatDate(story.publishedAt))}</span>
+  </p>`;
 }
 
 function modeLabel(mode) {

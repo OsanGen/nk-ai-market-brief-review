@@ -12,8 +12,9 @@ export function renderText({ stories, generatedAt }) {
   stories.forEach((story, index) => {
     lines.push(index === 0 ? "LEAD STORY" : `STORY ${index + 1}`);
     lines.push(clean(story.headline));
-    lines.push(`Source: ${clean(story.sourceName)}`);
+    lines.push(`Source: ${clean(story.sourceOutlet || story.sourceName)}`);
     lines.push(`Category: ${clean(story.category ?? "market")}`);
+    if (story.scanLabel || story.sourceOutlet) lines.push(`Scan: ${clean(story.scanLabel || story.sourceName)}`);
     if (story.publishedAt) lines.push(`Date: ${story.publishedAt.slice(0, 10)}`);
     lines.push(`Summary: ${clean(story.summary)}`);
     lines.push(`Why it matters: ${clean(story.whyItMatters)}`);

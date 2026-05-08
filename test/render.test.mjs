@@ -14,7 +14,9 @@ const stories = [
     headline: "AI beauty assistant <script>alert(1)</script>",
     summary: "Beauty shoppers test <img src=x onerror=alert(1)> AI recommendations.",
     whyItMatters: "This matters because beauty discovery is moving toward algorithmic recommendations.",
-    sourceName: "Example",
+    sourceName: "AI Fashion and Beauty Market Scan",
+    sourceOutlet: "Glossy",
+    scanLabel: "AI Fashion and Beauty Market Scan",
     category: "beauty",
     publishedAt: "2026-05-08T11:00:00.000Z",
     url: "https://example.com/story"
@@ -23,7 +25,9 @@ const stories = [
     headline: "Agentic commerce platform expands AI shopping",
     summary: "Retail teams test AI shopping discovery in commerce workflows.",
     whyItMatters: "This matters because agentic shopping channels can shift product discovery.",
-    sourceName: "Retail Example",
+    sourceName: "Agentic Commerce Market Scan",
+    sourceOutlet: "Retail TouchPoints",
+    scanLabel: "Agentic Commerce Market Scan",
     category: "agentic_commerce",
     publishedAt: "2026-05-08T10:00:00.000Z",
     url: "https://example.com/commerce"
@@ -61,8 +65,8 @@ test("Review page renderer creates shareable static page", () => {
       sourceCount: 2,
       sourceErrors: [],
       sourceResults: [
-        { sourceName: "Example", status: "ok", itemCount: 1 },
-        { sourceName: "Retail Example", status: "ok", itemCount: 1 }
+        { sourceName: "AI Fashion and Beauty Market Scan", status: "ok", itemCount: 1 },
+        { sourceName: "Agentic Commerce Market Scan", status: "ok", itemCount: 1 }
       ],
       reviewReady: false,
       reviewReasons: ["Only 2 qualifying stories; tune sources before sharing."],
@@ -82,8 +86,10 @@ test("Review page renderer creates shareable static page", () => {
   assert.match(html, /class="lead-story"/);
   assert.match(html, /class="story-card"/);
   assert.match(html, /href="newsletter.txt"/);
-  assert.match(html, /Source health/);
-  assert.match(html, /Review diagnostics/);
+  assert.match(html, /Source:.*Glossy/s);
+  assert.match(html, /Scan:.*AI Fashion and Beauty Market Scan/s);
+  assert.match(html, /Source fetch status/);
+  assert.match(html, /Technical diagnostics/);
   assert.match(html, /Automation status/);
   assert.match(html, /Auto-refresh: configured/);
   assert.match(html, /weekdays around 8 a\.m\. Eastern/);

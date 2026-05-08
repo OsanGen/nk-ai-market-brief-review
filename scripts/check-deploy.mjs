@@ -14,7 +14,7 @@ const required = [
   "SHARE_WITH_CYRIL.md",
   "FULL_TECH_BUILD.txt"
 ];
-const forbidden = /RESEND_API_KEY|<script|onerror|onclick|javascript:|metadata matched|matched filters/i;
+const forbidden = /RESEND_API_KEY|OPENAI_API_KEY|<script|onerror|onclick|javascript:|metadata matched|matched filters/i;
 const indexMarkers = ["NK AI Market Brief", "Internal review", "Email disabled", "newsletter.txt", "Read source"];
 
 export async function checkDeploy(root = process.cwd()) {

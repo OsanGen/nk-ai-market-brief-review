@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-08T18:22:02.295Z",
+  "generatedAt": "2026-05-08T18:55:10.058Z",
   "mode": "preview",
   "skipped": false,
   "outputDir": ".newsletter-outbox/2026-05-08",
@@ -103,8 +103,9 @@
   "selectedItemCount": 8,
   "itemCount": 8,
   "rejectedReasonCounts": {
-    "outside_lookback": 782,
-    "not_relevant": 86
+    "outside_lookback": 781,
+    "not_relevant": 83,
+    "blocked_market_noise": 4
   },
   "sendStatus": "send_disabled",
   "reviewReasons": [],
@@ -113,11 +114,14 @@
       "id": "d9up23",
       "sourceId": "review_agentic_commerce_market_scan",
       "sourceName": "Agentic Commerce Market Scan",
+      "sourceOutlet": "MSN",
+      "scanLabel": "Agentic Commerce Market Scan",
+      "topicCluster": "agentic commerce platform race",
       "title": "Etsy and eBay expand AI shopping tools amid shift to agentic commerce",
       "headline": "Etsy and eBay expand AI shopping tools amid shift to agentic commerce.",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOTjdVS1FUZ0NBam5qRVdOUXMzN2hmOGRVMVo3dzdFNGhrSEc5WFZhUkt4WThIc0EtcjJCRWY3T3N0NDlqWkpDLTlIUnNkbXpVaHJLbExsSGVRQnNmVktsZVFGc2hTNUZsSTc0NlBpUnRlZjJFV2tPUGVUTm9ZbzBiU3BZUTVFb1RHWk80aFB4THF1eVlMcGR0dlRDU3JYSGNfSlloSFQzT2RPY3QzME5jYzZMaXVjWU5rM0sydg?oc=5",
       "publishedAt": "2026-05-07T12:40:14.000Z",
-      "summary": "Agentic commerce is moving into shopping workflows that can affect discovery, checkout expectations, and catalog readiness.",
+      "summary": "This story points to AI shopping becoming a new discovery path before customers reach a brand site.",
       "whyItMatters": "This matters because agentic shopping channels can shift product discovery, checkout expectations, and catalog readiness.",
       "category": "agentic_commerce",
       "categories": [
@@ -125,18 +129,21 @@
         "ecommerce",
         "shopping"
       ],
-      "score": 108
+      "score": 107
     },
     {
       "id": "17mvuln",
       "sourceId": "review_platform_ai_shopping_market_scan",
       "sourceName": "Platform AI Shopping Market Scan",
+      "sourceOutlet": "Glenbrook Partners",
+      "scanLabel": "Platform AI Shopping Market Scan",
+      "topicCluster": "Meta / Instagram / Hatch shopping agents",
       "title": "Meta Develops Agentic AI Shopping Assistant for Instagram",
       "headline": "Meta Develops Agentic AI Shopping Assistant for Instagram.",
       "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNV1BGZXNRa2phSjR0OGRubzVaWHBrbWZxd3RRRnl6QmQ0WjhZV3hzTHNXX0lkS0hZbjZ3dVhpbmh5UHpBM3ZIMlRhc1R1OTFqMTM1WFNnckZKQThzUVpBS19pcjJmS1NkdHpadkJxUjdDRGU0cGdHemw1TWVhYnVQczVNdnktWTMxeDE1aDBoNkVrTGxvUmlaakNn?oc=5",
       "publishedAt": "2026-05-08T15:16:42.000Z",
-      "summary": "AI shopping agents are becoming a more visible path for product discovery and purchase decisions.",
-      "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
+      "summary": "This story shows AI assistants moving closer to the shopping interface on major platforms.",
+      "whyItMatters": "This matters because social platforms can shift shopping discovery before shoppers reach a brand site.",
       "category": "shopping",
       "categories": [
         "shopping",
@@ -149,11 +156,14 @@
       "id": "nmcjx7",
       "sourceId": "review_agentic_commerce_market_scan",
       "sourceName": "Agentic Commerce Market Scan",
+      "sourceOutlet": "Fast Company",
+      "scanLabel": "Agentic Commerce Market Scan",
+      "topicCluster": "OpenAI / ChatGPT commerce",
       "title": "Shop ’til you bot: Google, OpenAI, and the race to build agentic commerce",
       "headline": "Shop ’til you bot: Google, OpenAI, and the race to build agentic commerce.",
       "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOdC1RMDNQMkJtU0tWLWZXWmNSWEJaVVMza2NQQnY2WGR4MkV6aGxOUGdGbG1oR0ZGbWp6YlRQZy01eWdOWnQ5SEhOSDNBdkE5SUpYaXBDQjBjTy1icUNOWUwxbkltakpsN0V2NDNuYnRWWHdYZTRIczh1dkFsaF83ZHZMaHJDc3VGR2ZxSF9WSHZ6OXg5cmFiR1g5amhKX25FTzk5U3RsTUJjdw?oc=5",
       "publishedAt": "2026-05-07T19:32:35.000Z",
-      "summary": "Agentic commerce is moving into shopping workflows that can affect discovery, checkout expectations, and catalog readiness.",
+      "summary": "This story points to AI shopping becoming a new discovery path before customers reach a brand site.",
       "whyItMatters": "This matters because agentic shopping channels can shift product discovery, checkout expectations, and catalog readiness.",
       "category": "agentic_commerce",
       "categories": [
@@ -164,32 +174,17 @@
       "score": 78
     },
     {
-      "id": "1a6wm6e",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "title": "Meta readies AI shopping agents for Instagram to rival TikTok Shop",
-      "headline": "Meta readies AI shopping agents for Instagram to rival TikTok Shop.",
-      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQ0tjZmxLbDJiUXJqbVNVVmRYdzBuS2U4UTNvQ0xRdjVEdEVTMjI4YS10T1ppZlJQQTNxM0NNTmxNVEQxd1N2TXdEUGhyc1RIVFhjdjB2VGQyS3dvSkRfS25wcnp5WlljQmE5bW5nZzI2enhHRzk5V0JDOTVGOFJiUE43dkRvNHJ6Y0V5M2FQbmcwVG9qYTdnZQ?oc=5",
-      "publishedAt": "2026-05-06T19:42:34.000Z",
-      "summary": "AI shopping agents are becoming a more visible path for product discovery and purchase decisions.",
-      "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 77
-    },
-    {
       "id": "ckyfxf",
       "sourceId": "review_ai_fashion_beauty_market_scan",
       "sourceName": "AI Fashion and Beauty Market Scan",
+      "sourceOutlet": "AI Magazine",
+      "scanLabel": "AI Fashion and Beauty Market Scan",
+      "topicCluster": "Google Cloud / virtual try-on",
       "title": "OTB Group Brings Google Cloud Virtual Try-On to Luxury",
       "headline": "OTB Group Brings Google Cloud Virtual Try-On to Luxury.",
       "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPRmk5WjZKLTEtNWtBRUJqR3U0WGF0aHNlRFVrQUNUODlmbUJHSjlVNENKUmVrd0JzZVp6SXV2aXl6ek5QNl84VzUyXy1neDYweS1xd1lkYzFQQVljY2hlMkF1MkM2ZjFyLVF3MXFMc3FVaEZIa09iNmF0Ul9pYzFTR0doSnpoWG5pRnc?oc=5",
       "publishedAt": "2026-05-08T08:38:56.000Z",
-      "summary": "Virtual try-on is becoming a more visible AI layer for fashion and beauty discovery.",
+      "summary": "This item points to virtual try-on becoming part of how shoppers evaluate luxury products before purchase.",
       "whyItMatters": "This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.",
       "category": "fashion",
       "categories": [
@@ -200,14 +195,80 @@
       "score": 72
     },
     {
+      "id": "1qduqse",
+      "sourceId": "review_agentic_commerce_market_scan",
+      "sourceName": "Agentic Commerce Market Scan",
+      "sourceOutlet": "eMarketer",
+      "scanLabel": "Agentic Commerce Market Scan",
+      "topicCluster": "Shopify / Shopify Catalog / Agentic Storefronts",
+      "title": "Shopify expects agentic commerce to lift ecommerce adoption",
+      "headline": "Shopify expects agentic commerce to lift ecommerce adoption.",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNY01hZ0YyWXBEMUhYR0thOGRaVTJDVy01RHl0dmpsVjlrVlVRMm5rRS1EZlUtWFVrVzczWEZYYTYxMzlQUGdHNTVJTXBNNnJMUHRfa1ZadjJ0VDRSWk9qMVJuV2VlTE5wVTAwdDB1M3lrYm8zUHdZZjJwMnhJQWJ5M3ZWUlAyanRMZ2s3dnlONEVrTEtp?oc=5",
+      "publishedAt": "2026-05-06T18:44:17.000Z",
+      "summary": "This story points to commerce platforms preparing product data for AI-assisted shopping.",
+      "whyItMatters": "This matters because brands may need cleaner catalog data and product metadata for AI-mediated shopping.",
+      "category": "agentic_commerce",
+      "categories": [
+        "agentic_commerce",
+        "ecommerce",
+        "shopping"
+      ],
+      "score": 73
+    },
+    {
+      "id": "10fvyoh",
+      "sourceId": "review_ai_fashion_beauty_market_scan",
+      "sourceName": "AI Fashion and Beauty Market Scan",
+      "sourceOutlet": "Campaign Middle East",
+      "scanLabel": "AI Fashion and Beauty Market Scan",
+      "topicCluster": "fashion AI discovery",
+      "title": "R&B Fashion launches an AI fashion runway with Takumi AI",
+      "headline": "R&B Fashion launches an AI fashion runway with Takumi AI.",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQdkwzZWk4czRzTVE1SkJlVDZTZ1hWaFl4R245WHNMUVJSOVlLLXBuekd6ZnkxWXVhMlpOTjMwa3ZadDJPSzNVcmZvODlqWEpyblRKU2Iwd245OFJEdkV6dVdjU0M0b2c4VU5pVTNfWVE1OTQ3c3BZOHZlSmVXdGI5MTlXT3VTdw?oc=5",
+      "publishedAt": "2026-05-07T17:19:49.000Z",
+      "summary": "Fashion and retail teams are testing AI as part of product discovery and customer decision-making.",
+      "whyItMatters": "This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.",
+      "category": "fashion",
+      "categories": [
+        "fashion",
+        "beauty",
+        "commerce"
+      ],
+      "score": 61
+    },
+    {
+      "id": "s2jwe0",
+      "sourceId": "review_agentic_commerce_market_scan",
+      "sourceName": "Agentic Commerce Market Scan",
+      "sourceOutlet": "The Information",
+      "scanLabel": "Agentic Commerce Market Scan",
+      "topicCluster": "Meta / Instagram / Hatch shopping agents",
+      "title": "Meta Is Building an AI Agent Called ‘Hatch’ and an AI Shopping Tool",
+      "headline": "Meta Is Building an AI Agent Called ‘Hatch’ and an AI Shopping Tool.",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOdXJOZGRuT2Z1ZUtPMWtxRjhTSXE5cDIwV3p2cUxlN19RMFZmdzg2M2RycVBuU3VPUGdwWmh3UXZsbVh1WkdBelExeDl6cFJNQk5yZTlUTWJrNXZVZkpjdm42akdfY2pOV0pra0VhNW14eUxqT0FzdVNUSE1TenNIcUFCN21wbjhDZHpfbTZmSllHbEROZEREZg?oc=5",
+      "publishedAt": "2026-05-05T23:51:00.000Z",
+      "summary": "This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.",
+      "whyItMatters": "This matters because social platforms can shift shopping discovery before shoppers reach a brand site.",
+      "category": "agentic_commerce",
+      "categories": [
+        "agentic_commerce",
+        "ecommerce",
+        "shopping"
+      ],
+      "score": 74
+    },
+    {
       "id": "gwrmgn",
       "sourceId": "review_ai_fashion_beauty_market_scan",
       "sourceName": "AI Fashion and Beauty Market Scan",
+      "sourceOutlet": "Technology Magazine",
+      "scanLabel": "AI Fashion and Beauty Market Scan",
+      "topicCluster": "Google Cloud / virtual try-on",
       "title": "Google Cloud Virtual Try-On Revolutionises Luxury Fashion",
       "headline": "Google Cloud Virtual Try-On Revolutionises Luxury Fashion.",
       "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOcnkwS19EWERrOUZ1VXlrUUhZRlpUcGJfcl85UjhZVFBNeG1CQzhUSWp6eWI1a2NaWERMOFdCUWFWeHFRVThzS1ptY3ZWQV93OXFvdFYzVFpUSEtIdWRqbWNrUWVTb1NNQ3d0dk9BY3FrUkR3M3ZDS19lVWt6NDlBZXpZamtRQXpfSTlNX2pha0swV1I1REo0?oc=5",
       "publishedAt": "2026-05-07T14:58:31.000Z",
-      "summary": "Virtual try-on is becoming a more visible AI layer for fashion and beauty discovery.",
+      "summary": "This item points to virtual try-on becoming part of how shoppers evaluate luxury products before purchase.",
       "whyItMatters": "This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.",
       "category": "fashion",
       "categories": [
@@ -216,42 +277,6 @@
         "commerce"
       ],
       "score": 66
-    },
-    {
-      "id": "z4cnld",
-      "sourceId": "review_ai_fashion_beauty_market_scan",
-      "sourceName": "AI Fashion and Beauty Market Scan",
-      "title": "OTB Group & Google Cloud launch AI-powered virtual try-on experiences",
-      "headline": "OTB Group & Google Cloud launch AI-powered virtual try-on experiences.",
-      "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQVXl1Nzl3bmt3MmlTNElSZ0NIWjJrVXd6UnpEcm43alhObVB0em1DYVphcUx5bnVHQVd4Zm5OZUhwWjFSRFJBZ0NSaHN0d2dndzJsaTlyendBLWMtUE5kSHZoVHhwVnFUWUk0RDBqNlRXckVlNGNxVzZ6T0lBb0RhVkthRmwza1ZZNGR0Tzd2OEl2NXIzYXZfQmJWYlJaS29QSkZvVGlUSWVGX3oza3hGNDN2QnBBbmdEUDJvaDA3MmFhZ3RaVW1NZmVRczRHQlVFcm0wVEMyUVR5SzdLbWpsTGdqemtmZw?oc=5",
-      "publishedAt": "2026-05-07T19:14:30.000Z",
-      "summary": "Virtual try-on is becoming a more visible AI layer for fashion and beauty discovery.",
-      "whyItMatters": "This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.",
-      "category": "fashion",
-      "categories": [
-        "fashion",
-        "beauty",
-        "commerce"
-      ],
-      "score": 62
-    },
-    {
-      "id": "1jj7x3l",
-      "sourceId": "review_platform_ai_shopping_market_scan",
-      "sourceName": "Platform AI Shopping Market Scan",
-      "title": "Meta wants an AI agent to go Instagram shopping for you and pull the whole agent stunt",
-      "headline": "Meta wants an AI agent to go Instagram shopping for you and pull the whole agent stunt.",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPX3hha1d5RGJaaTVQZEYyNE94Q2tWaFNwSHRQalBvMURtc2hITWMzY19QRzhBMUtLNmp3M0pzVU1DSE1iNDNnMUItcTdfOUMwNkJSTDYwbkI4SUVWeVBlYzI0Z2lyM0pHZmlGQ1NqeWF0NWFsY0ZmSEd0bk5DNzJXNWlGczBvanZ4LTJEZlZyRldsTFdhSFVyMEFxTmNNLWpWWXFUYmZuZ01OcnlXOS1jVzJGeUJMZ2JZS29qQ0VLT0pwOE9xRUE?oc=5",
-      "publishedAt": "2026-05-08T13:20:59.000Z",
-      "summary": "This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.",
-      "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
-      "category": "shopping",
-      "categories": [
-        "shopping",
-        "platform",
-        "ecommerce"
-      ],
-      "score": 56
     }
   ],
   "send": {

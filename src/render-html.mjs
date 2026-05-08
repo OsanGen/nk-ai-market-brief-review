@@ -47,7 +47,7 @@ export function renderHtml({ stories, generatedAt }) {
 
 function renderLead(story) {
   return `<section class="lead">
-  <p class="meta">${escapeHtml(meta(story))}</p>
+  <p class="meta">${meta(story)}</p>
   <h2>${escapeHtml(story.headline)}</h2>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
@@ -62,7 +62,7 @@ function renderCards(stories) {
 
 function renderCard(story) {
   return `<article class="card">
-  <p class="meta">${escapeHtml(meta(story))}</p>
+  <p class="meta">${meta(story)}</p>
   <h3>${escapeHtml(story.headline)}</h3>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
@@ -76,7 +76,10 @@ function readLink(story) {
 }
 
 function meta(story) {
-  return `${story.sourceName} | ${story.category ?? "market"} | ${formatDate(story.publishedAt)}`;
+  const source = story.sourceOutlet || story.sourceName || "source unavailable";
+  const scan = story.scanLabel || (story.sourceOutlet ? story.sourceName : "");
+  const scanText = scan ? ` | Scan: ${escapeHtml(scan)}` : "";
+  return `Source: ${escapeHtml(source)} | Category: ${escapeHtml(story.category ?? "market")}${scanText} | Date: ${escapeHtml(formatDate(story.publishedAt))}`;
 }
 
 function formatDate(value) {

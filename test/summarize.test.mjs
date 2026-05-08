@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { cleanTitle, summarizeItem } from "../src/summarize.mjs";
+import { cleanTitle, summarizeItem, summarizeItems } from "../src/summarize.mjs";
 
 test("Title suffix cleanup removes common source suffixes", () => {
   assert.equal(cleanTitle("Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers - glossy.co", "Glossy AI Fashion and Beauty"), "Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers");
@@ -35,3 +35,28 @@ test("Why-it-matters copy is business-facing", () => {
   assert.doesNotMatch(story.whyItMatters, /metadata matched|filters/i);
   assert.match(story.whyItMatters, /catalog readiness|AI-assisted shopping/);
 });
+
+test("Issue summaries and why-it-matters avoid repeating the same sentence more than twice", () => {
+  const stories = summarizeItems(Array.from({ length: 5 }, (_, index) => ({
+    id: `agentic-${index}`,
+    title: `Agentic commerce AI shopping signal ${index + 1}`,
+    summary: `Agentic commerce AI shopping signal ${index + 1}`,
+    sourceName: "Agentic Commerce Market Scan",
+    sourceOutlet: "Example Outlet",
+    categories: ["agentic_commerce"],
+    url: `https://example.com/${index}`,
+    publishedAt: "2026-05-08T12:00:00.000Z"
+  })));
+  const summaryCounts = countSentences(stories.map((story) => story.summary));
+  const whyCounts = countSentences(stories.map((story) => story.whyItMatters));
+
+  assert.equal(Math.max(...Object.values(summaryCounts)), 2);
+  assert.equal(Math.max(...Object.values(whyCounts)), 2);
+});
+
+function countSentences(values) {
+  return values.reduce((counts, value) => {
+    counts[value] = (counts[value] ?? 0) + 1;
+    return counts;
+  }, {});
+}

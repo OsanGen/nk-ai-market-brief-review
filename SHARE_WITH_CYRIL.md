@@ -36,7 +36,7 @@ Live review page:
 https://osangen.github.io/nk-ai-market-brief-review/
 ```
 
-Site-only repo:
+Live review repo:
 
 ```text
 https://github.com/OsanGen/nk-ai-market-brief-review
@@ -88,25 +88,21 @@ Email is intentionally disabled until preview approval and recipient confirmatio
 
 Hi Cyril,
 
-I have the first review page for the NK AI Market Brief MVP ready.
-
-It is currently running in preview mode, with email intentionally disabled.
+I have the first live review page for the NK AI Market Brief MVP working.
 
 Review link:
-https://osangen.github.io/nk-ai-market-brief-review/
+[insert GitHub Pages link]
 
-What it shows:
-- AI + fashion
-- AI + beauty
-- AI + e-commerce
-- agentic commerce
-- AI shopping and brand/platform AI-agent moves
+What is working:
+- Live static review page
+- AI + fashion, beauty, e-commerce, AI shopping, and agentic commerce signals
+- One lead story plus a simple story grid
+- Source scanning across Vogue Business, Business of Fashion, Glossy, BeautyMatter, Retail TouchPoints, Shopify, OpenAI, Google Shopping, and brand watchlist queries
+- Email disabled by default
+- GitHub Actions auto-refresh configured for weekdays around 8 a.m. Eastern
+- GitHub Actions artifact fallback if Pages is not enabled
 
-It excludes generic fashion, generic e-commerce, and generic AI news.
-
-The page is static and free to host through GitHub Pages. Once the source set looks right, we can either keep this as the review link or enable email delivery for the internal recipient list.
-
-Please confirm:
-1. Source set is right for v1.
-2. Any domains you want added.
-3. Whether you want this as a page only or also emailed at 8 a.m. weekdays.
+This is still v1, so I’m tuning source diversity and summaries. Please confirm:
+1. Whether this source set is right for v1.
+2. Any domains or URLs you want added.
+3. Whether you want this kept as a live review page only or also emailed to the internal list.

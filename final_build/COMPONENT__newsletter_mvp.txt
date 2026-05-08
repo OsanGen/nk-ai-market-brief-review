@@ -47,6 +47,9 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `site/index.html` is a static review page, while `.newsletter-outbox/YYYY-MM-DD/newsletter.html` remains the email-style newsletter HTML.
 - Review readiness is recorded in `site/run.json`; `npm run check:deploy` fails when `reviewReady` is false unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
 - Automation readiness is recorded in `site/run.json`; `npm run check:deploy` fails when scheduled refresh or workflow-backed Pages support is missing.
+- Review story selection uses `src/story-diversity.mjs` to avoid over-representing repeated clusters such as Meta shopping agents, Google virtual try-on, OpenAI commerce, Shopify catalog/storefronts, beauty AI discovery, fashion AI discovery, and agentic commerce platform race. It does not drop valid items below the minimum review threshold only for diversity.
+- Normalized stories carry both the actual RSS outlet source and the configured scan label. Renderers show the outlet as `Source` and the query family as `Scan` so configured scans are not mistaken for publications.
+- Deterministic summary copy avoids repeating the same summary or why-it-matters sentence more than twice in one issue and keeps implementation-language filter explanations out of client-facing output.
 
 ## Dependencies
 
@@ -65,3 +68,4 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `NEWSLETTER_SEND_ENABLED=true npm run send || true`
 - `gh workflow run newsletter.yml -f mode=preview --ref main`
 - `env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true`
+- Unsafe-output grep has no matches for secrets, scripts, event handlers, `javascript:` URLs, `metadata matched`, or `matched filters`.

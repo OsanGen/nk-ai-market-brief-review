@@ -32,6 +32,18 @@ test("Generic retail story is excluded when AI is not actually present", () => {
   assert.equal(evaluateItem(item("Retail growth playbook gets more human", "", ["retail"]), now).include, false);
 });
 
+test("Generic market-growth wire stories are excluded even with AI terms", () => {
+  const result = evaluateItem(
+    item(
+      "Emerging Growth Trends Driving Expansion in the AI Beauty and Cosmetics Market - openPR.com",
+      "AI beauty market forecast and compound annual growth rate update"
+    ),
+    now
+  );
+  assert.equal(result.include, false);
+  assert.equal(result.reason, "blocked_market_noise");
+});
+
 test("OpenAI platform name alone does not satisfy AI plus commerce relevance", () => {
   assert.equal(evaluateItem(item("OpenAI developer model documentation update", "", ["agentic_commerce", "platform"]), now).include, false);
 });

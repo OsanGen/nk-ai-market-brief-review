@@ -45,6 +45,8 @@ If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `si
 
 The default workflow sets `NEWSLETTER_SEND_ENABLED=false`. Email cannot send from scheduled refresh by default.
 
+The final shareable review page still records send state in `site/run.json` and the lower Automation status section, but no workflow or local preview run sends email unless the explicit send gates are configured outside the default preview path.
+
 ## Acceptance Checks
 
 - `npm install`
@@ -55,6 +57,8 @@ The default workflow sets `NEWSLETTER_SEND_ENABLED=false`. Email cannot send fro
 - `site/run.json` has `automationConfigured: true`
 - `site/run.json` has `manualPushRequiredAfterSetup: false`
 - Workflow has manual dispatch, both cron entries, artifact upload, Pages upload/deploy, and Pages permissions.
+- `site/index.html` shows Automation status below the selected signals and technical diagnostics.
+- GitHub Pages deploy support remains gated by `DEPLOY_GITHUB_PAGES=true`; artifact upload remains available independently.
 
 ## Remaining Setup Steps
 

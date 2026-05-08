@@ -13,6 +13,7 @@ import { renderReviewPage } from "./render-review-page.mjs";
 import { renderText } from "./render-text.mjs";
 import { reviewStatus } from "./review-status.mjs";
 import { sendNewsletter } from "./send-resend.mjs";
+import { selectDiverseItems } from "./story-diversity.mjs";
 import { shouldRunScheduledSend } from "./time-guard.mjs";
 
 export async function runNewsletter({ mode = "preview", now = new Date(), force = false } = {}) {
@@ -95,29 +96,7 @@ export async function runNewsletter({ mode = "preview", now = new Date(), force 
 
 function selectItemsForMode(items, maxItems, mode) {
   if (mode !== "preview") return items.slice(0, maxItems);
-
-  const selected = [];
-  const sourceCounts = new Map();
-  const categoryCounts = new Map();
-
-  for (const item of items) {
-    const source = item.sourceName ?? item.sourceId ?? "source";
-    const category = item.categories?.[0] ?? "market";
-    if ((sourceCounts.get(source) ?? 0) >= 3) continue;
-    if ((categoryCounts.get(category) ?? 0) >= 4) continue;
-    selected.push(item);
-    sourceCounts.set(source, (sourceCounts.get(source) ?? 0) + 1);
-    categoryCounts.set(category, (categoryCounts.get(category) ?? 0) + 1);
-    if (selected.length >= maxItems) return selected;
-  }
-
-  for (const item of items) {
-    if (selected.includes(item)) continue;
-    selected.push(item);
-    if (selected.length >= maxItems) return selected;
-  }
-
-  return selected;
+  return selectDiverseItems(items, maxItems);
 }
 
 function publicConfig(config) {
@@ -141,6 +120,9 @@ function publicStory(story) {
     id: story.id,
     sourceId: story.sourceId,
     sourceName: story.sourceName,
+    sourceOutlet: story.sourceOutlet,
+    scanLabel: story.scanLabel,
+    topicCluster: story.topicCluster,
     title: story.title,
     headline: story.headline,
     url: story.url,

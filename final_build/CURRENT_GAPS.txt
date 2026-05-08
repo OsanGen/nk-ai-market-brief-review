@@ -1,6 +1,8 @@
 - email | deferred | Keep real email disabled until internal recipients, verified sender, Resend API key, and explicit preview approval are provided.
-- pages | enabled | Public Pages repo is configured with Pages build type `workflow`, `DEPLOY_GITHUB_PAGES=true`, and the live URL `https://osangen.github.io/nk-ai-market-brief-review/` was refreshed by workflow run `25572283316`.
-- auto-refresh | enabled | Public Pages repo now contains the no-secret app and scheduled workflow; manual workflow run passed with artifact upload and Pages deploy.
-- source-yield | monitor | Review mode now uses a 168-hour lookback and supplemental market-scan RSS queries to show 6-8 qualifying signals; scheduled daily mode remains strict with 36-hour and Monday 84-hour lookbacks.
+- pages | enabled | Public Pages repo is configured with Pages build type `workflow`, `DEPLOY_GITHUB_PAGES=true`, and the live URL `https://osangen.github.io/nk-ai-market-brief-review/` is the Cyril review target.
+- auto-refresh | enabled | Public Pages repo contains the no-secret app and scheduled workflow; manual workflow runs deploy artifacts and Pages when `DEPLOY_GITHUB_PAGES=true`.
+- story-diversity | ready | Review output now caps repeated topic clusters at two when enough qualifying items exist; monitor future feed runs for excessive same-topic repeats.
+- source-labels | ready | Cards now distinguish actual outlet source from the configured scan label so source labels do not look synthetic.
+- copy-polish | ready | Summaries and why-it-matters copy use deterministic variants and no implementation-language filter explanations.
 - github-actions | watch | Manual preview workflow passed after push; monitor GitHub action runtime deprecation warnings before Node 20-backed actions are removed from hosted runners.
-- cyril-review | ready | Share `SHARE_WITH_CYRIL.md` and the GitHub Pages link; ask Cyril to confirm recipients plus source URLs/domains to add or prioritize.
+- cyril-review | ready | Share `SHARE_WITH_CYRIL.md` and the GitHub Pages link; ask Cyril to confirm source set, added domains, and page-only vs email delivery.

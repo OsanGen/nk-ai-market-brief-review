@@ -97,6 +97,15 @@ const EXCLUDE_UNLESS_AI_CENTRAL = [
   "market is going to boom",
   "market is going to booming"
 ];
+const HARD_EXCLUDE_TERMS = [
+  "openpr.com",
+  "market size",
+  "market share",
+  "market growth",
+  "market forecast",
+  "emerging growth trends",
+  "compound annual growth"
+];
 
 export function filterAndScoreItems(items, options = {}) {
   const accepted = [];
@@ -129,6 +138,7 @@ export function evaluateItem(item, now = new Date(), lookbackHours = 36) {
   const title = normalize(item.title);
   const summary = normalize(item.summary);
   const combined = `${title} ${summary}`;
+  if (containsAny(combined, HARD_EXCLUDE_TERMS)) return reject("blocked_market_noise");
   const highPriorityTitle = countMatches(title, HIGH_PRIORITY_PHRASES);
   const highPrioritySummary = countMatches(summary, HIGH_PRIORITY_PHRASES);
   const contextualPriorityTitle = countMatches(title, CONTEXTUAL_HIGH_PRIORITY_PHRASES);

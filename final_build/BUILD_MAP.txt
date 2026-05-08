@@ -10,14 +10,15 @@ This repo is a standalone Node 20 ESM app for the free NK AI Market Brief MVP.
 - Source loading: `src/sources.mjs` validates the source registry and ignores disabled sources.
 - Google News RSS: `src/google-news.mjs` builds query feed URLs.
 - Feed fetching: `src/fetch-feeds.mjs` uses `rss-parser`, built-in `fetch`, and per-source timeout/error capture.
-- Normalization: `src/normalize.mjs` strips RSS HTML from summaries and produces stable item metadata.
+- Normalization: `src/normalize.mjs` strips RSS HTML from summaries, extracts the actual RSS outlet when available, and produces stable item metadata.
 - Filtering/scoring: `src/filter-score.mjs` enforces AI-plus-market inclusion from story title/summary text, uses word/phrase-boundary term matching, and scores by priority phrases, title/summary matches, source weight, and recency.
 - Dedupe: `src/dedupe.mjs` removes tracking-param URL duplicates and near-identical title duplicates.
-- Summaries: `src/summarize.mjs` creates deterministic summary fields from RSS title/summary only.
+- Story diversity: `src/story-diversity.mjs` selects the top review stories while limiting repeated topic clusters to two when enough qualifying items exist and preferring source/category diversity for close scores.
+- Summaries: `src/summarize.mjs` creates deterministic summary fields from RSS title/summary only, cleans outlet suffixes, and rotates safe business-facing sentence variants so repeated issue copy is limited.
 - Automation status: `src/automation-status.mjs` inspects `.github/workflows/newsletter.yml` and records workflow, schedule, Pages, artifact, and manual-push status in run output.
 - Rendering: `src/render-html.mjs` and `src/render-text.mjs` create escaped HTML/text newsletter outputs.
 - Review status: `src/review-status.mjs` marks review readiness and limited-yield states from selected item counts.
-- Review page: `src/render-review-page.mjs` creates the static `site/index.html` review page with noindex metadata, status badges, review status, selected-signal label, lead story, story grid when available, compact diagnostics, source health details, and `newsletter.txt` link.
+- Review page: `src/render-review-page.mjs` creates the static `site/index.html` review page with noindex metadata, status badges, review status, selected-signal label, lead story, story grid when available, actual source outlet labels, scan labels, secondary technical diagnostics, source fetch status, automation status, and `newsletter.txt` link.
 - Send gate: `src/send-resend.mjs` keeps email off by default, validates comma-separated recipients after config parsing, requires minimum item count, and uses Resend HTTP API only when all gates pass.
 - Time guard: `src/time-guard.mjs` allows scheduled send only at 8 a.m. America/New_York on weekdays.
 - Orchestrator: `src/run-newsletter.mjs` runs the full pipeline, writes `.newsletter-outbox/YYYY-MM-DD/`, and writes the static review site.
@@ -27,4 +28,4 @@ This repo is a standalone Node 20 ESM app for the free NK AI Market Brief MVP.
 
 ## Data Flow
 
-Sources -> Google News RSS URL -> RSS fetch/parse -> normalized metadata -> filter/score -> dedupe -> deterministic story summaries -> review-readiness and automation-status calculation -> email HTML/text render plus review-page render with event/protocol neutralization -> dated outbox + static review site -> deploy check enforcing `reviewReady` and scheduled automation -> artifact upload and optional GitHub Pages -> optional gated Resend email with idempotency header only outside default workflow.
+Sources -> Google News RSS URL -> RSS fetch/parse -> normalized metadata with outlet source -> filter/score -> dedupe -> story-diversity selection -> deterministic story summaries -> review-readiness and automation-status calculation -> email HTML/text render plus review-page render with event/protocol neutralization -> dated outbox + static review site -> deploy check enforcing `reviewReady` and scheduled automation -> artifact upload and optional GitHub Pages -> optional gated Resend email with idempotency header only outside default workflow.

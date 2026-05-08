@@ -31,6 +31,8 @@ The page is shareable only when `site/run.json` has `"reviewReady": true`. Revie
 
 The page includes a lower Automation status section showing scheduled refresh, GitHub Pages support, artifact fallback, and email-disabled status.
 
+The selected-signal area prioritizes the market brief content. Each story card shows the actual RSS outlet as `Source`, the primary category, the configured source-query family as `Scan`, date when available, a deterministic summary, business-facing why-it-matters copy, and a `Read source` link. The renderer keeps Technical diagnostics, Source fetch status, and Automation status visually secondary and below the story content.
+
 ## Artifact Fallback
 
 If Pages is unavailable, reviewers can use the latest GitHub Actions artifact:
@@ -45,6 +47,8 @@ If Pages is unavailable, reviewers can use the latest GitHub Actions artifact:
 - Never render raw RSS HTML.
 - Never expose secrets, recipients, API keys, or local-only environment values.
 - Email remains disabled by default.
+- Do not show an empty story grid as ready; if there are too few additional qualifying stories, show source/filter tuning language instead.
+- Do not expose implementation-language filter explanations such as `metadata matched` or `matched filters`.
 
 ## Acceptance Checks
 
@@ -54,4 +58,7 @@ If Pages is unavailable, reviewers can use the latest GitHub Actions artifact:
 - `site/index.html` includes `NK AI Market Brief`, `Internal review`, `Email disabled`, `newsletter.txt`, and noindex metadata.
 - `site/run.json` includes `reviewReady: true`, `minReviewItems`, `candidateItemCount`, `selectedItemCount`, `sourceErrorCount`, and `sendStatus`.
 - `site/run.json` includes `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `manualPushRequiredAfterSetup: false`.
+- Review output selects at least five stories when enough qualifying feed items exist and limits repeated topic clusters to two.
+- Story labels visibly distinguish `Source` from `Scan`.
+- Technical diagnostics, source fetch status, and automation status remain present but visually secondary.
 - Unsafe-output grep has no matches for secrets, scripts, event handlers, or `javascript:` links.

@@ -3,6 +3,7 @@ export function normalizeFeedItem(item, source) {
   const url = safeUrl(item.link ?? item.guid ?? "");
   const publishedAt = normalizeDate(item.isoDate ?? item.pubDate ?? item.date);
   const summary = stripTags(item.contentSnippet ?? item.summary ?? item.content ?? item.description ?? "");
+  const sourceOutlet = normalizeSourceOutlet(item.source);
 
   return {
     id: hash(`${source.id}|${url}|${title}|${publishedAt}`),
@@ -13,6 +14,7 @@ export function normalizeFeedItem(item, source) {
     url,
     publishedAt,
     summary,
+    sourceOutlet,
     sourceHomepageUrl: source.homepageUrl,
     categories: source.categories,
     raw: {
@@ -22,6 +24,13 @@ export function normalizeFeedItem(item, source) {
       source: item.source ?? ""
     }
   };
+}
+
+function normalizeSourceOutlet(value) {
+  if (!value) return "";
+  if (typeof value === "string") return stripTags(value);
+  if (typeof value === "object") return stripTags(value.title || value.name || value._ || "");
+  return "";
 }
 
 export function stripTags(value = "") {

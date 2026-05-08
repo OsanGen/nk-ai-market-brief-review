@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-05-08T16:28:41.131Z",
+  "mode": "preview",
+  "skipped": false,
+  "outputDir": ".newsletter-outbox/2026-05-08",
+  "siteDir": "site",
+  "config": {
+    "timezone": "America/New_York",
+    "targetHourLocal": 8,
+    "maxItems": 8,
+    "minItems": 3,
+    "lookbackHours": 36,
+    "mondayLookbackHours": 84,
+    "outputDir": ".newsletter-outbox",
+    "emailEnabled": false
+  },
+  "sourceCount": 9,
+  "sourceResults": [
+    {
+      "sourceId": "vogue_business_ai",
+      "sourceName": "Vogue Business AI",
+      "status": "ok",
+      "itemCount": 2
+    },
+    {
+      "sourceId": "business_of_fashion_ai",
+      "sourceName": "Business of Fashion AI",
+      "status": "ok",
+      "itemCount": 1
+    },
+    {
+      "sourceId": "glossy_ai_fashion_beauty",
+      "sourceName": "Glossy AI Fashion and Beauty",
+      "status": "ok",
+      "itemCount": 100
+    },
+    {
+      "sourceId": "beautymatter_ai",
+      "sourceName": "BeautyMatter AI",
+      "status": "ok",
+      "itemCount": 100
+    },
+    {
+      "sourceId": "retail_touchpoints_ai_shopping",
+      "sourceName": "Retail TouchPoints AI Shopping",
+      "status": "ok",
+      "itemCount": 100
+    },
+    {
+      "sourceId": "shopify_agentic_commerce",
+      "sourceName": "Shopify Agentic Commerce",
+      "status": "ok",
+      "itemCount": 66
+    },
+    {
+      "sourceId": "openai_commerce",
+      "sourceName": "OpenAI Commerce",
+      "status": "ok",
+      "itemCount": 100
+    },
+    {
+      "sourceId": "google_shopping_ai",
+      "sourceName": "Google Shopping AI",
+      "status": "ok",
+      "itemCount": 76
+    },
+    {
+      "sourceId": "brand_watchlist_ai_agents",
+      "sourceName": "Brand Watchlist AI Agents",
+      "status": "ok",
+      "itemCount": 75
+    }
+  ],
+  "sourceErrors": [],
+  "fetchedItemCount": 620,
+  "acceptedItemCount": 1,
+  "rejectedItemCount": 619,
+  "itemCount": 1,
+  "rejectedReasonCounts": {
+    "outside_lookback": 612,
+    "not_relevant": 7
+  },
+  "stories": [
+    {
+      "id": "4x2uaq",
+      "sourceId": "glossy_ai_fashion_beauty",
+      "sourceName": "Glossy AI Fashion and Beauty",
+      "title": "Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers - glossy.co",
+      "headline": "Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers - glossy.co.",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQcWs2SGJ0N1RuY1BQamVRQzFJMlNYcktsNWlBM09teEhMY21ubk41VTU5eDdWaTRMdzRUeW5TN0N0TEpJMmhJdjZranJncXlUY0thVS1NbnAxX0FYN2dvLUhldXhsQ1F1TVhkaHlUR2l5SEtMS0hwdHpnNnZXaVp3SW5QUmRkYVlNbUR6dms0VE44bEw5TEJzS29LUFZubnhoVWtFWUYyalpJMU1h?oc=5",
+      "publishedAt": "2026-05-08T09:29:09.000Z",
+      "summary": "Luxury Briefing: Pinterest’s luxury pitch is AI discovery, not AI answers glossy.co.",
+      "whyItMatters": "This belongs in the brief because the RSS metadata matched fashion and AI-commerce relevance filters.",
+      "category": "fashion",
+      "categories": [
+        "fashion",
+        "beauty",
+        "luxury",
+        "commerce"
+      ],
+      "score": 48
+    }
+  ],
+  "send": {
+    "sent": false,
+    "messageId": "",
+    "skippedReason": "send_disabled"
+  }
+}

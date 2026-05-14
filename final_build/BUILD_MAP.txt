@@ -22,10 +22,10 @@ This repo is a standalone Node 20 ESM app for the free NK AI Market Brief MVP.
 - Send gate: `src/send-resend.mjs` keeps email off by default, validates comma-separated recipients after config parsing, requires minimum item count, and uses Resend HTTP API only when all gates pass.
 - Time guard: `src/time-guard.mjs` allows scheduled send only at 8 a.m. America/New_York on weekdays.
 - Orchestrator: `src/run-newsletter.mjs` runs the full pipeline, writes `.newsletter-outbox/YYYY-MM-DD/`, and writes the static review site.
-- Scripts: `scripts/*.mjs` expose preview, send, build, and deploy checks.
+- Scripts: `scripts/*.mjs` expose preview, daily public refresh, send, build, and deploy checks.
 - Share handoff: `SHARE_WITH_CYRIL.md` documents local preview, Actions artifact fallback, Pages enablement, expected live link, and copy/paste review message.
-- Auto refresh and deploy: `.github/workflows/newsletter.yml` runs manual dispatch plus weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`, runs `npm ci`, tests, build, deploy check, artifact upload, and optional Pages deploy gated by `DEPLOY_GITHUB_PAGES=true`.
+- Auto refresh and deploy: `.github/workflows/newsletter.yml` runs manual dispatch plus weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`, runs `npm ci`, tests, daily public output for `auto` mode, deploy checks with mode/lookback guards, artifact upload, and optional Pages deploy gated by `DEPLOY_GITHUB_PAGES=true`.
 
 ## Data Flow
 
-Sources -> Google News RSS URL -> RSS fetch/parse -> normalized metadata with outlet source -> filter/score -> dedupe -> story-diversity selection -> deterministic story summaries -> review-readiness and automation-status calculation -> email HTML/text render plus review-page render with event/protocol neutralization -> dated outbox + static review site -> deploy check enforcing `reviewReady` and scheduled automation -> artifact upload and optional GitHub Pages -> optional gated Resend email with idempotency header only outside default workflow.
+Sources -> Google News RSS URL -> RSS fetch/parse -> normalized metadata with outlet source -> filter/score -> dedupe -> story-diversity selection in preview mode or top-score selection in daily auto mode -> deterministic story summaries -> review-readiness and automation-status calculation -> email HTML/text render plus review-page render with event/protocol neutralization -> dated outbox + static review site -> deploy check enforcing `reviewReady`, scheduled automation, and expected daily mode/lookback when configured -> artifact upload and optional GitHub Pages -> optional gated Resend email outside the default public daily workflow.

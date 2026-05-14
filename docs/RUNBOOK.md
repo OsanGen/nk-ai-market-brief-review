@@ -11,7 +11,16 @@ Open `site/index.html` or the dated HTML file under `.newsletter-outbox/`.
 
 For Cyril/Faneeza/Norma review, use `site/index.html` as the shareable review page and `SHARE_WITH_CYRIL.md` for the handoff note.
 
-Preview/build mode uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` and defaults to 168 hours so the review page can show a representative set of current qualifying signals. Scheduled `auto` mode keeps the tighter daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
+Preview/build mode uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` and defaults to 168 hours so the review page can show a representative set of current qualifying signals.
+
+For the public daily refresh path, use:
+
+```bash
+npm run daily
+NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+```
+
+`npm run daily` forces `auto` mode so delayed GitHub scheduled runs still publish a fresh page, but it keeps sending disabled and uses the tighter daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
 
 ## Build
 
@@ -19,6 +28,8 @@ Preview/build mode uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` and defaults to 168 h
 npm run build
 npm run check:deploy
 ```
+
+`npm run build` is intentionally review-oriented and writes `mode: "preview"` with the wider review lookback. Do not use it as the final public scheduled output.
 
 ## Automatic Refresh
 
@@ -28,6 +39,14 @@ The GitHub Actions workflow runs from the default branch on weekdays at:
 - `17 13 * * 1-5`
 
 Those UTC runs bracket 8 a.m. America/New_York across daylight saving time. Manual `workflow_dispatch` remains available for test runs.
+
+Scheduled workflow runs execute `npm run daily` and then enforce:
+
+```bash
+NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+```
+
+This prevents a preview-mode, 168-hour review page from being deployed as the daily public page.
 
 After setup, no manual push is needed for normal refreshes. To publish the live page automatically, configure repository Settings -> Pages -> Source: GitHub Actions, then set repository variable `DEPLOY_GITHUB_PAGES=true`. If that variable is false, the workflow still uploads `.newsletter-outbox` and `site` as the `nk-ai-market-brief` artifact.
 
@@ -47,7 +66,7 @@ Email is disabled by default. `npm run send` fails safely unless every gate is p
 - `NEWSLETTER_TO` with at least one valid comma-separated internal address
 - selected item count at least `NEWSLETTER_MIN_ITEMS`
 
-`npm run preview` never sends. `auto` mode only attempts send inside the weekday 8 a.m. America/New_York target window; without send secrets it writes artifacts and records a safe skipped send state.
+`npm run preview` never sends. `npm run daily` also keeps `NEWSLETTER_SEND_ENABLED=false` for public page generation. Explicit send remains isolated to `npm run send` and fails safely unless every gate is configured.
 
 Do not log secrets. Do not hard-code recipients. Keep the recipient list internal.
 
@@ -63,5 +82,6 @@ Expected result: nonzero send path, clear skipped reason such as `missing_resend
 
 - If one RSS source fails, the run continues and records the source error in `run.json`.
 - If no qualifying items are found, static files are still generated.
+- If the public page looks stale, check `site/run.json` or the live `run.json` first. Scheduled public output should show `"mode": "auto"` and `config.activeLookbackHours` of `36` on normal weekdays or `84` on Mondays.
 - If `site/run.json` has `"reviewReady": false`, do not share the live review page until sources or filters are tuned. For local debugging only, `ALLOW_NOT_READY_REVIEW=true npm run check:deploy` bypasses this guard.
 - If `check:deploy` fails, confirm `site/index.html`, `site/newsletter.txt`, `site/run.json`, `.env.example`, workflow, and `FULL_TECH_BUILD.txt` exist.

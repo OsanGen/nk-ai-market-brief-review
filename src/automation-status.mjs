@@ -19,7 +19,7 @@ export async function getAutomationStatus(root = process.cwd()) {
 
   const scheduledRefreshConfigured = workflowFound && AUTOMATION_SCHEDULE.every((cron) => workflow.includes(`cron: "${cron}"`) || workflow.includes(`cron: '${cron}'`));
   const manualDispatchConfigured = workflowFound && workflow.includes("workflow_dispatch");
-  const ciConfigured = workflowFound && ["npm ci", "npm test", "npm run build", "npm run check:deploy"].every((command) => workflow.includes(command));
+  const ciConfigured = workflowFound && ["npm ci", "npm test", "npm run daily", "npm run check:deploy"].every((command) => workflow.includes(command));
   const artifactUploadConfigured = workflowFound && workflow.includes("actions/upload-artifact");
   const githubPagesDeployConfigured = workflowFound
     && workflow.includes("actions/upload-pages-artifact")

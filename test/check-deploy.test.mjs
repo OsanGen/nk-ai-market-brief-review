@@ -21,7 +21,9 @@ jobs:
     steps:
       - run: npm ci
       - run: npm test
+      - run: npm run daily
       - run: npm run build
+      - run: NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
       - run: npm run check:deploy
       - uses: actions/upload-artifact@v4
       - uses: actions/upload-pages-artifact@v3
@@ -110,3 +112,97 @@ test("check-deploy fails when scheduled cron entries are missing", async () => {
 
   await assert.rejects(checkDeploy(root), /Workflow missing cron/);
 });
+
+test("check-deploy passes expected daily auto output", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-daily-"));
+  await writeDeployFixture(root, {
+    run: {
+      mode: "auto",
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      config: { activeLookbackHours: 36 }
+    }
+  });
+
+  await withEnv({
+    NEWSLETTER_EXPECT_MODE: "auto",
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84"
+  }, async () => {
+    await assert.doesNotReject(checkDeploy(root));
+  });
+});
+
+test("check-deploy fails when expected daily output is preview", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-preview-mode-"));
+  await writeDeployFixture(root, {
+    run: {
+      mode: "preview",
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      config: { activeLookbackHours: 168 }
+    }
+  });
+
+  await withEnv({
+    NEWSLETTER_EXPECT_MODE: "auto",
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84"
+  }, async () => {
+    await assert.rejects(checkDeploy(root), /Expected site\/run\.json mode auto, got preview/);
+  });
+});
+
+test("check-deploy fails when expected daily lookback is too wide", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-wide-lookback-"));
+  await writeDeployFixture(root, {
+    run: {
+      mode: "auto",
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      config: { activeLookbackHours: 168 }
+    }
+  });
+
+  await withEnv({
+    NEWSLETTER_EXPECT_MODE: "auto",
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84"
+  }, async () => {
+    await assert.rejects(checkDeploy(root), /active lookback 168 exceeds 84/);
+  });
+});
+
+async function writeDeployFixture(root, { run, workflowText = workflow }) {
+  await mkdir(path.join(root, "site"), { recursive: true });
+  await mkdir(path.join(root, ".github", "workflows"), { recursive: true });
+  await Promise.all([
+    writeFile(
+      path.join(root, "site", "index.html"),
+      '<!doctype html><title>NK AI Market Brief</title><body><p>Internal review</p><p>Email disabled</p><a href="newsletter.txt">newsletter.txt</a><a>Read source</a></body>',
+      "utf8"
+    ),
+    writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), `${JSON.stringify(run)}\n`, "utf8"),
+    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflowText, "utf8"),
+    writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
+    writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
+    writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")
+  ]);
+}
+
+async function withEnv(values, callback) {
+  const previous = {};
+  for (const [key, value] of Object.entries(values)) {
+    previous[key] = process.env[key];
+    process.env[key] = value;
+  }
+  try {
+    return await callback();
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+}

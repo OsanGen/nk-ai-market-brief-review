@@ -47,14 +47,19 @@ jobs:
           if [ "$MODE" = "send" ]; then
             npm run send
           elif [ "$MODE" = "auto" ]; then
-            node -e "import('./src/run-newsletter.mjs').then(m => m.runNewsletter({ mode: 'auto' })).then(r => console.log(JSON.stringify(r, null, 2))).catch(e => { console.error(e); process.exit(1); })"
+            npm run daily
           else
-            npm run preview
+            npm run build
           fi
 
-      - run: npm run build
-
-      - run: npm run check:deploy
+      - name: Check deploy output
+        run: |
+          MODE="${RUN_MODE:-auto}"
+          if [ "$MODE" = "auto" ]; then
+            NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+          else
+            npm run check:deploy
+          fi
 
       - uses: actions/upload-artifact@v4
         with:

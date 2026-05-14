@@ -1,86 +1,86 @@
 NK AI Market Brief
-Generated 2026-05-08T18:55:10.058Z
+Generated 2026-05-14T15:34:58.850Z
 
 AI, fashion, beauty, e-commerce, AI shopping, and agentic commerce signals.
 
 LEAD STORY
-Etsy and eBay expand AI shopping tools amid shift to agentic commerce.
-Source: MSN
-Category: agentic_commerce
-Scan: Agentic Commerce Market Scan
-Date: 2026-05-07
-Summary: This story points to AI shopping becoming a new discovery path before customers reach a brand site.
-Why it matters: This matters because agentic shopping channels can shift product discovery, checkout expectations, and catalog readiness.
-Read source: https://news.google.com/rss/articles/CBMivAFBVV95cUxOTjdVS1FUZ0NBam5qRVdOUXMzN2hmOGRVMVo3dzdFNGhrSEc5WFZhUkt4WThIc0EtcjJCRWY3T3N0NDlqWkpDLTlIUnNkbXpVaHJLbExsSGVRQnNmVktsZVFGc2hTNUZsSTc0NlBpUnRlZjJFV2tPUGVUTm9ZbzBiU3BZUTVFb1RHWk80aFB4THF1eVlMcGR0dlRDU3JYSGNfSlloSFQzT2RPY3QzME5jYzZMaXVjWU5rM0sydg?oc=5
-
-STORY 2
-Meta Develops Agentic AI Shopping Assistant for Instagram.
-Source: Glenbrook Partners
+Amazon Alexa AI Shopping Assistant In The Search Bar: What It Means For Shoppers And Brands.
+Source: ALM Corp
 Category: shopping
 Scan: Platform AI Shopping Market Scan
-Date: 2026-05-08
+Date: 2026-05-14
 Summary: This story shows AI assistants moving closer to the shopping interface on major platforms.
-Why it matters: This matters because social platforms can shift shopping discovery before shoppers reach a brand site.
-Read source: https://news.google.com/rss/articles/CBMimgFBVV95cUxNV1BGZXNRa2phSjR0OGRubzVaWHBrbWZxd3RRRnl6QmQ0WjhZV3hzTHNXX0lkS0hZbjZ3dVhpbmh5UHpBM3ZIMlRhc1R1OTFqMTM1WFNnckZKQThzUVpBS19pcjJmS1NkdHpadkJxUjdDRGU0cGdHemw1TWVhYnVQczVNdnktWTMxeDE1aDBoNkVrTGxvUmlaakNn?oc=5
+Why it matters: This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.
+Read source: https://news.google.com/rss/articles/CBMie0FVX3lxTE44aXN3RTgwc29taEFYNVNOeDBLNmtxdlhYelVINVVoRDR3cko1bXhhRzl6ZlFncHdTdk1xN2lhMmhiX1FERk4yTmM2UzhrUjYxTVRKU296UjNmTW1xdjljT1YzUjZZbVg2eXNmVEYzcFo5eFNjSlEwWFhBQQ?oc=5
 
-STORY 3
-Shop ’til you bot: Google, OpenAI, and the race to build agentic commerce.
-Source: Fast Company
+STORY 2
+Stellagent Launches Agentic Commerce Studio for AI Agent Shopping Readiness.
+Source: Yahoo Finance Singapore
 Category: agentic_commerce
 Scan: Agentic Commerce Market Scan
-Date: 2026-05-07
+Date: 2026-05-14
 Summary: This story points to AI shopping becoming a new discovery path before customers reach a brand site.
 Why it matters: This matters because agentic shopping channels can shift product discovery, checkout expectations, and catalog readiness.
-Read source: https://news.google.com/rss/articles/CBMiqgFBVV95cUxOdC1RMDNQMkJtU0tWLWZXWmNSWEJaVVMza2NQQnY2WGR4MkV6aGxOUGdGbG1oR0ZGbWp6YlRQZy01eWdOWnQ5SEhOSDNBdkE5SUpYaXBDQjBjTy1icUNOWUwxbkltakpsN0V2NDNuYnRWWHdYZTRIczh1dkFsaF83ZHZMaHJDc3VGR2ZxSF9WSHZ6OXg5cmFiR1g5amhKX25FTzk5U3RsTUJjdw?oc=5
+Read source: https://news.google.com/rss/articles/CBMilwFBVV95cUxQNWcyNUVUTGFJUjducEdZYmtLLV9VRFJ2R2FRektjZXVRS095dmlmREp0bkU1SDRrWlJOeWtlT01ZQXRpeEU2TVBQaEtqcWtwM1JucVdqaGxxaTVxRFM2eWE3V3NSakUyMDcwbWZQY1Y3VEpXRng3c3ZUQUt5VjUxWTA0bFBVZWlWR013QkJCOWRHTmh4cnlB?oc=5
+
+STORY 3
+Amazon's new AI shopping assistant automates purchases and personalizes recommendations.
+Source: NewsBytes
+Category: shopping
+Scan: Platform AI Shopping Market Scan
+Date: 2026-05-14
+Summary: This story shows AI assistants moving closer to the shopping interface on major platforms.
+Why it matters: This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.
+Read source: https://news.google.com/rss/articles/CBMixAFBVV95cUxPYTJGUUw1T3YyWjFPaUtRV1pnM3VyMnd6SE9hQzZZN2tFa3pfNlBGZlp3R1JzRlRNTUxFVDhXX3NlQVkza3lwX0o1NWhjRmN0VThfRXhLVF9BV1lZVkg3VzZPc3hjSnAyQVBMb21LQjFnMnNoQ0d2VVJIRzJRVFU2SnZLTzBaaEJtV2k4THJ6ZmFzMmlpeXV3aV9VWDhVUmptcWdmQzRyYWpHUmdnS0dETTlUZ1R5Q0FnVzdEZGZadV93RW5L?oc=5
 
 STORY 4
-OTB Group Brings Google Cloud Virtual Try-On to Luxury.
-Source: AI Magazine
-Category: fashion
-Scan: AI Fashion and Beauty Market Scan
-Date: 2026-05-08
-Summary: This item points to virtual try-on becoming part of how shoppers evaluate luxury products before purchase.
-Why it matters: This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.
-Read source: https://news.google.com/rss/articles/CBMiigFBVV95cUxPRmk5WjZKLTEtNWtBRUJqR3U0WGF0aHNlRFVrQUNUODlmbUJHSjlVNENKUmVrd0JzZVp6SXV2aXl6ek5QNl84VzUyXy1neDYweS1xd1lkYzFQQVljY2hlMkF1MkM2ZjFyLVF3MXFMc3FVaEZIa09iNmF0Ul9pYzFTR0doSnpoWG5pRnc?oc=5
+Amazon overhauls AI shopping, putting Alexa at core to integrate search, recommendations and ads.
+Source: 디지털투데이
+Category: agentic_commerce
+Scan: Agentic Commerce Market Scan
+Date: 2026-05-13
+Summary: This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.
+Why it matters: This matters because brands may need cleaner catalog data and product metadata for AI-mediated shopping.
+Read source: https://news.google.com/rss/articles/CBMixgFBVV95cUxQeUw0cWlLVUdiMVlENDhDXzB0X1d2MkFPdWVPYV9nbXR0V3hDc0ZoRWJUQlAySWE4ZHR0Q2FxZS1sQU14bGZqUDFCN01KXzFMRXNHQ2p5TEVHbFN0MmF3ajFFVjR4YkJiQl8xZEtzLUhpQmcxdnlVR2dIeUx3QmM2RHV4aXB2SHhnSmVTSktYWUo3V3N2aHRlREJ3aWxsM3VGTl9xMmNOQThHaUNhQUVZeWpjQ29tMU8wVlUxV3hFQ3N6QjRWOHc?oc=5
 
 STORY 5
-Shopify expects agentic commerce to lift ecommerce adoption.
-Source: eMarketer
+Amazon's search bar is now an AI shopping assistant that remembers your conversations.
+Source: Android Police
 Category: agentic_commerce
 Scan: Agentic Commerce Market Scan
-Date: 2026-05-06
-Summary: This story points to commerce platforms preparing product data for AI-assisted shopping.
+Date: 2026-05-13
+Summary: This story points to AI shopping becoming a discovery path before customers reach a brand site.
 Why it matters: This matters because brands may need cleaner catalog data and product metadata for AI-mediated shopping.
-Read source: https://news.google.com/rss/articles/CBMilAFBVV95cUxNY01hZ0YyWXBEMUhYR0thOGRaVTJDVy01RHl0dmpsVjlrVlVRMm5rRS1EZlUtWFVrVzczWEZYYTYxMzlQUGdHNTVJTXBNNnJMUHRfa1ZadjJ0VDRSWk9qMVJuV2VlTE5wVTAwdDB1M3lrYm8zUHdZZjJwMnhJQWJ5M3ZWUlAyanRMZ2s3dnlONEVrTEtp?oc=5
+Read source: https://news.google.com/rss/articles/CBMidkFVX3lxTE1PTTc5aEFzNEJkTDNZNTRqWGVkVTRoa1dXWlUzaDZzQ0VCa25QUVBwSkRMRkdpcjBvTVZ3azZxSzA5R0UxOTBpcXpPb0R1cUlTdlpYVVQ1d3ZyRUlkQWh3bTVUN0dndFhHWi1UYnpLUDBrNjFoSVE?oc=5
 
 STORY 6
-R&B Fashion launches an AI fashion runway with Takumi AI.
-Source: Campaign Middle East
-Category: fashion
-Scan: AI Fashion and Beauty Market Scan
-Date: 2026-05-07
-Summary: Fashion and retail teams are testing AI as part of product discovery and customer decision-making.
-Why it matters: This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.
-Read source: https://news.google.com/rss/articles/CBMihgFBVV95cUxQdkwzZWk4czRzTVE1SkJlVDZTZ1hWaFl4R245WHNMUVJSOVlLLXBuekd6ZnkxWXVhMlpOTjMwa3ZadDJPSzNVcmZvODlqWEpyblRKU2Iwd245OFJEdkV6dVdjU0M0b2c4VU5pVTNfWVE1OTQ3c3BZOHZlSmVXdGI5MTlXT3VTdw?oc=5
-
-STORY 7
-Meta Is Building an AI Agent Called ‘Hatch’ and an AI Shopping Tool.
-Source: The Information
+Amazon Introduces Alexa+ Powered AI Shopping Assistant For The Search Bar.
+Source: Gadget Review
 Category: agentic_commerce
 Scan: Agentic Commerce Market Scan
-Date: 2026-05-05
-Summary: This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.
-Why it matters: This matters because social platforms can shift shopping discovery before shoppers reach a brand site.
-Read source: https://news.google.com/rss/articles/CBMimAFBVV95cUxOdXJOZGRuT2Z1ZUtPMWtxRjhTSXE5cDIwV3p2cUxlN19RMFZmdzg2M2RycVBuU3VPUGdwWmh3UXZsbVh1WkdBelExeDl6cFJNQk5yZTlUTWJrNXZVZkpjdm42akdfY2pOV0pra0VhNW14eUxqT0FzdVNUSE1TenNIcUFCN21wbjhDZHpfbTZmSllHbEROZEREZg?oc=5
+Date: 2026-05-13
+Summary: This story points to AI shopping becoming a discovery path before customers reach a brand site.
+Why it matters: This matters because discovery and checkout expectations can move upstream into AI agents.
+Read source: https://news.google.com/rss/articles/CBMiowFBVV95cUxQOVR5Y1hjWXpWR3RpRHVNbDQwaks5SFBsRlhmbUxxNUgwcUY4MTRTanN6V2R1YTI3VDRZdVpDdGVpR2xHZ25YT0V5THA1RmhXVF9mNUo1Ql83dkkyLWNNRTVIOExQVDN3a0gxTWl2QzNjQ0FWSmNlWW96TWdWRFdodWVuTXl6blFxZnJYUGxxdnV2R0tIYnVtOGNya3FZNWZ4dUMw?oc=5
+
+STORY 7
+Amazon replaces Rufus with a new AI shopping assistant powered by Alexa+.
+Source: The Indian Express
+Category: fashion
+Scan: Brand Watchlist AI Agents
+Date: 2026-05-14
+Summary: This signal shows platforms competing to own the shopper's AI-assisted product search and checkout path.
+Why it matters: This matters because discovery and checkout expectations can move upstream into AI agents.
+Read source: https://news.google.com/rss/articles/CBMi4AFBVV95cUxQV01ZczM0T0JaR1UydlJOVWtsNnRNY3FDazlzOC1OMkJVRlpwYTlBZXpnaG94MURJYWxsaWx6OTJOSzc5NjlIa2Z2Tm0zM2h4OEJoa0FZSnFwYW55R3RBek9Td19oQ2xDalUwSnJqNlotZV84aExjbGFCUlh3TGZROUh2Z1VndTJFdGR4TUVfOVV6dVZIc1FWcEdER3VrLTBVZXEyalhjVl9Tc3ExYW5HQ2NpNF9YMTlXOWZqRkFHSWJtZjZLRDMtTzhER1JyUkNVWmdPVV9Dcmh6NUlsb3hzctIB5wFBVV95cUxQSkNGRDM5NVhUREktSDFHSHdFRUU5VVNyYy14OFg0aWpRNnJtcHFfck5HU2xVY2g0Tk1hdmVSZ2hOMl85aVU5T2dEVXBCck9kaGs4ZVZCbk5jTVYwSEl5cFZuc0RMeExQNXphOGtaTW9oUXFBQU5vY3V0TW1VVkFja3RnQVh1Y1dFOXlWeGwwRmdCdTdudFFRclpmWEU4UnZHcmZRc08waHc0X3lnQmh4Q205V0NUNTBPV2ZpdWZ2bUtmSGVSd2Y2dkQ1LXlpVE0xRTZpUk0xNGliYkFBamFiZTliVmtRbmc?oc=5
 
 STORY 8
-Google Cloud Virtual Try-On Revolutionises Luxury Fashion.
-Source: Technology Magazine
-Category: fashion
-Scan: AI Fashion and Beauty Market Scan
-Date: 2026-05-07
-Summary: This item points to virtual try-on becoming part of how shoppers evaluate luxury products before purchase.
-Why it matters: This matters because try-on experiences can change how fashion and beauty shoppers evaluate products before purchase.
-Read source: https://news.google.com/rss/articles/CBMilwFBVV95cUxOcnkwS19EWERrOUZ1VXlrUUhZRlpUcGJfcl85UjhZVFBNeG1CQzhUSWp6eWI1a2NaWERMOFdCUWFWeHFRVThzS1ptY3ZWQV93OXFvdFYzVFpUSEtIdWRqbWNrUWVTb1NNQ3d0dk9BY3FrUkR3M3ZDS19lVWt6NDlBZXpZamtRQXpfSTlNX2pha0swV1I1REo0?oc=5
+Retailers keep tinkering with their AI shopping assistants, in search of better service.
+Source: MarketWatch
+Category: agentic_commerce
+Scan: Agentic Commerce Market Scan
+Date: 2026-05-13
+Summary: This signal shows platforms competing to own the shopper's AI-assisted product search and checkout path.
+Why it matters: This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.
+Read source: https://news.google.com/rss/articles/CBMiyAFBVV95cUxQSDFrWWF5LUFJQkItcEV3NXNFOVd6bHZSaFkwZC00cHN3ckg4SWtjS0FsYTlBdlpHRGVrNjlnRU9yMFFKenB0OVNIcjVBUThQd0ljTWdyWlE4T3E0c0tOUU5OdDQwOEVCcmNyUFh4M1A5LWZwNmN0ZFVDWVQ3dkpVcEpzMWlMcWk1UFlmdUtxMklySkVId3A1NzFHSXh6Y284cENyb3RZczhHNWdjU0dmaGtiTXdmLW0xRE85ZW9pcHBveXJmSW9oVw?oc=5
 
 Internal NK market brief. Summaries are deterministic and based on RSS metadata only.

@@ -1,6 +1,6 @@
 - email | deferred | Keep real email disabled until internal recipients, verified sender, Resend API key, and explicit preview approval are provided.
 - pages | enabled | Public Pages repo is configured with Pages build type `workflow`, `DEPLOY_GITHUB_PAGES=true`, and the live URL `https://osangen.github.io/nk-ai-market-brief-review/` is the Cyril review target.
-- auto-refresh | enabled | Public Pages repo contains the no-secret app and scheduled workflow; manual workflow runs deploy artifacts and Pages when `DEPLOY_GITHUB_PAGES=true`.
+- auto-refresh | ready-local | Scheduled workflow now uses daily `auto` output and deploy guards prevent preview-mode/168-hour output from being published; push and verify the public Pages mirror to make this live.
 - story-diversity | ready | Review output now caps repeated topic clusters at two when enough qualifying items exist; monitor future feed runs for excessive same-topic repeats.
 - source-labels | ready | Cards now distinguish actual outlet source from the configured scan label so source labels do not look synthetic.
 - copy-polish | ready | Summaries and why-it-matters copy use deterministic variants and no implementation-language filter explanations.

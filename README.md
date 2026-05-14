@@ -16,6 +16,7 @@ Free, standalone internal market brief for NK. The MVP focuses only on AI plus f
 ```bash
 npm install
 npm run preview
+npm run daily
 npm test
 npm run build
 npm run check:deploy
@@ -33,9 +34,9 @@ Outputs:
 
 ## Deployment
 
-GitHub Actions runs from the default branch on weekdays at 12:17 UTC and 13:17 UTC. The runtime time guard targets 8 a.m. America/New_York for `auto` mode, while preview/build mode uses the wider review lookback for the share page.
+GitHub Actions runs from the default branch on weekdays at 12:17 UTC and 13:17 UTC. Scheduled/public refreshes use `npm run daily`, which forces `auto` mode with the normal daily lookback windows so GitHub cron delays do not publish a skipped page. Manual preview/build mode keeps the wider review lookback for stakeholder review.
 
-After setup, no manual push is needed for normal refreshes. The scheduled workflow rebuilds the RSS brief, runs tests and deploy checks, and uploads `.newsletter-outbox` plus `site` as the `nk-ai-market-brief` artifact.
+After setup, no manual push is needed for normal refreshes. The scheduled workflow rebuilds the RSS brief, runs tests and daily-mode deploy checks, and uploads `.newsletter-outbox` plus `site` as the `nk-ai-market-brief` artifact.
 
 GitHub Pages is optional and only deploys when repository Settings -> Pages uses GitHub Actions and repository variable `DEPLOY_GITHUB_PAGES=true`.
 

@@ -14,11 +14,11 @@ The workflow runs:
 ```bash
 npm ci
 npm test
-npm run build
-npm run check:deploy
+npm run daily
+NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
 ```
 
-Scheduled runs come from the latest default branch commit at 12:17 UTC and 13:17 UTC on weekdays. The runtime guard targets 8 a.m. America/New_York for `auto` mode. If `DEPLOY_GITHUB_PAGES` is false, output still appears as the `nk-ai-market-brief` GitHub Actions artifact.
+Scheduled runs come from the latest default branch commit at 12:17 UTC and 13:17 UTC on weekdays. The public scheduled path forces `auto` mode with daily lookback windows so GitHub cron delays do not publish a skipped or broad preview page. If `DEPLOY_GITHUB_PAGES` is false, output still appears as the `nk-ai-market-brief` GitHub Actions artifact.
 
 ## Optional GitHub Pages
 
@@ -45,4 +45,4 @@ Email stays off unless all send gates pass:
 - mode is `send`, or mode is `auto` inside the 8 a.m. America/New_York weekday target window
 - item count is at least `NEWSLETTER_MIN_ITEMS`
 
-Preview mode never sends, even if send variables are configured. Scheduled auto mode without secrets generates preview artifacts only. No recipient emails or API keys are hard-coded, and logs/report JSON never include full recipient lists or secret values.
+Preview mode never sends, even if send variables are configured. The scheduled daily page path keeps sending disabled and generates page artifacts only. No recipient emails or API keys are hard-coded, and logs/report JSON never include full recipient lists or secret values.

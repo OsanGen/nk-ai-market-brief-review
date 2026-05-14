@@ -33,9 +33,39 @@ export async function checkDeploy(root = process.cwd()) {
   if (!run.reviewReady && process.env.ALLOW_NOT_READY_REVIEW !== "true") {
     throw new Error(`Review page is not ready: ${(run.reviewReasons ?? []).join(" ") || "reviewReady=false"}`);
   }
+  checkExpectedMode(run);
+  checkExpectedLookback(run);
   await checkWorkflow(root);
   if (run.automationConfigured !== true) throw new Error("site/run.json automationConfigured is not true");
   if (run.scheduledRefreshConfigured !== true) throw new Error("site/run.json scheduledRefreshConfigured is not true");
+}
+
+function checkExpectedMode(run) {
+  const expectedMode = process.env.NEWSLETTER_EXPECT_MODE?.trim();
+  if (expectedMode && run.mode !== expectedMode) {
+    throw new Error(`Expected site/run.json mode ${expectedMode}, got ${run.mode ?? "missing"}`);
+  }
+}
+
+function checkExpectedLookback(run) {
+  const maxActiveLookbackHours = optionalNumber("NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS");
+  if (maxActiveLookbackHours === undefined) return;
+
+  const activeLookbackHours = Number(run.config?.activeLookbackHours);
+  if (!Number.isFinite(activeLookbackHours)) {
+    throw new Error("site/run.json config.activeLookbackHours is missing or invalid");
+  }
+  if (activeLookbackHours > maxActiveLookbackHours) {
+    throw new Error(`site/run.json active lookback ${activeLookbackHours} exceeds ${maxActiveLookbackHours}`);
+  }
+}
+
+function optionalNumber(name) {
+  const value = process.env[name];
+  if (value === undefined || value.trim() === "") return undefined;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) throw new Error(`${name} must be a finite number`);
+  return parsed;
 }
 
 async function checkWorkflow(root) {
@@ -43,6 +73,9 @@ async function checkWorkflow(root) {
   const checks = [
     ["workflow_dispatch", workflow.includes("workflow_dispatch")],
     [`cron: "17 12 * * 1-5"`, AUTOMATION_SCHEDULE.every((cron) => workflow.includes(`cron: "${cron}"`) || workflow.includes(`cron: '${cron}'`))],
+    ["npm run daily", workflow.includes("npm run daily")],
+    ["NEWSLETTER_EXPECT_MODE=auto", workflow.includes("NEWSLETTER_EXPECT_MODE=auto")],
+    ["NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84", workflow.includes("NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84")],
     ["actions/upload-artifact", workflow.includes("actions/upload-artifact")],
     ["actions/upload-pages-artifact", workflow.includes("actions/upload-pages-artifact")],
     ["actions/deploy-pages", workflow.includes("actions/deploy-pages")],

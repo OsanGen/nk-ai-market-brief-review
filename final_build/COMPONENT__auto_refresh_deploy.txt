@@ -28,7 +28,9 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
   - `17 12 * * 1-5`
   - `17 13 * * 1-5`
 - The workflow runs from the latest default branch commit.
-- The runtime guard targets 8 a.m. America/New_York for auto mode.
+- Scheduled/public runs use `npm run daily`, which forces `auto` mode so delayed GitHub cron starts still publish a generated daily page.
+- Daily public output uses `NEWSLETTER_LOOKBACK_HOURS=36` on normal weekdays and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84` on Mondays.
+- Manual preview dispatch still uses `npm run build` and the broader 168-hour review lookback.
 
 ## GitHub Pages Behavior
 
@@ -43,7 +45,7 @@ If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `si
 
 ## Email Disabled Behavior
 
-The default workflow sets `NEWSLETTER_SEND_ENABLED=false`. Email cannot send from scheduled refresh by default.
+The default workflow sets `NEWSLETTER_SEND_ENABLED=false`, and `npm run daily` also disables sending for public page generation. Email cannot send from scheduled refresh by default.
 
 The final shareable review page still records send state in `site/run.json` and the lower Automation status section, but no workflow or local preview run sends email unless the explicit send gates are configured outside the default preview path.
 
@@ -51,11 +53,14 @@ The final shareable review page still records send state in `site/run.json` and 
 
 - `npm install`
 - `npm run preview`
+- `npm run daily`
 - `npm test`
 - `npm run build`
 - `npm run check:deploy`
+- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy`
 - `site/run.json` has `automationConfigured: true`
 - `site/run.json` has `manualPushRequiredAfterSetup: false`
+- Daily public `site/run.json` has `mode: "auto"` and `config.activeLookbackHours <= 84`
 - Workflow has manual dispatch, both cron entries, artifact upload, Pages upload/deploy, and Pages permissions.
 - `site/index.html` shows Automation status below the selected signals and technical diagnostics.
 - GitHub Pages deploy support remains gated by `DEPLOY_GITHUB_PAGES=true`; artifact upload remains available independently.

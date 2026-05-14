@@ -17,6 +17,9 @@ test("Workflow includes both scheduled cron entries", async () => {
 
 test("Workflow includes artifact and GitHub Pages deployment support", async () => {
   const workflow = await readFile(".github/workflows/newsletter.yml", "utf8");
+  assert.match(workflow, /npm run daily/);
+  assert.match(workflow, /NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy/);
+  assert.doesNotMatch(workflow, /\n\s*-\s*run: npm run build\n/);
   assert.match(workflow, /actions\/upload-artifact/);
   assert.match(workflow, /actions\/upload-pages-artifact/);
   assert.match(workflow, /actions\/deploy-pages/);

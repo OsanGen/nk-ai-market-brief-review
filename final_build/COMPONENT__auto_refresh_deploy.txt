@@ -57,11 +57,16 @@ If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `si
 
 ## Latest Live Verification
 
-- Public workflow run: `25916942424`.
-- Live `run.json` verified `generatedAt: "2026-05-15T12:08:02.039Z"`, `mode: "auto"`, `config.activeLookbackHours: 36`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.
+- Public workflow run: `25918494116`.
+- Public Pages repo commit: `fe843cf2a40c7eab913048b6975d69a89089ab4e`.
+- Live `run.json` verified `generatedAt: "2026-05-15T12:45:43.487Z"`, `mode: "auto"`, `config.activeLookbackHours: 36`, `config.targetHourLocal: 4`, schedule entries `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *` and `17 10,11,12 * * *`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.
+- Live page verified HTTP 200 and displays `NK AI Market Brief`, `Email disabled`, and `Schedule: daily around 4 a.m. Eastern with retry/watchdog runs`.
 - Unsafe-output search against the fetched live May 15 HTML and run JSON returned no matches.
 
 Previous verification:
+- Public workflow run: `25916942424`.
+- Live `run.json` verified `generatedAt: "2026-05-15T12:08:02.039Z"`, `mode: "auto"`, `config.activeLookbackHours: 36`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.
+- Unsafe-output search against the fetched live May 15 HTML and run JSON returned no matches.
 - Public Pages repo commit: `2c912c23e9dec113dd2844f2122cb799c124b2aa`.
 - Workflow run: `25869244639`.
 - Live `run.json` verified `mode: "auto"`, `config.activeLookbackHours: 36`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.

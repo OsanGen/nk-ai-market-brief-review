@@ -9,6 +9,8 @@ QA result: PASS
 - Schedule gate: PASS, `npm run should:refresh` skips duplicate scheduled retries when live `run.json` is already fresh and refreshes when stale or unreachable after the target hour.
 - Daily output guard: PASS, `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy` passed for local daily output.
 - Live freshness checker: PASS by unit coverage, rejects preview-mode output and verifies date, `mode=auto`, daily lookback, automation configured, and `send.sent=false`.
+- Public workflow dispatch proof: PASS, run `25918494116` completed `npm run should:refresh`, `npm ci`, `npm test`, `npm run daily`, fresh-date deploy check, artifact upload, Pages deploy, and `npm run check:live`.
+- Live Pages proof: PASS, live `run.json` returned HTTP 200 with `generatedAt=2026-05-15T12:45:43.487Z`, `mode=auto`, `config.activeLookbackHours=36`, `config.targetHourLocal=4`, automation configured, schedule entries present, and `send.sent=false`.
 - Story-count policy: PASS, daily deploy checks allow limited current output while manual review builds keep strict `reviewReady` behavior.
 - Email status: PASS, scheduled daily page path keeps sending disabled.
 

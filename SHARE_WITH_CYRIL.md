@@ -24,7 +24,7 @@ Actions -> NK AI Market Brief -> latest run -> artifact nk-ai-market-brief
 
 The artifact contains both `.newsletter-outbox` and `site`.
 
-After repository setup, normal refreshes do not require manual pushes. The scheduled GitHub Actions workflow rebuilds the page from the default branch on weekdays at 12:17 UTC and 13:17 UTC, with the runtime guard targeting 8 a.m. America/New_York.
+After repository setup, normal refreshes do not require manual pushes. The scheduled GitHub Actions workflow rebuilds the page from the default branch every day around 4 a.m. America/New_York, with retry and watchdog runs that skip duplicates once the live page is already fresh.
 
 ## Live Review Link
 
@@ -99,7 +99,7 @@ What is working:
 - One lead story plus a simple story grid
 - Source scanning across Vogue Business, Business of Fashion, Glossy, BeautyMatter, Retail TouchPoints, Shopify, OpenAI, Google Shopping, and brand watchlist queries
 - Email disabled by default
-- GitHub Actions auto-refresh configured for weekdays around 8 a.m. Eastern
+- GitHub Actions auto-refresh configured daily around 4 a.m. Eastern, with retry/watchdog checks
 - GitHub Actions artifact fallback if Pages is not enabled
 
 This is still v1, so I’m tuning source diversity and summaries. Please confirm:

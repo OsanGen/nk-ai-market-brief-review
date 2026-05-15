@@ -11,14 +11,17 @@ test("Workflow file exists and includes manual dispatch", async () => {
 
 test("Workflow includes both scheduled cron entries", async () => {
   const workflow = await readFile(".github/workflows/newsletter.yml", "utf8");
-  assert.match(workflow, /cron: "17 12 \* \* 1-5"/);
-  assert.match(workflow, /cron: "17 13 \* \* 1-5"/);
+  assert.match(workflow, /cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 \* \* \*"/);
+  assert.match(workflow, /cron: "17 10,11,12 \* \* \*"/);
+  assert.match(workflow, /NEWSLETTER_TARGET_HOUR_LOCAL: "4"/);
 });
 
 test("Workflow includes artifact and GitHub Pages deployment support", async () => {
   const workflow = await readFile(".github/workflows/newsletter.yml", "utf8");
+  assert.match(workflow, /npm run should:refresh/);
   assert.match(workflow, /npm run daily/);
-  assert.match(workflow, /NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy/);
+  assert.match(workflow, /NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy/);
+  assert.match(workflow, /npm run check:live/);
   assert.doesNotMatch(workflow, /\n\s*-\s*run: npm run build\n/);
   assert.match(workflow, /actions\/upload-artifact/);
   assert.match(workflow, /actions\/upload-pages-artifact/);

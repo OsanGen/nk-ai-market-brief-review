@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Generate a weekday internal NK AI Market Brief focused only on AI plus fashion, beauty, e-commerce, agentic commerce, AI shopping, and AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands.
+Generate a daily internal NK AI Market Brief focused only on AI plus fashion, beauty, e-commerce, agentic commerce, AI shopping, and AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands.
 
 ## Inputs
 
@@ -27,7 +27,7 @@ Generate a weekday internal NK AI Market Brief focused only on AI plus fashion, 
 
 No database and no durable remote state. Every run creates a dated outbox and refreshes the latest static `site/` output.
 
-Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` with a 168-hour default so the share page can demonstrate enough current signals. The public daily path uses `npm run daily`, forces `auto` mode, and keeps the normal daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
+Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` with a 168-hour default so the share page can demonstrate enough current signals. The public daily path uses `npm run daily`, forces `auto` mode, targets 4 a.m. America/New_York through workflow scheduling, and keeps the normal daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
 
 ## Edge Cases
 
@@ -47,7 +47,8 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `site/index.html` is a static review page, while `.newsletter-outbox/YYYY-MM-DD/newsletter.html` remains the email-style newsletter HTML.
 - Review readiness is recorded in `site/run.json`; `npm run check:deploy` fails when `reviewReady` is false unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
 - Automation readiness is recorded in `site/run.json`; `npm run check:deploy` fails when scheduled refresh or workflow-backed Pages support is missing.
-- Public daily deploy checks can require `NEWSLETTER_EXPECT_MODE=auto` and `NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84` so preview-mode review output is not accidentally deployed as the daily page.
+- Public daily deploy checks can require `NEWSLETTER_EXPECT_MODE=auto`, `NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84`, and `NEWSLETTER_EXPECT_FRESH_DATE=true` so preview-mode, stale-date, or 168-hour review output is not accidentally deployed as the daily page.
+- Public daily deploys prioritize freshness over review-story count: limited-story daily output may publish with a current date, while manual review builds keep the stricter `reviewReady` check.
 - Review story selection uses `src/story-diversity.mjs` to avoid over-representing repeated clusters such as Meta shopping agents, Google virtual try-on, OpenAI commerce, Shopify catalog/storefronts, beauty AI discovery, fashion AI discovery, and agentic commerce platform race. It does not drop valid items below the minimum review threshold only for diversity.
 - Normalized stories carry both the actual RSS outlet source and the configured scan label. Renderers show the outlet as `Source` and the query family as `Scan` so configured scans are not mistaken for publications.
 - Deterministic summary copy avoids repeating the same summary or why-it-matters sentence more than twice in one issue and keeps implementation-language filter explanations out of client-facing output.
@@ -67,7 +68,7 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `npm test`
 - `npm run build`
 - `npm run check:deploy`
-- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy`
+- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy`
 - `NEWSLETTER_SEND_ENABLED=true npm run send || true`
 - `gh workflow run newsletter.yml -f mode=preview --ref main`
 - `env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true`

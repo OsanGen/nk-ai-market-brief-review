@@ -12,6 +12,7 @@ test("Review lookback uses 168 hours in preview mode", () => {
 test("Scheduled auto mode keeps daily lookback", () => {
   const friday = loadConfig({}, new Date("2026-05-08T12:00:00Z"), { mode: "auto" });
   const monday = loadConfig({}, new Date("2026-05-11T12:00:00Z"), { mode: "auto" });
+  assert.equal(friday.targetHourLocal, 4);
   assert.equal(friday.activeLookbackHours, 36);
   assert.equal(monday.activeLookbackHours, 84);
 });

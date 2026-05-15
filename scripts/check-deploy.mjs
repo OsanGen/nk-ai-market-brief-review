@@ -4,6 +4,7 @@ import process from "node:process";
 import { pathToFileURL } from "node:url";
 
 import { AUTOMATION_SCHEDULE, getAutomationStatus, WORKFLOW_PATH } from "../src/automation-status.mjs";
+import { localDateKey } from "../src/live-freshness.mjs";
 
 const required = [
   "site/index.html",
@@ -19,25 +20,35 @@ const indexMarkers = ["NK AI Market Brief", "Internal review", "Email disabled",
 
 export async function checkDeploy(root = process.cwd()) {
   for (const file of required) await access(path.join(root, file));
+  const run = JSON.parse(await readFile(path.join(root, "site/run.json"), "utf8"));
+  const expectsDaily = process.env.NEWSLETTER_EXPECT_MODE?.trim() === "auto";
+
   for (const file of ["site/index.html", "site/newsletter.txt"]) {
     const text = await readFile(path.join(root, file), "utf8");
     if (forbidden.test(text)) throw new Error(`Forbidden public-output pattern in ${file}`);
     if (file === "site/index.html") {
-      for (const marker of indexMarkers) {
+      for (const marker of indexMarkersFor(run, expectsDaily)) {
         if (!text.includes(marker)) throw new Error(`Missing "${marker}" in site/index.html`);
       }
     }
   }
 
-  const run = JSON.parse(await readFile(path.join(root, "site/run.json"), "utf8"));
-  if (!run.reviewReady && process.env.ALLOW_NOT_READY_REVIEW !== "true") {
+  if (!run.reviewReady && !expectsDaily && process.env.ALLOW_NOT_READY_REVIEW !== "true") {
     throw new Error(`Review page is not ready: ${(run.reviewReasons ?? []).join(" ") || "reviewReady=false"}`);
   }
   checkExpectedMode(run);
   checkExpectedLookback(run);
+  checkExpectedFreshDate(run);
   await checkWorkflow(root);
   if (run.automationConfigured !== true) throw new Error("site/run.json automationConfigured is not true");
   if (run.scheduledRefreshConfigured !== true) throw new Error("site/run.json scheduledRefreshConfigured is not true");
+}
+
+function indexMarkersFor(run, expectsDaily) {
+  if (expectsDaily && Number(run.itemCount ?? run.selectedItemCount ?? 0) === 0) {
+    return indexMarkers.filter((marker) => marker !== "Read source");
+  }
+  return indexMarkers;
 }
 
 function checkExpectedMode(run) {
@@ -60,6 +71,19 @@ function checkExpectedLookback(run) {
   }
 }
 
+function checkExpectedFreshDate(run) {
+  if (process.env.NEWSLETTER_EXPECT_FRESH_DATE !== "true") return;
+
+  const generatedAt = new Date(run.generatedAt);
+  if (Number.isNaN(generatedAt.getTime())) throw new Error("site/run.json generatedAt is missing or invalid");
+
+  const now = process.env.NEWSLETTER_NOW ? new Date(process.env.NEWSLETTER_NOW) : new Date();
+  const timezone = run.config?.timezone || process.env.NEWSLETTER_TIMEZONE || "America/New_York";
+  if (localDateKey(generatedAt, timezone) !== localDateKey(now, timezone)) {
+    throw new Error(`site/run.json generatedAt is not fresh for ${localDateKey(now, timezone)}`);
+  }
+}
+
 function optionalNumber(name) {
   const value = process.env[name];
   if (value === undefined || value.trim() === "") return undefined;
@@ -72,10 +96,14 @@ async function checkWorkflow(root) {
   const workflow = await readFile(path.join(root, WORKFLOW_PATH), "utf8");
   const checks = [
     ["workflow_dispatch", workflow.includes("workflow_dispatch")],
-    [`cron: "17 12 * * 1-5"`, AUTOMATION_SCHEDULE.every((cron) => workflow.includes(`cron: "${cron}"`) || workflow.includes(`cron: '${cron}'`))],
+    ["configured daily refresh cron entries", AUTOMATION_SCHEDULE.every((cron) => workflow.includes(`cron: \"${cron}\"`) || workflow.includes(`cron: '${cron}'`))],
+    ["NEWSLETTER_TARGET_HOUR_LOCAL: \"4\"", workflow.includes('NEWSLETTER_TARGET_HOUR_LOCAL: "4"')],
+    ["npm run should:refresh", workflow.includes("npm run should:refresh")],
     ["npm run daily", workflow.includes("npm run daily")],
     ["NEWSLETTER_EXPECT_MODE=auto", workflow.includes("NEWSLETTER_EXPECT_MODE=auto")],
     ["NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84", workflow.includes("NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84")],
+    ["NEWSLETTER_EXPECT_FRESH_DATE=true", workflow.includes("NEWSLETTER_EXPECT_FRESH_DATE=true")],
+    ["npm run check:live", workflow.includes("npm run check:live")],
     ["actions/upload-artifact", workflow.includes("actions/upload-artifact")],
     ["actions/upload-pages-artifact", workflow.includes("actions/upload-pages-artifact")],
     ["actions/deploy-pages", workflow.includes("actions/deploy-pages")],

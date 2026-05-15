@@ -29,7 +29,7 @@ The source workflow always builds `site/` and uploads it as an artifact. The pri
 
 The page is shareable only when `site/run.json` has `"reviewReady": true`. Review mode targets 6-8 selected stories when enough qualifying RSS items exist; if fewer than 5 stories are selected, the page labels itself as needing source tuning. If fewer than 3 are selected, deploy check fails unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
 
-The page includes a lower Automation status section showing scheduled refresh, GitHub Pages support, artifact fallback, and email-disabled status.
+The page includes a lower Automation status section showing the daily 4 a.m. Eastern refresh, GitHub Pages support, artifact fallback, live freshness verification, and email-disabled status.
 
 The selected-signal area prioritizes the market brief content. Each story card shows the actual RSS outlet as `Source`, the primary category, the configured source-query family as `Scan`, date when available, a deterministic summary, business-facing why-it-matters copy, and a `Read source` link. The renderer keeps Technical diagnostics, Source fetch status, and Automation status visually secondary and below the story content.
 

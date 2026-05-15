@@ -10,20 +10,24 @@ const workflow = `name: NK AI Market Brief
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 12 * * 1-5"
-    - cron: "17 13 * * 1-5"
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *"
+    - cron: "17 10,11,12 * * *"
 permissions:
   contents: read
   pages: write
   id-token: write
 jobs:
   newsletter:
+    env:
+      NEWSLETTER_TARGET_HOUR_LOCAL: "4"
     steps:
+      - run: npm run should:refresh
       - run: npm ci
       - run: npm test
       - run: npm run daily
       - run: npm run build
-      - run: NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+      - run: NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
+      - run: npm run check:live
       - run: npm run check:deploy
       - uses: actions/upload-artifact@v4
       - uses: actions/upload-pages-artifact@v3
@@ -73,6 +77,31 @@ test("check-deploy fails when reviewReady is false", async () => {
   await assert.rejects(checkDeploy(root), /too few stories/);
 });
 
+test("check-deploy allows limited daily output when freshness is enforced", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-daily-limited-"));
+  const now = new Date();
+  await writeDeployFixture(root, {
+    run: {
+      generatedAt: now.toISOString(),
+      mode: "auto",
+      reviewReady: false,
+      reviewReasons: ["Only 2 qualifying stories."],
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      config: { activeLookbackHours: 36, timezone: "America/New_York" }
+    }
+  });
+
+  await withEnv({
+    NEWSLETTER_EXPECT_MODE: "auto",
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84",
+    NEWSLETTER_EXPECT_FRESH_DATE: "true",
+    NEWSLETTER_NOW: now.toISOString()
+  }, async () => {
+    await assert.doesNotReject(checkDeploy(root));
+  });
+});
+
 test("check-deploy fails when workflow is missing", async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-no-workflow-"));
   await mkdir(path.join(root, "site"), { recursive: true });
@@ -104,32 +133,59 @@ test("check-deploy fails when scheduled cron entries are missing", async () => {
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
     writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true}\n", "utf8"),
-    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow.replace('    - cron: "17 13 * * 1-5"\n', ""), "utf8"),
+    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow.replace('    - cron: "17 10,11,12 * * *"\n', ""), "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
     writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")
   ]);
 
-  await assert.rejects(checkDeploy(root), /Workflow missing cron/);
+  await assert.rejects(checkDeploy(root), /Workflow missing configured daily refresh cron entries/);
 });
 
 test("check-deploy passes expected daily auto output", async () => {
   const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-daily-"));
+  const now = new Date();
   await writeDeployFixture(root, {
     run: {
+      generatedAt: now.toISOString(),
       mode: "auto",
       reviewReady: true,
       automationConfigured: true,
       scheduledRefreshConfigured: true,
-      config: { activeLookbackHours: 36 }
+      config: { activeLookbackHours: 36, timezone: "America/New_York" }
     }
   });
 
   await withEnv({
     NEWSLETTER_EXPECT_MODE: "auto",
-    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84"
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84",
+    NEWSLETTER_EXPECT_FRESH_DATE: "true",
+    NEWSLETTER_NOW: now.toISOString()
   }, async () => {
     await assert.doesNotReject(checkDeploy(root));
+  });
+});
+
+test("check-deploy fails when expected daily output is stale", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-stale-date-"));
+  await writeDeployFixture(root, {
+    run: {
+      generatedAt: "2026-05-14T08:00:00.000Z",
+      mode: "auto",
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      config: { activeLookbackHours: 36, timezone: "America/New_York" }
+    }
+  });
+
+  await withEnv({
+    NEWSLETTER_EXPECT_MODE: "auto",
+    NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS: "84",
+    NEWSLETTER_EXPECT_FRESH_DATE: "true",
+    NEWSLETTER_NOW: "2026-05-15T08:00:00.000Z"
+  }, async () => {
+    await assert.rejects(checkDeploy(root), /generatedAt is not fresh/);
   });
 });
 

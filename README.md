@@ -34,9 +34,16 @@ Outputs:
 
 ## Deployment
 
-GitHub Actions runs from the default branch on weekdays at 12:17 UTC and 13:17 UTC. Scheduled/public refreshes use `npm run daily`, which forces `auto` mode with the normal daily lookback windows so GitHub cron delays do not publish a skipped page. Manual preview/build mode keeps the wider review lookback for stakeholder review.
+GitHub Actions runs from the default branch every day with redundant 4 a.m. America/New_York coverage:
 
-After setup, no manual push is needed for normal refreshes. The scheduled workflow rebuilds the RSS brief, runs tests and daily-mode deploy checks, and uploads `.newsletter-outbox` plus `site` as the `nk-ai-market-brief` artifact.
+- `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *`
+- `17 10,11,12 * * *`
+
+The first schedule covers the DST and standard-time 4 a.m. window without hitting exactly `:00`; the second is a late watchdog. A cheap schedule gate checks the live `run.json` first, skips duplicate retries once today is fresh, and fails open by refreshing if live freshness cannot be fetched.
+
+Scheduled/public refreshes use `npm run daily`, which forces `auto` mode with the normal daily lookback windows so GitHub cron delays do not publish a skipped page. Manual preview/build mode keeps the wider review lookback for stakeholder review.
+
+After setup, no manual push is needed for normal refreshes. The scheduled workflow rebuilds the RSS brief when the live page is stale, runs tests and daily-mode deploy checks, uploads `.newsletter-outbox` plus `site` as the `nk-ai-market-brief` artifact, deploys Pages when enabled, then verifies the live page is fresh.
 
 GitHub Pages is optional and only deploys when repository Settings -> Pages uses GitHub Actions and repository variable `DEPLOY_GITHUB_PAGES=true`.
 

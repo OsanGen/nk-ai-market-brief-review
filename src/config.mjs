@@ -1,5 +1,5 @@
 export function loadConfig(env = process.env, now = new Date(), options = {}) {
-  const targetHourLocal = toInt(env.NEWSLETTER_TARGET_HOUR_LOCAL, 8);
+  const targetHourLocal = toInt(env.NEWSLETTER_TARGET_HOUR_LOCAL, 4);
   const maxItems = toInt(env.NEWSLETTER_MAX_ITEMS, 8);
   const minItems = toInt(env.NEWSLETTER_MIN_ITEMS, 3);
   const lookbackHours = toInt(env.NEWSLETTER_LOOKBACK_HOURS, 36);

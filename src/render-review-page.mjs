@@ -153,7 +153,7 @@ function renderAutomationStatus(run) {
   <h2>Automation status</h2>
   <ul>
     <li>Auto-refresh: ${escapeHtml(autoLabel)}</li>
-    <li>Schedule: weekdays around 8 a.m. Eastern (${escapeHtml(schedule)})</li>
+    <li>Schedule: daily around 4 a.m. Eastern with retry/watchdog runs (${escapeHtml(schedule)})</li>
     <li>Page deploy: ${pagesLabel}</li>
     <li>Fallback: GitHub Actions artifact</li>
     <li>Email: disabled unless explicitly enabled</li>

@@ -2,6 +2,16 @@
 
 QA result: PASS
 
+## 4 A.M. Daily Refresh Hardening Addendum
+
+- Daily 4 a.m. America/New_York refresh hardening: PASS locally.
+- Workflow schedules: PASS, includes `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *` and `17 10,11,12 * * *`.
+- Schedule gate: PASS, `npm run should:refresh` skips duplicate scheduled retries when live `run.json` is already fresh and refreshes when stale or unreachable after the target hour.
+- Daily output guard: PASS, `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy` passed for local daily output.
+- Live freshness checker: PASS by unit coverage, rejects preview-mode output and verifies date, `mode=auto`, daily lookback, automation configured, and `send.sent=false`.
+- Story-count policy: PASS, daily deploy checks allow limited current output while manual review builds keep strict `reviewReady` behavior.
+- Email status: PASS, scheduled daily page path keeps sending disabled.
+
 ## Shareable Review Page Addendum
 
 - `site/index.html` is now a static review page instead of raw email HTML: PASS.
@@ -113,7 +123,7 @@ PASS. All required sources exist, are enabled, and use `google_news_rss` mode:
 PASS. `.github/workflows/newsletter.yml` includes:
 
 - `workflow_dispatch`
-- weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`
+- daily retry/watchdog schedules at `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *` and `17 10,11,12 * * *`
 - `npm test` before newsletter generation/send
 - artifact upload for `.newsletter-outbox` and `site`
 - optional GitHub Pages gated by `DEPLOY_GITHUB_PAGES == 'true'`

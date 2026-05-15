@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Refresh the NK AI Market Brief page automatically through GitHub Actions and optional GitHub Pages so normal weekday updates do not require local builds or manual pushes after repository setup.
+Refresh the NK AI Market Brief page automatically through GitHub Actions and optional GitHub Pages every calendar day around 4 a.m. America/New_York so normal updates do not require local builds or manual pushes after repository setup.
 
 ## Inputs
 
@@ -24,12 +24,18 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 ## Schedule Behavior
 
 - Manual `workflow_dispatch` remains available.
-- Weekday schedules:
-  - `17 12 * * 1-5`
-  - `17 13 * * 1-5`
+- Daily 4 a.m. retry schedules:
+  - `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *`
+  - `17 10,11,12 * * *`
+- The 8/9 UTC schedule covers daylight saving and standard-time 4 a.m. Eastern without hitting exactly `:00`.
+- The 10/11/12 UTC schedule is a late watchdog recovery layer.
 - The workflow runs from the latest default branch commit.
+- `npm run should:refresh` checks the live `run.json` before dependency install on scheduled `auto` runs.
+- Scheduled retries skip if the live page is already fresh for today in America/New_York.
+- If the live freshness check cannot be fetched, the gate fails open and runs the refresh.
 - Scheduled/public runs use `npm run daily`, which forces `auto` mode so delayed GitHub cron starts still publish a generated daily page.
-- Daily public output uses `NEWSLETTER_LOOKBACK_HOURS=36` on normal weekdays and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84` on Mondays.
+- Daily public output uses `NEWSLETTER_LOOKBACK_HOURS=36` on normal days and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84` on Mondays.
+- Daily freshness beats perfect story count: expected daily deploy checks allow limited-story output as long as the page is current, auto-mode, and within the daily lookback ceiling.
 - Manual preview dispatch still uses `npm run build` and the broader 168-hour review lookback.
 
 ## GitHub Pages Behavior
@@ -42,6 +48,24 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 ## Artifact Fallback Behavior
 
 If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `site` as the `nk-ai-market-brief` artifact.
+
+## Live Freshness Behavior
+
+- `scripts/check-live-freshness.mjs` fetches `https://osangen.github.io/nk-ai-market-brief-review/run.json` with cache busting after Pages deploy.
+- It retries before failing the workflow.
+- It passes only when `generatedAt` is today in America/New_York, `mode` is `auto`, `config.activeLookbackHours <= 84`, `automationConfigured` is true, and `send.sent` is false.
+
+## Latest Live Verification
+
+- Public workflow run: `25916942424`.
+- Live `run.json` verified `generatedAt: "2026-05-15T12:08:02.039Z"`, `mode: "auto"`, `config.activeLookbackHours: 36`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.
+- Unsafe-output search against the fetched live May 15 HTML and run JSON returned no matches.
+
+Previous verification:
+- Public Pages repo commit: `2c912c23e9dec113dd2844f2122cb799c124b2aa`.
+- Workflow run: `25869244639`.
+- Live `run.json` verified `mode: "auto"`, `config.activeLookbackHours: 36`, `automationConfigured: true`, `scheduledRefreshConfigured: true`, `githubPagesDeployConfigured: true`, and `send.sent: false`.
+- Unsafe-output search against the fetched live HTML and run JSON returned no matches.
 
 ## Email Disabled Behavior
 
@@ -57,11 +81,11 @@ The final shareable review page still records send state in `site/run.json` and 
 - `npm test`
 - `npm run build`
 - `npm run check:deploy`
-- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy`
+- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy`
 - `site/run.json` has `automationConfigured: true`
 - `site/run.json` has `manualPushRequiredAfterSetup: false`
 - Daily public `site/run.json` has `mode: "auto"` and `config.activeLookbackHours <= 84`
-- Workflow has manual dispatch, both cron entries, artifact upload, Pages upload/deploy, and Pages permissions.
+- Workflow has manual dispatch, both daily retry/watchdog cron entries, schedule gate, artifact upload, Pages upload/deploy, live freshness check, and Pages permissions.
 - `site/index.html` shows Automation status below the selected signals and technical diagnostics.
 - GitHub Pages deploy support remains gated by `DEPLOY_GITHUB_PAGES=true`; artifact upload remains available independently.
 

@@ -8,8 +8,8 @@ on:
         required: false
         default: "preview"
   schedule:
-    - cron: "17 12 * * 1-5"
-    - cron: "17 13 * * 1-5"
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *"
+    - cron: "17 10,11,12 * * *"
 
 concurrency:
   group: nk-ai-market-brief-${{ github.ref }}
@@ -26,8 +26,9 @@ jobs:
     env:
       NEWSLETTER_SEND_ENABLED: "false"
       NEWSLETTER_TIMEZONE: America/New_York
-      NEWSLETTER_TARGET_HOUR_LOCAL: "8"
+      NEWSLETTER_TARGET_HOUR_LOCAL: "4"
       NEWSLETTER_REVIEW_LOOKBACK_HOURS: "168"
+      NEWSLETTER_LIVE_RUN_JSON_URL: https://osangen.github.io/nk-ai-market-brief-review/run.json
       RUN_MODE: ${{ github.event.inputs.mode }}
     steps:
       - uses: actions/checkout@v4
@@ -37,11 +38,18 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Decide scheduled refresh
+        id: refresh_gate
+        run: npm run should:refresh
+
       - run: npm ci
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
 
       - run: npm test
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
 
       - name: Build newsletter page
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "send" ]; then
@@ -53,15 +61,17 @@ jobs:
           fi
 
       - name: Check deploy output
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "auto" ]; then
-            NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+            NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
           else
             npm run check:deploy
           fi
 
       - uses: actions/upload-artifact@v4
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
         with:
           name: nk-ai-market-brief
           path: |
@@ -69,16 +79,20 @@ jobs:
             site
 
       - name: Configure Pages
-        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' }}
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
       - name: Deploy to GitHub Pages
-        if: ${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' }}
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify live page freshness
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' && (github.event_name == 'schedule' || github.event.inputs.mode == 'auto') }}
+        run: npm run check:live

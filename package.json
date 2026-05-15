@@ -10,6 +10,8 @@
   "scripts": {
     "preview": "node scripts/preview.mjs",
     "daily": "node scripts/daily.mjs",
+    "should:refresh": "node scripts/should-refresh.mjs",
+    "check:live": "node scripts/check-live-freshness.mjs",
     "send": "node scripts/send.mjs",
     "build": "node scripts/build-site.mjs",
     "test": "node --test",

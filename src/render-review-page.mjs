@@ -160,7 +160,7 @@ function renderAutomationStatus(run) {
   <h2>Automation status</h2>
   <ul>
     <li>Workflow definition: ${escapeHtml(autoLabel)}</li>
-    <li>Schedule: daily around 4 a.m. Eastern with retry/watchdog runs (${escapeHtml(schedule)})</li>
+    <li>Schedule: weekly on Fridays around 4 a.m. Eastern with retry/watchdog runs (${escapeHtml(schedule)})</li>
     <li>Page deploy definition: ${pagesLabel}</li>
     <li>Live health: ${escapeHtml(liveLabel)}</li>
     <li>Fallback: GitHub Actions artifact</li>

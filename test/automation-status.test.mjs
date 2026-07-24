@@ -11,8 +11,8 @@ test("Workflow file exists and includes manual dispatch", async () => {
 
 test("Workflow includes both scheduled cron entries", async () => {
   const workflow = await readFile(".github/workflows/newsletter.yml", "utf8");
-  assert.match(workflow, /cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 \* \* \*"/);
-  assert.match(workflow, /cron: "17 10,11,12 \* \* \*"/);
+  assert.match(workflow, /cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 \* \* 5"/);
+  assert.match(workflow, /cron: "17 10,11,12 \* \* 5"/);
   assert.match(workflow, /NEWSLETTER_TARGET_HOUR_LOCAL: "4"/);
 });
 

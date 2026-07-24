@@ -8,8 +8,10 @@ on:
         required: false
         default: "preview"
   schedule:
-    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *"
-    - cron: "17 10,11,12 * * *"
+    # Weekly cadence: Fridays around 4 a.m. America/New_York (DST-safe retry
+    # window across 8-9 UTC, late watchdog at 10-12 UTC), per demo review plan.
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * 5"
+    - cron: "17 10,11,12 * * 5"
 
 concurrency:
   group: nk-ai-market-brief-${{ github.ref }}

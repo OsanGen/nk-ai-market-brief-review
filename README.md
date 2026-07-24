@@ -46,10 +46,10 @@ Outputs:
 
 ## Deployment
 
-GitHub Actions runs from the default branch every day with redundant 4 a.m. America/New_York coverage:
+GitHub Actions runs from the default branch weekly on Fridays with redundant 4 a.m. America/New_York coverage:
 
-- `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *`
-- `17 10,11,12 * * *`
+- `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * 5`
+- `17 10,11,12 * * 5`
 
 The first schedule covers the DST and standard-time 4 a.m. window without hitting exactly `:00`; the second is a late watchdog. A cheap schedule gate checks the live `run.json` first, skips duplicate retries once today is fresh, and fails open by refreshing if live freshness cannot be fetched.
 

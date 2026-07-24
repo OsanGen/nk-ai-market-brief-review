@@ -1,0 +1,41 @@
+# One-off manual deploy of the committed root demo files to GitHub Pages.
+# Publishes exactly what is committed at the repo root (index.html,
+# newsletter.txt, run.json) — no pipeline, no RSS fetch, no API keys.
+# Manual trigger only; used to freeze a hand-curated edition on the live URL.
+name: Deploy committed demo files
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: nk-ai-market-brief-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage committed demo files
+        run: |
+          mkdir -p _demo_site
+          cp index.html newsletter.txt run.json _demo_site/
+          touch _demo_site/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _demo_site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

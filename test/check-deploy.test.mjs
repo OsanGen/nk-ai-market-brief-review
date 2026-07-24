@@ -10,8 +10,8 @@ const workflow = `name: NK AI Market Brief
 on:
   workflow_dispatch:
   schedule:
-    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *"
-    - cron: "17 10,11,12 * * *"
+    - cron: "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * 5"
+    - cron: "17 10,11,12 * * 5"
 permissions:
   contents: read
   pages: write
@@ -143,7 +143,7 @@ test("check-deploy fails when scheduled cron entries are missing", async () => {
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
     writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
-    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow.replace('    - cron: "17 10,11,12 * * *"\n', ""), "utf8"),
+    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow.replace('    - cron: "17 10,11,12 * * 5"\n', ""), "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
     writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")

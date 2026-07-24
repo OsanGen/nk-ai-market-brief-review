@@ -84,7 +84,7 @@ Use `telemetry.phase(...)` for started/completed/failed lifecycle pairs. Event, 
 
 ## Automatic Refresh
 
-The GitHub Actions workflow runs from the default branch every day with redundant 4 a.m. America/New_York coverage:
+The GitHub Actions workflow runs from the default branch weekly on Fridays with redundant 4 a.m. America/New_York coverage:
 
 - `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *`
 - `17 10,11,12 * * *`

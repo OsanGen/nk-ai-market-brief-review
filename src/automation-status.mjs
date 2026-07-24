@@ -1,9 +1,12 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+// Weekly cadence: Fridays around 4 a.m. America/New_York (DOW 5), matching
+// .github/workflows/newsletter.yml. The strings must match the workflow crons
+// exactly — getAutomationStatus() verifies the workflow contains them.
 export const AUTOMATION_SCHEDULE = [
-  "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *",
-  "17 10,11,12 * * *"
+  "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * 5",
+  "17 10,11,12 * * 5"
 ];
 export const PAGES_GATE_VARIABLE = "DEPLOY_GITHUB_PAGES";
 export const WORKFLOW_PATH = ".github/workflows/newsletter.yml";

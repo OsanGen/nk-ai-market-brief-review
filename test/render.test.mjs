@@ -74,7 +74,7 @@ test("Review page renderer creates shareable static page", () => {
       scheduledRefreshConfigured: true,
       githubPagesDeployConfigured: true,
       githubPagesDeployGatedBy: "DEPLOY_GITHUB_PAGES",
-      schedule: ["2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *", "17 10,11,12 * * *"],
+      schedule: ["2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * 5", "17 10,11,12 * * 5"],
       send: { sent: false, skippedReason: "send_disabled" }
     }
   });
@@ -93,7 +93,7 @@ test("Review page renderer creates shareable static page", () => {
   assert.match(html, /Automation status/);
   assert.match(html, /Workflow definition: configured/);
   assert.match(html, /Live health: not verified by this static build/);
-  assert.match(html, /daily around 4 a\.m\. Eastern/);
+  assert.match(html, /weekly on Fridays around 4 a\.m\. Eastern/);
   assert.doesNotMatch(html, /<script|onerror|onclick|javascript:/i);
 });
 

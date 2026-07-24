@@ -39,6 +39,38 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .lead-story h2 { font-size: clamp(26px, 4vw, 38px); line-height: 1.05; letter-spacing: -0.01em; text-transform: none; }
     .story-card h3 { font-size: 19px; }
     .story-meta strong, footer { text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; }
+    /* B: week-in-five index */
+    .week-five { list-style: none; margin: 12px 0 4px; padding: 0; }
+    .week-five li { display: flex; gap: 14px; align-items: baseline; border-top: 1px solid #ddd; padding: 10px 2px; }
+    .week-five li:first-child { border-top: 0; }
+    .week-five a { text-decoration: none; font-weight: 600; font-size: 16px; line-height: 1.3; }
+    .week-five a:hover { text-decoration: underline; }
+    .five-num, .story-num { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #000; }
+    /* C: editorial numerals + why-it-matters callout + source-type badge */
+    .story-num { font-size: 26px; line-height: 1; margin: 0 0 8px; }
+    .lead-story .story-num { display: inline-block; margin-right: 10px; font-size: 15px; }
+    .why-callout { border-left: 4px solid #000; background: #f6f6f6; padding: 10px 12px; margin: 10px 0; }
+    .why-callout strong { display: block; text-transform: uppercase; font-size: 10px; letter-spacing: 0.14em; margin-bottom: 3px; }
+    .source-type { display: inline-block; border: 1px solid #000; padding: 1px 6px; margin-right: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; vertical-align: 1px; }
+    /* D: pull-stat hero */
+    .pull-stat { text-align: center; padding: 26px 12px 30px; }
+    .pull-stat-value { font-size: clamp(64px, 12vw, 128px); font-weight: 700; letter-spacing: -0.02em; line-height: 1; margin: 0; }
+    .pull-stat-caption { font-size: 18px; max-width: 34em; margin: 10px auto 0; }
+    .pull-stat-source { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #333; margin-top: 8px; }
+    /* E: collapsed system details */
+    details.ops { border-top: 1px solid #000; margin-top: 26px; padding-top: 14px; }
+    details.ops > summary { cursor: pointer; text-transform: uppercase; font-size: 12px; letter-spacing: 0.14em; font-weight: 700; padding: 8px 0; list-style-position: inside; }
+    details.ops section { border-top-color: #ddd; }
+    /* F: reading comfort + touch targets */
+    .story-body, .why-callout, .lead-story > p { max-width: 68ch; }
+    a { padding: 2px 0; }
+    @media (max-width: 760px) {
+      .week-five a { font-size: 15px; }
+      .pull-stat-caption { font-size: 16px; }
+      .story-card { padding: 16px; }
+      .badges { gap: 10px; }
+      .badge { padding: 7px 12px; }
+    }
     .story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .story-card { border: 1px solid #000; padding: 14px; min-width: 0; }
     .story-card h3 { font-size: 18px; }
@@ -75,7 +107,9 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     </header>
     <section>
       <p class="signals-label">Today's selected signals</p>
+      ${renderWeekInFive(stories)}
     </section>
+    ${renderPullStat(run.pullStat)}
     ${lead ? renderLead(lead) : renderEmpty()}
     ${renderCards(rest)}
     ${renderWatchlist(run.watchlist ?? [])}
@@ -83,11 +117,14 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
       <h2>Text version</h2>
       <p><a href="newsletter.txt">Open newsletter.txt</a></p>
     </section>
-    ${renderRunSummary(run, sendLabel)}
-    ${renderRingStats(run.sourceRings)}
-    ${renderAiLanePanel(run.aiLane, run.modelPolicy)}
-    ${renderSourceHealth(sourceResults)}
-    ${renderAutomationStatus(run)}
+    <details class="ops">
+      <summary>System details</summary>
+      ${renderRunSummary(run, sendLabel)}
+      ${renderRingStats(run.sourceRings)}
+      ${renderAiLanePanel(run.aiLane, run.modelPolicy)}
+      ${renderSourceHealth(sourceResults)}
+      ${renderAutomationStatus(run)}
+    </details>
     <footer>
       <p>${FOOTER}</p>
     </footer>
@@ -97,13 +134,35 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
 `;
 }
 
+// B: numbered one-line index of the issue, anchor-linked to each story.
+function renderWeekInFive(stories) {
+  if (!stories.length) return "";
+  const items = stories.map((story, index) =>
+    `    <li><span class="five-num">${padNum(index + 1)}</span><a href="#story-${index + 1}">${escapeHtml(story.headline)}</a></li>`
+  ).join("\n");
+  return `<ol class="week-five">
+${items}
+  </ol>`;
+}
+
+// D: one oversized, sourced editorial stat. Renders only when the edition
+// provides one — never synthesized.
+function renderPullStat(pullStat) {
+  if (!pullStat || !pullStat.value || !pullStat.caption) return "";
+  return `<section class="pull-stat">
+  <p class="pull-stat-value">${escapeHtml(pullStat.value)}</p>
+  <p class="pull-stat-caption">${escapeHtml(pullStat.caption)}</p>
+  ${pullStat.sourceLabel ? `<p class="pull-stat-source">${escapeHtml(pullStat.sourceLabel)}</p>` : ""}
+</section>`;
+}
+
 function renderLead(story) {
-  return `<section class="lead-story">
-  <p class="meta">Lead story</p>
+  return `<section class="lead-story" id="story-1">
+  <p class="meta"><span class="story-num">01</span>Lead story</p>
   ${renderStoryMeta(story)}
   <h2>${escapeHtml(story.headline)}</h2>
-  <p>${escapeHtml(story.summary)}</p>
-  <p>${escapeHtml(story.whyItMatters)}</p>
+  <p class="story-body">${escapeHtml(story.summary)}</p>
+  ${whyCallout(story)}
   ${readLink(story)}
 </section>`;
 }
@@ -117,19 +176,42 @@ function renderCards(stories) {
   return `<section>
   <h2>Story grid</h2>
   <div class="story-grid">
-${stories.map(renderCard).join("\n")}
+${stories.map((story, index) => renderCard(story, index)).join("\n")}
   </div>
 </section>`;
 }
 
-function renderCard(story) {
-  return `<article class="story-card">
+function renderCard(story, index) {
+  return `<article class="story-card" id="story-${index + 2}">
+  <p class="story-num">${padNum(index + 2)}</p>
   ${renderStoryMeta(story)}
   <h3>${escapeHtml(story.headline)}</h3>
-  <p>${escapeHtml(story.summary)}</p>
-  <p>${escapeHtml(story.whyItMatters)}</p>
+  <p class="story-body">${escapeHtml(story.summary)}</p>
+  ${whyCallout(story)}
   ${readLink(story)}
 </article>`;
+}
+
+// C: "Why it matters" as a distinct black-ruled callout.
+function whyCallout(story) {
+  if (!story.whyItMatters) return "";
+  return `<p class="why-callout"><strong>Why it matters</strong> ${escapeHtml(story.whyItMatters)}</p>`;
+}
+
+function padNum(value) {
+  return String(value).padStart(2, "0");
+}
+
+// C: compact claim-fit badge, shown only when the edition supplies sourceType.
+const SOURCE_TYPE_LABELS = {
+  official_primary: "Official",
+  premium_independent: "Independent press",
+  verified_expert: "Verified expert"
+};
+
+function sourceTypeBadge(story) {
+  const label = SOURCE_TYPE_LABELS[story.sourceType];
+  return label ? `<span class="source-type">${escapeHtml(label)}</span>` : "";
 }
 
 function renderRunSummary(run, sendLabel) {
@@ -201,7 +283,7 @@ function renderStoryMeta(story) {
   const source = story.sourceOutlet || story.sourceName || "source unavailable";
   const scan = story.scanLabel || (story.sourceOutlet ? story.sourceName : "");
   return `<p class="story-meta">
-    <span><strong>Source:</strong> ${escapeHtml(source)}</span>
+    <span><strong>Source:</strong> ${escapeHtml(source)}</span>${sourceTypeBadge(story)}
     <span><strong>Category:</strong> ${escapeHtml(story.category ?? "market")}</span>
     ${scan ? `<span><strong>Scan:</strong> ${escapeHtml(scan)}</span>` : ""}
     <span><strong>Date:</strong> ${escapeHtml(formatDate(story.publishedAt))}</span>

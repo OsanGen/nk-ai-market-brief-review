@@ -239,3 +239,50 @@ test("V1 review page renders NK-relevance badges, watchlist, ring stats, and the
   assert.match(html, /NK stack-aware ranking/);
   assert.match(html, /blocked until ZDR verification/);
 });
+
+test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and collapsed ops are data-conditional", () => {
+  const stories = Array.from({ length: 3 }, (_, index) => ({
+    headline: `Story number ${index + 1}`,
+    summary: `Summary ${index + 1}.`,
+    whyItMatters: `Matters ${index + 1}.`,
+    sourceName: "Scan",
+    sourceOutlet: "Outlet",
+    category: "fashion",
+    publishedAt: "2026-07-24T04:00:00.000Z",
+    url: `https://example.com/${index + 1}`,
+    sourceType: index === 0 ? "official_primary" : undefined
+  }));
+
+  const withExtras = renderReviewPage({
+    stories,
+    run: {
+      mode: "preview",
+      reviewReady: true,
+      pullStat: { value: "41.4%", caption: "of shoppers prefer AI tools", sourceLabel: "Survey, July 22" }
+    },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+
+  assert.match(withExtras, /class="week-five"/);
+  assert.match(withExtras, /href="#story-1">Story number 1/);
+  assert.match(withExtras, /href="#story-3">Story number 3/);
+  assert.match(withExtras, /id="story-1"/);
+  assert.match(withExtras, /id="story-3"/);
+  assert.match(withExtras, /class="why-callout"><strong>Why it matters<\/strong> Matters 1\./);
+  assert.match(withExtras, /class="source-type">Official</);
+  assert.equal((withExtras.match(/class="source-type"/g) || []).length, 1, "badge only where sourceType provided");
+  assert.match(withExtras, /class="pull-stat-value">41\.4%/);
+  assert.match(withExtras, /Survey, July 22/);
+  assert.match(withExtras, /<details class="ops">/);
+  assert.match(withExtras, /<summary>System details<\/summary>/);
+  assert.match(withExtras, /Technical diagnostics/);
+
+  const withoutExtras = renderReviewPage({
+    stories: [],
+    run: { mode: "preview" },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+  assert.doesNotMatch(withoutExtras, /class="week-five"/);
+  assert.doesNotMatch(withoutExtras, /class="pull-stat-value"/);
+  assert.doesNotMatch(withoutExtras, /class="source-type"/);
+});

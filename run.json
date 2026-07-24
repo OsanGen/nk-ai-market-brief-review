@@ -18,7 +18,7 @@
   },
   "correlationId": "manual-editorial-2026-07-24",
   "fetchedItemCount": 5,
-  "generatedAt": "2026-07-24T20:06:33.330Z",
+  "generatedAt": "2026-07-24T20:52:36.039Z",
   "githubActionsWorkflowFound": true,
   "githubPagesDeployConfigured": true,
   "githubPagesDeployGatedBy": "DEPLOY_GITHUB_PAGES",
@@ -52,7 +52,7 @@
   "rejectedReasonCounts": {},
   "reviewReady": true,
   "reviewReasons": [
-    "Hand-curated weekly edition (2026-07-17 to 2026-07-24): stories researched, opened, and verified editorially this week by Claude Fable 5 using public web sources; the automated source pipeline and API-powered analysis lane were not used for this edition."
+    "Weekly edition, July 17-24: curated against Norma Kamali's current platform architecture (normakamali.com + normakamali.ai) and ranked for highest business impact. Every story verified at its primary source."
   ],
   "runId": "manual-editorial-2026-07-24",
   "schedule": [
@@ -126,5 +126,5 @@
       "url": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/"
     }
   ],
-  "editorialNote": "Hand-curated weekly edition (2026-07-17 to 2026-07-24): stories researched, opened, and verified editorially this week by Claude Fable 5 using public web sources; the automated source pipeline and API-powered analysis lane were not used for this edition."
+  "editorialNote": "Weekly edition, July 17-24: curated against Norma Kamali's current platform architecture (normakamali.com + normakamali.ai) and ranked for highest business impact. Every story verified at its primary source."
 }

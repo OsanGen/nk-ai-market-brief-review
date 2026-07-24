@@ -177,7 +177,8 @@ export async function runNewsletter({
 
       // Key-gated AI lane: dry-run (packets + budget preflight + receipts) until
       // the operator wires ANTHROPIC_API_KEY and flips the lane flag. Fail-soft.
-      const aiLane = await recordAiLane({ telemetry, stories, env, stack });
+      const aiLaneOutcome = await recordAiLane({ telemetry, stories, env, stack });
+      const aiLane = aiLaneOutcome.summary;
 
       const { html, text } = await telemetry.phase({
         name: "content.render",
@@ -263,6 +264,8 @@ export async function runNewsletter({
         modelPolicy,
         stackProfile: stack.summary,
         aiLane,
+        weekOverview: aiLaneOutcome.weekOverview || "",
+        ogImageUrl: OG_IMAGE_URL,
         sourceRings,
         watchlist,
         ...(coverage ? {
@@ -334,11 +337,12 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
         if (!override) continue;
         story.summary = override.summary;
         story.whyItMatters = override.why_it_matters;
+        if (override.next_move) story.nextMove = override.next_move;
         story.aiWritten = true;
         story.aiRelevance = override.relevance;
       }
     }
-    return result.summary;
+    return { summary: result.summary, weekOverview: result.weekOverview ?? "" };
   } catch (error) {
     await telemetry.event({
       event: "ai.lane.failed",
@@ -347,7 +351,7 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
       status: "skipped",
       reasonCode: "ai_lane_unavailable"
     });
-    return { status: "unavailable", reasonCode: "ai_lane_unavailable" };
+    return { summary: { status: "unavailable", reasonCode: "ai_lane_unavailable" }, weekOverview: "" };
   }
 }
 
@@ -410,6 +414,9 @@ async function recordModelPolicy(telemetry) {
     };
   }
 }
+
+// Social-card image served from the live review page (H: branded link previews).
+const OG_IMAGE_URL = "https://osangen.github.io/nk-ai-market-brief-review/og-card.png";
 
 export const WEEKLY_SEND_SKIP_REASON = "weekly_mode_send_prohibited";
 

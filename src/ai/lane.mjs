@@ -114,8 +114,9 @@ export async function runAiLane({
   }
   const data = await response.json();
   let overrides = [];
+  let weekOverview = "";
   try {
-    overrides = parseSynthesis(data, { allowedStoryIds: new Set(stories.map((story) => String(story.id))) });
+    ({ overrides, weekOverview } = parseSynthesis(data, { allowedStoryIds: new Set(stories.map((story) => String(story.id))) }));
   } catch (error) {
     return {
       mode: "synthesis_invalid",
@@ -129,6 +130,7 @@ export async function runAiLane({
   return {
     mode: "synthesized",
     overrides,
+    weekOverview,
     summary: {
       ...activeSummary,
       status: "synthesized",

@@ -268,7 +268,7 @@ test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and colla
   assert.match(withExtras, /href="#story-3">Story number 3/);
   assert.match(withExtras, /id="story-1"/);
   assert.match(withExtras, /id="story-3"/);
-  assert.match(withExtras, /class="why-callout"><strong>Why it matters<\/strong> Matters 1\./);
+  assert.match(withExtras, /class="callout-line"><strong>Why it matters<\/strong> Matters 1\./);
   assert.match(withExtras, /class="source-type">Official</);
   assert.equal((withExtras.match(/class="source-type"/g) || []).length, 1, "badge only where sourceType provided");
   assert.match(withExtras, /class="pull-stat-value">41\.4%/);

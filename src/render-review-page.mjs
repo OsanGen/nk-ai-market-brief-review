@@ -16,6 +16,14 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Internal preview of AI + fashion, beauty, e-commerce, and agentic commerce signals for NK.">
   <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NK AI Market Brief · Week ending ${escapeHtml(folioDate(generated))}">
+  <meta property="og:description" content="${escapeHtml(run.weekOverview || "AI + fashion, beauty, e-commerce, AI shopping, and agentic commerce signals, curated weekly.")}">
+  ${run.ogImageUrl ? `<meta property="og:image" content="${escapeHtml(run.ogImageUrl)}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="nk-icon.png">` : ""}
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial,sans-serif' font-size='28' font-weight='700' fill='%23fff' text-anchor='middle'%3ENK%3C/text%3E%3C/svg%3E">
   <title>NK AI Market Brief</title>
   <style>
     /* NK editorial type system: stark black/white, grotesque type, magazine folio. */
@@ -51,6 +59,11 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .lead-story .story-num { display: inline-block; margin-right: 10px; font-size: 15px; }
     .why-callout { border-left: 4px solid #000; background: #f6f6f6; padding: 10px 12px; margin: 10px 0; }
     .why-callout strong { display: block; text-transform: uppercase; font-size: 10px; letter-spacing: 0.14em; margin-bottom: 3px; }
+    .callout-line { display: block; }
+    .callout-line + .callout-line { margin-top: 8px; }
+    .next-move { font-weight: 700; }
+    /* G: weekly standfirst */
+    .the-week .standfirst { font-size: 19px; line-height: 1.5; max-width: 62ch; margin: 6px 0 4px; }
     .source-type { display: inline-block; border: 1px solid #000; padding: 1px 6px; margin-right: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; vertical-align: 1px; }
     /* D: pull-stat hero */
     .pull-stat { text-align: center; padding: 26px 12px 30px; }
@@ -105,6 +118,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
       <p class="status-line"><strong>Review status:</strong> ${escapeHtml(reviewLabel)}</p>
       ${renderReviewNote(run)}
     </header>
+    ${renderWeekOverview(run.weekOverview)}
     <section>
       <p class="signals-label">Today's selected signals</p>
       ${renderWeekInFive(stories)}
@@ -132,6 +146,16 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
 </body>
 </html>
 `;
+}
+
+// G: the week's narrative as a magazine standfirst. Data-conditional — absent
+// field, absent section.
+function renderWeekOverview(weekOverview) {
+  if (!weekOverview) return "";
+  return `<section class="the-week">
+  <p class="signals-label">The week</p>
+  <p class="standfirst">${escapeHtml(weekOverview)}</p>
+</section>`;
 }
 
 // B: numbered one-line index of the issue, anchor-linked to each story.
@@ -192,10 +216,17 @@ function renderCard(story, index) {
 </article>`;
 }
 
-// C: "Why it matters" as a distinct black-ruled callout.
+// C + I: "Why it matters" and the operator "Next move" as one calm two-line
+// callout. The next-move line renders only when the edition provides it.
 function whyCallout(story) {
-  if (!story.whyItMatters) return "";
-  return `<p class="why-callout"><strong>Why it matters</strong> ${escapeHtml(story.whyItMatters)}</p>`;
+  if (!story.whyItMatters && !story.nextMove) return "";
+  const why = story.whyItMatters
+    ? `<span class="callout-line"><strong>Why it matters</strong> ${escapeHtml(story.whyItMatters)}</span>`
+    : "";
+  const move = story.nextMove
+    ? `<span class="callout-line next-move"><strong>Next move</strong> ${escapeHtml(story.nextMove)}</span>`
+    : "";
+  return `<p class="why-callout">${why}${move}</p>`;
 }
 
 function padNum(value) {

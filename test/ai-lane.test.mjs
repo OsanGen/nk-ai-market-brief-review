@@ -191,10 +191,33 @@ test("parseSynthesis drops spoofed ids, URLs, and empty fields; strips code fenc
       ]) + "\n```"
     }]
   };
-  const outputs = parseSynthesis(data, allowed);
-  assert.equal(outputs.length, 1);
-  assert.equal(outputs[0].summary, "Good summary.");
-  assert.equal(outputs[0].relevance, "high");
+  const { overrides, weekOverview } = parseSynthesis(data, allowed);
+  assert.equal(overrides.length, 1);
+  assert.equal(overrides[0].summary, "Good summary.");
+  assert.equal(overrides[0].relevance, "high");
+  assert.equal(weekOverview, "", "legacy array shape has no overview");
+});
+
+test("parseSynthesis handles the object shape: week overview, next_move, and dash normalization", () => {
+  const allowed = { allowedStoryIds: new Set(["abc123"]) };
+  const data = {
+    content: [{
+      type: "text",
+      text: JSON.stringify({
+        week_overview: "The agent layer got rails \u2014 and consumers noticed.",
+        stories: [{
+          story_id: "abc123",
+          summary: "Good summary.",
+          why_it_matters: "Real reason.",
+          next_move: "Audit UCP feed readiness before Q4.",
+          relevance: "high"
+        }]
+      })
+    }]
+  };
+  const { overrides, weekOverview } = parseSynthesis(data, allowed);
+  assert.equal(weekOverview, "The agent layer got rails - and consumers noticed.");
+  assert.equal(overrides[0].next_move, "Audit UCP feed readiness before Q4.");
 });
 
 test("synthesis prompt carries only public projections inside evidence delimiters", () => {

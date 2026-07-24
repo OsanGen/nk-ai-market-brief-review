@@ -272,6 +272,9 @@ export async function runNewsletter({
         ogImageUrl: OG_IMAGE_URL,
         sourceRings,
         watchlist,
+        // Velvet Rope: when a site passcode is configured, the published page is
+        // encrypted at deploy time; the renderer drops plaintext side-doors.
+        gated: Boolean(env.SITE_PASSCODE),
         ...(coverage ? {
           weekId: coverage.receipt.week_id,
           coverage: {

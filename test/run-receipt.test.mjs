@@ -127,8 +127,7 @@ test("public receipt carries aiLane/stackProfile/sourceRings/watchlist allowlist
   assert.equal(receipt.stackProfile.internalNotes, undefined);
   assert.equal(receipt.stackProfile.capabilityIds, undefined);
   assert.equal(receipt.sourceRings.active, 40);
-  assert.equal(receipt.watchlist.length, 1);
-  assert.equal(receipt.watchlist[0].score, undefined);
-  assert.doesNotMatch(JSON.stringify(receipt), /sk-should-never-appear|token=x/);
-  assert.deepEqual(receipt.watchlist[0].normaRelevance.capabilities, ["Voice AI / voice commerce"]);
+  assert.equal(receipt.watchlistCount, 1);
+  assert.equal(receipt.watchlist, undefined, "titles and links never enter the public receipt");
+  assert.doesNotMatch(JSON.stringify(receipt), /sk-should-never-appear|token=x|example\.com\/w/);
 });

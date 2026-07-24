@@ -147,10 +147,10 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     ${lead ? renderLead(lead) : renderEmpty()}
     ${renderCards(rest)}
     ${renderWatchlist(run.watchlist ?? [])}
-    <section>
+    ${run.gated ? "" : `<section>
       <h2>Text version</h2>
       <p><a href="newsletter.txt">Open newsletter.txt</a></p>
-    </section>
+    </section>`}
     <details class="ops">
       <summary>System details</summary>
       <p class="status-line"><strong>Review status:</strong> ${escapeHtml(reviewLabel)}</p>

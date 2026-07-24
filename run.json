@@ -18,7 +18,7 @@
   },
   "correlationId": "manual-editorial-2026-07-24",
   "fetchedItemCount": 5,
-  "generatedAt": "2026-07-24T23:09:52.673Z",
+  "generatedAt": "2026-07-24T23:51:29.471Z",
   "githubActionsWorkflowFound": true,
   "githubPagesDeployConfigured": true,
   "githubPagesDeployGatedBy": "DEPLOY_GITHUB_PAGES",
@@ -100,31 +100,6 @@
   },
   "targetHourLocal": 4,
   "timezone": "America/New_York",
-  "watchlist": [
-    {
-      "id": "watch-1",
-      "normaRelevance": {
-        "capabilities": [
-          "Shopify / headless commerce"
-        ]
-      },
-      "publishedAt": "2026-07-21T00:00:00.000Z",
-      "sourceOutlet": "Shopify developer changelog",
-      "title": "Shopify ships full-stack analytics capabilities for apps (developer changelog, July 21)",
-      "url": "https://shopify.dev/changelog/full-stack-capabilities-to-power-app-analytics"
-    },
-    {
-      "id": "watch-2",
-      "normaRelevance": {
-        "capabilities": [
-          "Agent platforms / model providers"
-        ]
-      },
-      "publishedAt": "2026-07-20T00:00:00.000Z",
-      "sourceOutlet": "TechCrunch",
-      "title": "Natural raises a $30M Series A led by Forerunner to build payment rails for AI agents (TechCrunch, July 20)",
-      "url": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/"
-    }
-  ],
+  "watchlistCount": 2,
   "editorialNote": "Weekly edition, July 17-24: curated against Norma Kamali's current platform architecture (normakamali.com + normakamali.ai) and ranked for highest business impact. Every story verified at its primary source."
 }

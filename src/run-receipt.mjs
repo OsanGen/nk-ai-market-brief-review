@@ -45,7 +45,9 @@ export function publicRunReceipt(run) {
     stackProfile: publicStackProfile(run.stackProfile),
     aiLane: publicAiLane(run.aiLane),
     sourceRings: run.sourceRings ?? null,
-    watchlist: (run.watchlist ?? []).map(publicWatchlistEntry),
+    // Gated site: the public ops receipt carries only the COUNT of watchlist
+    // items, never titles or links (competitor-readable surface).
+    watchlistCount: (run.watchlist ?? []).length,
     observability: publicObservability(run.observability)
   });
 }
@@ -93,18 +95,6 @@ function publicAiLane(lane) {
   };
 }
 
-function publicWatchlistEntry(entry) {
-  return {
-    id: entry.id,
-    title: entry.title,
-    url: entry.url,
-    sourceOutlet: entry.sourceOutlet || "",
-    publishedAt: entry.publishedAt || "",
-    normaRelevance: entry.normaRelevance
-      ? { capabilities: (entry.normaRelevance.capabilities ?? []).map((capability) => capability.label) }
-      : null
-  };
-}
 
 function publicModelPolicy(policy) {
   if (!policy || typeof policy !== "object") return null;

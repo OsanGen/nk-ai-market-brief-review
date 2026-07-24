@@ -58,6 +58,8 @@ jobs:
           # degrades safely to the deterministic template copy (dry-run receipts).
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NEWSLETTER_AI_LANE_ENABLED: ${{ vars.NEWSLETTER_AI_LANE_ENABLED }}
+          # Presence only: tells the renderer the published page will be gated.
+          SITE_PASSCODE: ${{ secrets.SITE_PASSCODE }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "send" ]; then
@@ -84,6 +86,22 @@ jobs:
             NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
           else
             npm run check:deploy
+          fi
+
+      - name: Protect published site (Velvet Rope)
+        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
+        env:
+          SITE_PASSCODE: ${{ secrets.SITE_PASSCODE }}
+        run: |
+          if [ -n "$SITE_PASSCODE" ]; then
+            node scripts/protect-site.mjs site/index.html
+            rm -f site/newsletter.txt
+            echo "site encrypted"
+          elif [ "${{ vars.DEPLOY_GITHUB_PAGES }}" = "true" ]; then
+            echo "SITE_PASSCODE secret is required when Pages deploy is enabled" >&2
+            exit 1
+          else
+            echo "no passcode configured; artifact stays internal-plaintext"
           fi
 
       - name: Upload newsletter artifact

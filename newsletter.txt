@@ -1,5 +1,5 @@
 NK AI Market Brief
-Generated 2026-07-24T21:20:38.096Z
+Generated 2026-07-24T22:06:00.981Z
 
 AI, fashion, beauty, e-commerce, AI shopping, and agentic commerce signals.
 
@@ -52,5 +52,7 @@ Date: 2026-07-22
 Summary: On July 22, Ulta Beauty hosted a TikTok Shop livestream with Ice Spice to debut her first fragrance ahead of a September Ulta-exclusive retail release, Glossy reported on July 24. The stream - Ulta's first major TikTok Shop campaign since joining the platform in March - drew a reported 178,000 views and 5.95 million impressions, with limited quantities sold exclusively during the broadcast.
 Why it matters: A concrete playbook for exclusive-drop livestream commerce, where the discovery-to-checkout loop happens inside a social platform rather than on the brand's own site.
 Read source: https://www.glossy.co/beauty/exclusive-ulta-beauty-taps-ice-spice-for-its-first-tiktok-shop-campaign-to-unveil
+
+From 26 signals scanned | 7 qualified | 5 published
 
 Internal NK market brief. Summaries are deterministic and based on RSS metadata only.

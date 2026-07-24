@@ -16,7 +16,9 @@
   <title>NK AI Market Brief</title>
   <style>
     /* NK editorial type system: stark black/white, grotesque type, magazine folio. */
+    html { scroll-behavior: smooth; }
     body { margin: 0; background: #fff; color: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.5; }
+    [id^="story-"] { scroll-margin-top: 14px; }
     main { max-width: 1040px; margin: 0 auto; padding: 24px 18px 44px; }
     header, section, footer { border-top: 1px solid #000; padding-top: 18px; margin-top: 22px; }
     header { border-top: 0; margin-top: 0; padding-top: 0; border-bottom: 2px solid #000; padding-bottom: 20px; }
@@ -53,6 +55,21 @@
     .next-move { font-weight: 700; }
     /* G: weekly standfirst */
     .the-week .standfirst { font-size: 19px; line-height: 1.5; max-width: 62ch; margin: 6px 0 4px; }
+    /* №1: curation-funnel colophon (masthead folio spec echoed) */
+    .curation-folio { font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 400; color: #333; margin: 2px 0 12px; line-height: 1.6; }
+    /* №2: THE MOVES action ledger */
+    .moves { list-style: none; margin: 12px 0 4px; padding: 0; }
+    .moves li { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; border-top: 1px solid #000; padding: 10px 2px; }
+    .moves li:first-child { border-top: 0; }
+    .move-text { font-weight: 700; font-size: 16px; line-height: 1.35; flex: 1 1 24ch; max-width: 62ch; }
+    .move-ref { margin-left: auto; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #000; text-decoration: none; border-bottom: 1px solid #000; padding: 2px 0 1px; white-space: nowrap; }
+    .move-ref:hover { border-bottom-width: 2px; }
+    /* №3: signal-grade triage marks */
+    .sig { display: inline-flex; gap: 3px; vertical-align: 1px; }
+    .sig b { display: block; width: 7px; height: 7px; border: 1px solid #000; box-sizing: border-box; background: #fff; }
+    .sig .on { background: #000; }
+    .week-five .sig { margin-left: auto; padding-left: 14px; }
+    .story-num .sig, .lead-story .meta .sig { margin-left: 10px; }
     .source-type { display: inline-block; border: 1px solid #000; padding: 1px 6px; margin-right: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; vertical-align: 1px; }
     /* D: pull-stat hero */
     .pull-stat { text-align: center; padding: 26px 12px 30px; }
@@ -72,6 +89,7 @@
       .story-card { padding: 16px; }
       .badges { gap: 10px; }
       .badge { padding: 7px 12px; }
+      .move-text { font-size: 15px; }
     }
     .story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .story-card { border: 1px solid #000; padding: 14px; min-width: 0; }
@@ -96,7 +114,7 @@
       <p class="folio"><span>Norma Kamali</span><span>AI Market Intelligence</span><span>Week ending July 24, 2026</span></p>
       <h1>NK AI Market Brief</h1>
       <p class="deck">AI + fashion, beauty, e-commerce, AI shopping, and agentic commerce signals</p>
-      <p class="meta">Generated 2026-07-24 21:20 UTC</p>
+      <p class="meta">Generated 2026-07-24 22:06 UTC</p>
       <div class="badges">
         <span class="badge">Internal review</span>
         <span class="badge">AI-curated &amp; source-verified</span>
@@ -111,21 +129,32 @@
 </section>
     <section>
       <p class="signals-label">Today's selected signals</p>
+      <p class="curation-folio">From 26 signals scanned · 7 qualified · 5 published</p>
       <ol class="week-five">
-    <li><span class="five-num">01</span><a href="#story-1">Google declares its Universal Commerce Protocol the standard for agentic commerce, with Target and Steve Madden live</a></li>
-    <li><span class="five-num">02</span><a href="#story-2">Michaels formally launches Ask Mike, a Gemini-built AI shopping assistant, and reports early usage data</a></li>
-    <li><span class="five-num">03</span><a href="#story-3">New consumer survey: shoppers now narrowly prefer AI tools over brand websites</a></li>
-    <li><span class="five-num">04</span><a href="#story-4">Algolia makes Dynamic Facets generally available, auto-prioritizing search filters by shopper context</a></li>
-    <li><span class="five-num">05</span><a href="#story-5">Ulta Beauty runs its first major TikTok Shop campaign: an Ice Spice livestream fragrance debut</a></li>
+    <li><span class="five-num">01</span><a href="#story-1">Google declares its Universal Commerce Protocol the standard for agentic commerce, with Target and Steve Madden live</a><span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></li>
+    <li><span class="five-num">02</span><a href="#story-2">Michaels formally launches Ask Mike, a Gemini-built AI shopping assistant, and reports early usage data</a><span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></li>
+    <li><span class="five-num">03</span><a href="#story-3">New consumer survey: shoppers now narrowly prefer AI tools over brand websites</a><span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></li>
+    <li><span class="five-num">04</span><a href="#story-4">Algolia makes Dynamic Facets generally available, auto-prioritizing search filters by shopper context</a><span class="sig" role="img" title="Signal: medium (AI-assessed)" aria-label="Signal: medium, 2 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b></b></span></li>
+    <li><span class="five-num">05</span><a href="#story-5">Ulta Beauty runs its first major TikTok Shop campaign: an Ice Spice livestream fragrance debut</a><span class="sig" role="img" title="Signal: medium (AI-assessed)" aria-label="Signal: medium, 2 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b></b></span></li>
   </ol>
     </section>
+    <section>
+  <h2>The moves</h2>
+  <ol class="moves">
+    <li><span class="five-num">01</span><span class="move-text">Audit UCP feed readiness for the Shopify catalog so NK products stay visible to Google&#39;s shopping agents.</span><a class="move-ref" href="#story-1">Story 01</a></li>
+    <li><span class="five-num">02</span><span class="move-text">Benchmark the NK stylist roadmap against this six-week Gemini build and its discovery-first usage data.</span><a class="move-ref" href="#story-2">Story 02</a></li>
+    <li><span class="five-num">03</span><span class="move-text">Test how NK products surface today in Claude, ChatGPT, and Gemini shopping queries.</span><a class="move-ref" href="#story-3">Story 03</a></li>
+    <li><span class="five-num">04</span><span class="move-text">Evaluate adaptive facets for NK product search, starting with size and fit filters.</span><a class="move-ref" href="#story-4">Story 04</a></li>
+    <li><span class="five-num">05</span><span class="move-text">Watch exclusive-drop livestream mechanics as a template for future NK fragrance or archive drops.</span><a class="move-ref" href="#story-5">Story 05</a></li>
+  </ol>
+</section>
     <section class="pull-stat">
   <p class="pull-stat-value">41.4%</p>
   <p class="pull-stat-caption">of shoppers would now choose to shop through an AI tool over a brand&#39;s own website</p>
   <p class="pull-stat-source">Bloomreach survey of 4,040 US and UK consumers, published July 22, 2026</p>
 </section>
     <section class="lead-story" id="story-1">
-  <p class="meta"><span class="story-num">01</span>Lead story</p>
+  <p class="meta"><span class="story-num">01</span>Lead story<span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></p>
   <p class="story-meta">
     <span><strong>Source:</strong> Alphabet Q2 2026 earnings call</span><span class="source-type">Official</span>
     <span><strong>Category:</strong> agentic_commerce</span>
@@ -135,13 +164,13 @@
   <h2>Google declares its Universal Commerce Protocol the standard for agentic commerce, with Target and Steve Madden live</h2>
   <p class="story-body">On Alphabet&#39;s July 22 earnings call, Google&#39;s chief business officer said the company &quot;established the open-source Universal Commerce Protocol, UCP, as the new standard for agentic commerce,&quot; naming Target and Steve Madden as merchants now live. Google also described Universal Cart, which lets shoppers add items from different retailers across Google services and buy in a single checkout. The framing and adoption pace are Google&#39;s own on-the-record claims, not independent findings.</p>
   <p class="why-callout"><span class="callout-line"><strong>Why it matters</strong> Google is building the rails that decide which catalogs its shopping agents can see and transact, and a first fashion merchant is already live - UCP feed readiness becomes a near-term checklist item for a Shopify fashion brand.</span><span class="callout-line next-move"><strong>Next move</strong> Audit UCP feed readiness for the Shopify catalog so NK products stay visible to Google&#39;s shopping agents.</span></p>
-  <p><a href="https://stockanalysis.com/stocks/googl/transcripts/657320-q2-2026/">Read source</a></p>
+  <p><a href="https://stockanalysis.com/stocks/googl/transcripts/657320-q2-2026/" target="_blank" rel="noopener noreferrer">Read source</a></p>
 </section>
     <section>
   <h2>Story grid</h2>
   <div class="story-grid">
 <article class="story-card" id="story-2">
-  <p class="story-num">02</p>
+  <p class="story-num">02<span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></p>
   <p class="story-meta">
     <span><strong>Source:</strong> Michaels / Google Cloud newsroom</span><span class="source-type">Official</span>
     <span><strong>Category:</strong> retail_ai</span>
@@ -151,10 +180,10 @@
   <h3>Michaels formally launches Ask Mike, a Gemini-built AI shopping assistant, and reports early usage data</h3>
   <p class="story-body">Michaels and Google Cloud announced on July 21 that Ask Mike, a conversational shopping assistant built on Gemini Enterprise, is live on michaels.com and the retailer&#39;s apps after a quiet May launch - with a company-reported six-week concept-to-production build, nearly 75,000 conversations, and over 60% of interactions focused on product discovery. Michaels separately told Modern Retail that shoppers who engage with the assistant convert at more than double the rate of traditional search; that figure is company-reported, not independently verified.</p>
   <p class="why-callout"><span class="callout-line"><strong>Why it matters</strong> This is the closest public benchmark for an AI assistant on a brand&#39;s own storefront: discovery-first usage and a fast build validate the exact pattern a fashion brand building an AI stylist is pursuing.</span><span class="callout-line next-move"><strong>Next move</strong> Benchmark the NK stylist roadmap against this six-week Gemini build and its discovery-first usage data.</span></p>
-  <p><a href="https://www.googlecloudpresscorner.com/2026-07-20-Michaels-Unveils-Ask-Mike-AI-Assistant-Built-With-Google-Clouds-Gemini-Enterprise-for-Customer-Experience">Read source</a></p>
+  <p><a href="https://www.googlecloudpresscorner.com/2026-07-20-Michaels-Unveils-Ask-Mike-AI-Assistant-Built-With-Google-Clouds-Gemini-Enterprise-for-Customer-Experience" target="_blank" rel="noopener noreferrer">Read source</a></p>
 </article>
 <article class="story-card" id="story-3">
-  <p class="story-num">03</p>
+  <p class="story-num">03<span class="sig" role="img" title="Signal: high (AI-assessed)" aria-label="Signal: high, 3 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b class="on"></b></span></p>
   <p class="story-meta">
     <span><strong>Source:</strong> Bloomreach newsroom</span><span class="source-type">Official</span>
     <span><strong>Category:</strong> consumer_research</span>
@@ -164,10 +193,10 @@
   <h3>New consumer survey: shoppers now narrowly prefer AI tools over brand websites</h3>
   <p class="story-body">In a Bloomreach-commissioned survey of 4,040 US and UK consumers (fielded May 11-21 by Propeller Insights, published July 22), 41.4% said they would choose to shop through an AI tool versus 38% directly on a brand&#39;s site. 75.4% reported having used AI tools such as Claude, ChatGPT, or Gemini for shopping decisions, and 80.4% said those experiences met or exceeded expectations. Bloomreach sells personalization software, so the research supports its commercial narrative and should be read as vendor-commissioned.</p>
   <p class="why-callout"><span class="callout-line"><strong>Why it matters</strong> If product discovery keeps shifting into AI assistants, a brand&#39;s own assistant and its visibility inside third-party agents both become traffic-defense strategies rather than experiments.</span><span class="callout-line next-move"><strong>Next move</strong> Test how NK products surface today in Claude, ChatGPT, and Gemini shopping queries.</span></p>
-  <p><a href="https://www.bloomreach.com/en/news/2026/from-novelty-to-necessity-new-bloomreach-consumer-survey-finds-shoppers-now-prefer-ai-tools-to-shop/">Read source</a></p>
+  <p><a href="https://www.bloomreach.com/en/news/2026/from-novelty-to-necessity-new-bloomreach-consumer-survey-finds-shoppers-now-prefer-ai-tools-to-shop/" target="_blank" rel="noopener noreferrer">Read source</a></p>
 </article>
 <article class="story-card" id="story-4">
-  <p class="story-num">04</p>
+  <p class="story-num">04<span class="sig" role="img" title="Signal: medium (AI-assessed)" aria-label="Signal: medium, 2 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b></b></span></p>
   <p class="story-meta">
     <span><strong>Source:</strong> Algolia newsroom</span><span class="source-type">Official</span>
     <span><strong>Category:</strong> search_discovery</span>
@@ -177,10 +206,10 @@
   <h3>Algolia makes Dynamic Facets generally available, auto-prioritizing search filters by shopper context</h3>
   <p class="story-body">Algolia announced on July 21 that Dynamic Facets is generally available to its customers: the feature surfaces and reorders the most relevant filters (such as size, color, or occasion) in real time based on the query and shopper behavior, replacing fixed facet lists. Algolia&#39;s vendor-reported early results cite 10-15% higher click-through on filters in its strongest-performing markets.</p>
   <p class="why-callout"><span class="callout-line"><strong>Why it matters</strong> Facet quality is disproportionately important in fashion search, where size and fit filters drive conversion - adaptive facets are worth evaluating for any headless storefront&#39;s discovery layer.</span><span class="callout-line next-move"><strong>Next move</strong> Evaluate adaptive facets for NK product search, starting with size and fit filters.</span></p>
-  <p><a href="https://www.algolia.com/about/news/algolia-launches-dynamic-facets-to-make-product-discovery-faster-smarter-and-more-relevant">Read source</a></p>
+  <p><a href="https://www.algolia.com/about/news/algolia-launches-dynamic-facets-to-make-product-discovery-faster-smarter-and-more-relevant" target="_blank" rel="noopener noreferrer">Read source</a></p>
 </article>
 <article class="story-card" id="story-5">
-  <p class="story-num">05</p>
+  <p class="story-num">05<span class="sig" role="img" title="Signal: medium (AI-assessed)" aria-label="Signal: medium, 2 of 3, AI-assessed"><b class="on"></b><b class="on"></b><b></b></span></p>
   <p class="story-meta">
     <span><strong>Source:</strong> Glossy</span><span class="source-type">Independent press</span>
     <span><strong>Category:</strong> social_commerce</span>
@@ -190,7 +219,7 @@
   <h3>Ulta Beauty runs its first major TikTok Shop campaign: an Ice Spice livestream fragrance debut</h3>
   <p class="story-body">On July 22, Ulta Beauty hosted a TikTok Shop livestream with Ice Spice to debut her first fragrance ahead of a September Ulta-exclusive retail release, Glossy reported on July 24. The stream - Ulta&#39;s first major TikTok Shop campaign since joining the platform in March - drew a reported 178,000 views and 5.95 million impressions, with limited quantities sold exclusively during the broadcast.</p>
   <p class="why-callout"><span class="callout-line"><strong>Why it matters</strong> A concrete playbook for exclusive-drop livestream commerce, where the discovery-to-checkout loop happens inside a social platform rather than on the brand&#39;s own site.</span><span class="callout-line next-move"><strong>Next move</strong> Watch exclusive-drop livestream mechanics as a template for future NK fragrance or archive drops.</span></p>
-  <p><a href="https://www.glossy.co/beauty/exclusive-ulta-beauty-taps-ice-spice-for-its-first-tiktok-shop-campaign-to-unveil">Read source</a></p>
+  <p><a href="https://www.glossy.co/beauty/exclusive-ulta-beauty-taps-ice-spice-for-its-first-tiktok-shop-campaign-to-unveil" target="_blank" rel="noopener noreferrer">Read source</a></p>
 </article>
   </div>
 </section>
@@ -198,8 +227,8 @@
   <h2>Watchlist</h2>
   <p class="meta">Qualifying signals that did not make today's selection.</p>
   <ul>
-<li><a href="https://shopify.dev/changelog/full-stack-capabilities-to-power-app-analytics">Shopify ships full-stack analytics capabilities for apps (developer changelog, July 21)</a> — Shopify developer changelog <span class="story-meta">[NK: Shopify / headless commerce]</span></li>
-<li><a href="https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/">Natural raises a $30M Series A led by Forerunner to build payment rails for AI agents (TechCrunch, July 20)</a> — TechCrunch <span class="story-meta">[NK: Agent platforms / model providers]</span></li>
+<li><a href="https://shopify.dev/changelog/full-stack-capabilities-to-power-app-analytics" target="_blank" rel="noopener noreferrer">Shopify ships full-stack analytics capabilities for apps (developer changelog, July 21)</a> — Shopify developer changelog <span class="story-meta">[NK: Shopify / headless commerce]</span></li>
+<li><a href="https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/" target="_blank" rel="noopener noreferrer">Natural raises a $30M Series A led by Forerunner to build payment rails for AI agents (TechCrunch, July 20)</a> — TechCrunch <span class="story-meta">[NK: Agent platforms / model providers]</span></li>
   </ul>
 </section>
     <section>

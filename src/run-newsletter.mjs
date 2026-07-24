@@ -186,7 +186,11 @@ export async function runNewsletter({
         attributes: { storyCount: stories.length }
       }, async () => ({
         html: renderHtml({ stories, generatedAt: date.toISOString() }),
-        text: renderText({ stories, generatedAt: date.toISOString() })
+        text: renderText({
+          stories,
+          generatedAt: date.toISOString(),
+          curation: { candidate: items.length, accepted: accepted.length, selected: stories.length }
+        })
       }));
       const sendMode = mode === "auto" ? "auto" : mode;
       // Weekly review runs never invoke the send path: the guard short-circuits

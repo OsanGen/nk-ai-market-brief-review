@@ -286,3 +286,75 @@ test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and colla
   assert.doesNotMatch(withoutExtras, /class="pull-stat-value"/);
   assert.doesNotMatch(withoutExtras, /class="source-type"/);
 });
+
+test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are data-conditional and coherent", () => {
+  const graded = (index, aiRelevance, nextMove) => ({
+    headline: `Story ${index}`,
+    summary: "S.",
+    whyItMatters: "W.",
+    nextMove,
+    aiRelevance,
+    sourceName: "Scan",
+    sourceOutlet: "Outlet",
+    category: "fashion",
+    publishedAt: "2026-07-24T04:00:00.000Z",
+    url: `https://example.com/${index}`
+  });
+
+  const full = renderReviewPage({
+    stories: [graded(1, "high", "Audit the feed."), graded(2, "medium", "Test the queries."), graded(3, undefined, undefined)],
+    run: { mode: "preview", candidateItemCount: 26, acceptedItemCount: 7, selectedItemCount: 3 },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+
+  assert.match(full, /class="curation-folio">From 26 signals scanned · 7 qualified · 3 published</);
+  assert.match(full, /<h2>The moves<\/h2>/);
+  assert.equal((full.match(/class="move-text"/g) || []).length, 2, "only stories with moves get rows");
+  assert.match(full, /class="move-ref" href="#story-2">Story 02</);
+  assert.equal((full.match(/class="sig"/g) || []).length, 4, "high+medium marked in index and story; ungraded story unmarked");
+  assert.match(full, /aria-label="Signal: high, 3 of 3, AI-assessed"/);
+
+  const incoherent = renderReviewPage({
+    stories: [graded(1, undefined, "Only move.")],
+    run: { mode: "preview", candidateItemCount: 5, acceptedItemCount: 9, selectedItemCount: 1 },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+  assert.doesNotMatch(incoherent, /class="curation-folio"/, "incoherent funnel prints nothing");
+  assert.doesNotMatch(incoherent, /<h2>The moves<\/h2>/, "a single move stays in its story callout");
+  assert.doesNotMatch(incoherent, /class="sig"/, "no grade, no ink");
+
+  const equalFunnel = renderReviewPage({
+    stories: [],
+    run: { mode: "preview", candidateItemCount: 8, acceptedItemCount: 8, selectedItemCount: 8 },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+  assert.doesNotMatch(equalFunnel, /class="curation-folio"/, "a funnel that does not narrow tells no story");
+});
+
+test("external source links open in a new tab with noopener; internal anchors stay same-tab", () => {
+  const html = renderReviewPage({
+    stories: [{
+      headline: "Story",
+      summary: "S.",
+      whyItMatters: "W.",
+      sourceName: "Scan",
+      sourceOutlet: "Outlet",
+      category: "fashion",
+      publishedAt: "2026-07-24T04:00:00.000Z",
+      url: "https://example.com/a"
+    }],
+    run: {
+      mode: "preview",
+      watchlist: [{ id: "w1", title: "Watch", url: "https://example.com/w", sourceOutlet: "O" }]
+    },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+  const external = html.match(/href="https:[^"]*"[^>]*/g) || [];
+  assert.ok(external.length >= 2);
+  for (const link of external) {
+    assert.match(link, /target="_blank"/);
+    assert.match(link, /rel="noopener noreferrer"/);
+  }
+  const internal = html.match(/href="#story-\d"[^>]*/g) || [];
+  for (const link of internal) assert.doesNotMatch(link, /target=/);
+});

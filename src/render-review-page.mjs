@@ -27,7 +27,9 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
   <title>NK AI Market Brief</title>
   <style>
     /* NK editorial type system: stark black/white, grotesque type, magazine folio. */
+    html { scroll-behavior: smooth; }
     body { margin: 0; background: #fff; color: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.5; }
+    [id^="story-"] { scroll-margin-top: 14px; }
     main { max-width: 1040px; margin: 0 auto; padding: 24px 18px 44px; }
     header, section, footer { border-top: 1px solid #000; padding-top: 18px; margin-top: 22px; }
     header { border-top: 0; margin-top: 0; padding-top: 0; border-bottom: 2px solid #000; padding-bottom: 20px; }
@@ -64,6 +66,21 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .next-move { font-weight: 700; }
     /* G: weekly standfirst */
     .the-week .standfirst { font-size: 19px; line-height: 1.5; max-width: 62ch; margin: 6px 0 4px; }
+    /* №1: curation-funnel colophon (masthead folio spec echoed) */
+    .curation-folio { font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 400; color: #333; margin: 2px 0 12px; line-height: 1.6; }
+    /* №2: THE MOVES action ledger */
+    .moves { list-style: none; margin: 12px 0 4px; padding: 0; }
+    .moves li { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; border-top: 1px solid #000; padding: 10px 2px; }
+    .moves li:first-child { border-top: 0; }
+    .move-text { font-weight: 700; font-size: 16px; line-height: 1.35; flex: 1 1 24ch; max-width: 62ch; }
+    .move-ref { margin-left: auto; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #000; text-decoration: none; border-bottom: 1px solid #000; padding: 2px 0 1px; white-space: nowrap; }
+    .move-ref:hover { border-bottom-width: 2px; }
+    /* №3: signal-grade triage marks */
+    .sig { display: inline-flex; gap: 3px; vertical-align: 1px; }
+    .sig b { display: block; width: 7px; height: 7px; border: 1px solid #000; box-sizing: border-box; background: #fff; }
+    .sig .on { background: #000; }
+    .week-five .sig { margin-left: auto; padding-left: 14px; }
+    .story-num .sig, .lead-story .meta .sig { margin-left: 10px; }
     .source-type { display: inline-block; border: 1px solid #000; padding: 1px 6px; margin-right: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; vertical-align: 1px; }
     /* D: pull-stat hero */
     .pull-stat { text-align: center; padding: 26px 12px 30px; }
@@ -83,6 +100,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
       .story-card { padding: 16px; }
       .badges { gap: 10px; }
       .badge { padding: 7px 12px; }
+      .move-text { font-size: 15px; }
     }
     .story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .story-card { border: 1px solid #000; padding: 14px; min-width: 0; }
@@ -121,8 +139,10 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     ${renderWeekOverview(run.weekOverview)}
     <section>
       <p class="signals-label">Today's selected signals</p>
+      ${renderCurationFolio(run)}
       ${renderWeekInFive(stories)}
     </section>
+    ${renderTheMoves(stories)}
     ${renderPullStat(run.pullStat)}
     ${lead ? renderLead(lead) : renderEmpty()}
     ${renderCards(rest)}
@@ -158,11 +178,61 @@ function renderWeekOverview(weekOverview) {
 </section>`;
 }
 
+// №1: the curation-funnel colophon. Pipeline arithmetic promoted into editorial
+// voice; renders only when the funnel is coherent and actually narrows, and
+// never with AI involvement — these are the run's own counts.
+function renderCurationFolio(run) {
+  const candidate = Number(run.candidateItemCount);
+  const accepted = Number(run.acceptedItemCount);
+  const selected = Number(run.selectedItemCount ?? run.itemCount);
+  if (!Number.isFinite(candidate) || !Number.isFinite(selected)) return "";
+  if (candidate <= 0 || selected <= 0 || candidate <= selected) return "";
+  const parts = [`From ${candidate.toLocaleString("en-US")} signals scanned`];
+  if (Number.isFinite(accepted) && accepted > 0) {
+    if (!(candidate >= accepted && accepted >= selected)) return "";
+    parts.push(`${accepted.toLocaleString("en-US")} qualified`);
+  }
+  parts.push(`${selected.toLocaleString("en-US")} published`);
+  return `<p class="curation-folio">${escapeHtml(parts.join(" · "))}</p>`;
+}
+
+// №2: THE MOVES — the week's next-move imperatives gathered into one action
+// ledger, each row back-referencing its story. Re-displays existing validated
+// lines only; renders only when at least two stories carry a move.
+function renderTheMoves(stories) {
+  const rows = stories
+    .map((story, index) => ({ story, index }))
+    .filter((entry) => entry.story.nextMove);
+  if (rows.length < 2) return "";
+  const items = rows.map(({ story, index }) =>
+    `    <li><span class="five-num">${padNum(index + 1)}</span><span class="move-text">${escapeHtml(story.nextMove)}</span><a class="move-ref" href="#story-${index + 1}">Story ${padNum(index + 1)}</a></li>`
+  ).join("\n");
+  return `<section>
+  <h2>The moves</h2>
+  <ol class="moves">
+${items}
+  </ol>
+</section>`;
+}
+
+// №3: signal-grade triage mark — three pure-CSS squares surfacing the relevance
+// grade the AI lane already assigns (high 3/3, medium 2/3, low 1/3). Per-story
+// conditional; no grade, no ink. Labeled as AI-assessed for honesty.
+const SIGNAL_LEVELS = { high: 3, medium: 2, low: 1 };
+
+function signalGlyph(story) {
+  const level = story.aiRelevance;
+  const filled = SIGNAL_LEVELS[level];
+  if (!filled) return "";
+  const cells = [1, 2, 3].map((cell) => `<b${cell <= filled ? ' class="on"' : ""}></b>`).join("");
+  return `<span class="sig" role="img" title="Signal: ${level} (AI-assessed)" aria-label="Signal: ${level}, ${filled} of 3, AI-assessed">${cells}</span>`;
+}
+
 // B: numbered one-line index of the issue, anchor-linked to each story.
 function renderWeekInFive(stories) {
   if (!stories.length) return "";
   const items = stories.map((story, index) =>
-    `    <li><span class="five-num">${padNum(index + 1)}</span><a href="#story-${index + 1}">${escapeHtml(story.headline)}</a></li>`
+    `    <li><span class="five-num">${padNum(index + 1)}</span><a href="#story-${index + 1}">${escapeHtml(story.headline)}</a>${signalGlyph(story)}</li>`
   ).join("\n");
   return `<ol class="week-five">
 ${items}
@@ -182,7 +252,7 @@ function renderPullStat(pullStat) {
 
 function renderLead(story) {
   return `<section class="lead-story" id="story-1">
-  <p class="meta"><span class="story-num">01</span>Lead story</p>
+  <p class="meta"><span class="story-num">01</span>Lead story${signalGlyph(story)}</p>
   ${renderStoryMeta(story)}
   <h2>${escapeHtml(story.headline)}</h2>
   <p class="story-body">${escapeHtml(story.summary)}</p>
@@ -207,7 +277,7 @@ ${stories.map((story, index) => renderCard(story, index)).join("\n")}
 
 function renderCard(story, index) {
   return `<article class="story-card" id="story-${index + 2}">
-  <p class="story-num">${padNum(index + 2)}</p>
+  <p class="story-num">${padNum(index + 2)}${signalGlyph(story)}</p>
   ${renderStoryMeta(story)}
   <h3>${escapeHtml(story.headline)}</h3>
   <p class="story-body">${escapeHtml(story.summary)}</p>
@@ -307,7 +377,8 @@ function renderEmpty() {
 
 function readLink(story) {
   const url = safeUrl(story.url);
-  return url ? `<p><a href="${escapeHtml(url)}">Read source</a></p>` : "";
+  // External sources open in a new tab so the brief stays put; noopener for safety.
+  return url ? `<p><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Read source</a></p>` : "";
 }
 
 function renderStoryMeta(story) {
@@ -335,7 +406,7 @@ function renderWatchlist(watchlist) {
   if (!watchlist.length) return "";
   const items = watchlist.map((entry) => {
     const url = safeUrl(entry.url);
-    const title = url ? `<a href="${escapeHtml(url)}">${escapeHtml(entry.title)}</a>` : escapeHtml(entry.title);
+    const title = url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(entry.title)}</a>` : escapeHtml(entry.title);
     const outlet = entry.sourceOutlet ? ` — ${escapeHtml(entry.sourceOutlet)}` : "";
     const capabilities = entry.normaRelevance?.capabilities ?? [];
     const labels = capabilities.map((capability) => capability.label ?? capability).join(", ");

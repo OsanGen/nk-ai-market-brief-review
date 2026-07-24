@@ -1,6 +1,6 @@
 import { sanitizeDisplayText, safeUrl } from "./normalize.mjs";
 
-export function renderText({ stories, generatedAt }) {
+export function renderText({ stories, generatedAt, curation }) {
   const lines = [
     "NK AI Market Brief",
     `Generated ${generatedAt}`,
@@ -23,6 +23,13 @@ export function renderText({ stories, generatedAt }) {
   });
 
   if (!stories.length) lines.push("No qualifying stories matched the current filters.", "");
+  // Curation-funnel parity with the web page (renders only when coherent).
+  if (curation && curation.candidate > curation.selected && curation.selected > 0) {
+    const middle = curation.accepted > 0 && curation.candidate >= curation.accepted && curation.accepted >= curation.selected
+      ? ` | ${curation.accepted} qualified`
+      : "";
+    lines.push(`From ${curation.candidate} signals scanned${middle} | ${curation.selected} published`, "");
+  }
   lines.push("Internal NK market brief. Summaries are deterministic and based on RSS metadata only.");
   return `${lines.join("\n").trim()}\n`;
 }

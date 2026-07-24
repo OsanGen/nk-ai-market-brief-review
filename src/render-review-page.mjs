@@ -18,21 +18,27 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
   <meta name="robots" content="noindex,nofollow">
   <title>NK AI Market Brief</title>
   <style>
-    body { margin: 0; background: #fff; color: #000; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.45; }
-    main { max-width: 1040px; margin: 0 auto; padding: 28px 18px 44px; }
+    /* NK editorial type system: stark black/white, grotesque type, magazine folio. */
+    body { margin: 0; background: #fff; color: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.5; }
+    main { max-width: 1040px; margin: 0 auto; padding: 24px 18px 44px; }
     header, section, footer { border-top: 1px solid #000; padding-top: 18px; margin-top: 22px; }
-    header { border-top: 0; margin-top: 0; padding-top: 0; border-bottom: 2px solid #000; padding-bottom: 18px; }
-    h1 { margin: 0 0 10px; font-size: 34px; line-height: 1.05; letter-spacing: 0; }
+    header { border-top: 0; margin-top: 0; padding-top: 0; border-bottom: 2px solid #000; padding-bottom: 20px; }
+    .folio { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 18px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; border-bottom: 1px solid #000; padding-bottom: 10px; margin: 0; color: #000; }
+    h1 { margin: 20px 0 10px; font-size: clamp(42px, 7.5vw, 74px); line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; font-weight: 700; }
     h2, h3 { margin: 0 0 8px; line-height: 1.15; letter-spacing: 0; }
+    section > h2 { text-transform: uppercase; font-size: 13px; letter-spacing: 0.14em; font-weight: 700; }
     p { margin: 8px 0; }
     a { color: #000; text-decoration: underline; text-underline-offset: 3px; }
-    .deck, .meta, .badge, .summary-grid, footer { color: #333; }
+    .meta, .summary-grid, footer { color: #333; }
+    .deck { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: #000; }
     .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .badge { border: 1px solid #000; padding: 4px 8px; font-size: 13px; }
-    .status-line { font-size: 16px; margin-top: 14px; }
-    .signals-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0; color: #333; margin-bottom: 6px; }
+    .badge { border: 1px solid #000; padding: 5px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #000; }
+    .status-line { font-size: 15px; margin-top: 14px; }
+    .signals-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.14em; color: #000; margin-bottom: 6px; font-weight: 700; }
     .lead-story { padding-bottom: 22px; }
-    .lead-story h2 { font-size: 28px; }
+    .lead-story h2 { font-size: clamp(26px, 4vw, 38px); line-height: 1.05; letter-spacing: -0.01em; text-transform: none; }
+    .story-card h3 { font-size: 19px; }
+    .story-meta strong, footer { text-transform: uppercase; font-size: 11px; letter-spacing: 0.08em; }
     .story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .story-card { border: 1px solid #000; padding: 14px; min-width: 0; }
     .story-card h3 { font-size: 18px; }
@@ -53,8 +59,9 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
 <body>
   <main>
     <header>
+      <p class="folio"><span>Norma Kamali</span><span>AI Market Intelligence</span><span>Week ending ${escapeHtml(folioDate(generated))}</span></p>
       <h1>NK AI Market Brief</h1>
-      <p class="deck">Internal preview of AI + fashion, beauty, e-commerce, AI shopping, and agentic commerce signals for NK.</p>
+      <p class="deck">AI + fashion, beauty, e-commerce, AI shopping, and agentic commerce signals</p>
       <p class="meta">Generated ${escapeHtml(formatDateTime(generated))}</p>
       <div class="badges">
         <span class="badge">${escapeHtml(modeLabel(run.mode))}</span>
@@ -283,6 +290,14 @@ function formatDate(value) {
   if (!value) return "date unavailable";
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? "date unavailable" : date.toISOString().slice(0, 10);
+}
+
+// Magazine-folio date for the masthead, e.g. "July 24, 2026".
+function folioDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "date unavailable";
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
 }
 
 function formatDateTime(value) {

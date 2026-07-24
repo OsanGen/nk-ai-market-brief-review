@@ -250,3 +250,65 @@ test("reader_headline validation: hype, overlength, and URLs drop the field, nev
   assert.equal(overrides[2].reader_headline, "", "overlength dropped");
   assert.equal(overrides[3].reader_headline, "", "URL dropped");
 });
+
+test("anti-drift corpus: grounding gate and qualifier rule catch each drift class, receipts account for all", () => {
+  const source = "Michaels launches Ask Mike, an AI shopping assistant. The company-reported figure: shoppers convert at double the rate, it says. About 75,000 conversations since May. Built with Google.";
+  const storyTextById = new Map([["s1", source]]);
+  const allowed = { allowedStoryIds: new Set(["s1"]), storyTextById };
+  const attempt = (readerHeadline) => {
+    const data = { content: [{ type: "text", text: JSON.stringify({
+      week_overview: "A week.",
+      stories: [{ story_id: "s1", summary: "The company says conversion doubled.", why_it_matters: "W.", next_move: "Audit.", reader_headline: readerHeadline, relevance: "high" }]
+    }) }] };
+    return parseSynthesis(data, allowed);
+  };
+
+  // invented brand (mid-headline) -> ungrounded_entity; position-0 brands are a
+  // documented gap (sentence-case ambiguity) covered by the wire line + receipts.
+  let r = attempt("Retailers like Pinterest are doubling sales with AI helpers, it says");
+  assert.equal(r.overrides[0].reader_headline, "");
+  assert.deepEqual(r.headlineStats.drops[0], { story_id: "s1", reason: "ungrounded_entity" });
+
+  // invented number -> ungrounded_number
+  r = attempt("A retailer's AI helper drove 73% more sales, it says");
+  assert.equal(r.headlineStats.drops[0].reason, "ungrounded_number");
+
+  // stripped qualifier on a company metric -> missing_qualifier
+  r = attempt("A big retailer's new AI helper doubles shopper conversion");
+  assert.equal(r.headlineStats.drops[0].reason, "missing_qualifier");
+
+  // clean, grounded, qualified -> accepted
+  r = attempt("A big retailer's new AI helper is converting shoppers at double the rate, it says");
+  assert.equal(r.overrides[0].reader_headline, "A big retailer's new AI helper is converting shoppers at double the rate, it says");
+  assert.deepEqual(r.headlineStats, { attempted: 1, accepted: 1, drops: [] });
+
+  // grounded numbers pass when they exist in source
+  r = attempt("About 75,000 shopper conversations later, the AI helper is sticking, it says");
+  assert.equal(r.headlineStats.accepted, 1);
+});
+
+test("lane summary carries reader-headline drift receipts", async () => {
+  const result = await runAiLane({
+    stories: [story],
+    env: { ANTHROPIC_API_KEY: "k", NEWSLETTER_AI_LANE_ENABLED: "true" },
+    runId: "run-drift",
+    capabilityIds: [],
+    fetchImpl: async () => ({
+      ok: true, status: 200,
+      async json() {
+        return {
+          content: [{ type: "text", text: JSON.stringify({
+            week_overview: "A week.",
+            stories: [{ story_id: "abc123", summary: "S.", why_it_matters: "W.", next_move: "Audit.", reader_headline: "Totally invented Walmart figure of 99% growth", relevance: "high" }]
+          }) }],
+          usage: { input_tokens: 10, output_tokens: 10 }
+        };
+      }
+    })
+  });
+  assert.equal(result.mode, "synthesized");
+  assert.equal(result.summary.readerHeadlines.attempted, 1);
+  assert.equal(result.summary.readerHeadlines.accepted, 0);
+  assert.equal(result.summary.readerHeadlines.dropped, 1);
+  assert.ok(["ungrounded_entity", "ungrounded_number"].includes(result.summary.readerHeadlines.dropReasons[0]));
+});

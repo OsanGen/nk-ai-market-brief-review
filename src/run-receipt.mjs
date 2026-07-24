@@ -77,7 +77,16 @@ function publicAiLane(lane) {
     privateRoutingBlocked: lane.privateRoutingBlocked !== false,
     privacyStatus: lane.privacyStatus || "unverified",
     transport: lane.transport || "",
-    synthesizedCount: lane.synthesizedCount ?? 0
+    synthesizedCount: lane.synthesizedCount ?? 0,
+    // W4 drift receipts: weekly public accounting of headline validation.
+    readerHeadlines: lane.readerHeadlines
+      ? {
+        attempted: lane.readerHeadlines.attempted ?? 0,
+        accepted: lane.readerHeadlines.accepted ?? 0,
+        dropped: lane.readerHeadlines.dropped ?? 0,
+        dropReasons: lane.readerHeadlines.dropReasons ?? []
+      }
+      : null
   };
 }
 

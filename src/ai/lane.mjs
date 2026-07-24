@@ -115,8 +115,13 @@ export async function runAiLane({
   const data = await response.json();
   let overrides = [];
   let weekOverview = "";
+  let headlineStats = { attempted: 0, accepted: 0, drops: [] };
   try {
-    ({ overrides, weekOverview } = parseSynthesis(data, { allowedStoryIds: new Set(stories.map((story) => String(story.id))) }));
+    ({ overrides, weekOverview, headlineStats } = parseSynthesis(data, {
+      allowedStoryIds: new Set(stories.map((story) => String(story.id))),
+      // W1 grounding context: the story's own verified text is the only ground truth.
+      storyTextById: new Map(stories.map((story) => [String(story.id), `${story.title ?? ""} ${story.summary ?? ""}`]))
+    }));
   } catch (error) {
     return {
       mode: "synthesis_invalid",
@@ -135,6 +140,12 @@ export async function runAiLane({
       ...activeSummary,
       status: "synthesized",
       synthesizedCount: overrides.length,
+      readerHeadlines: {
+        attempted: headlineStats.attempted,
+        accepted: headlineStats.accepted,
+        dropped: headlineStats.drops.length,
+        dropReasons: headlineStats.drops.map((drop) => drop.reason)
+      },
       inputTokens: usage.input_tokens ?? 0,
       outputTokens: usage.output_tokens ?? 0
     },

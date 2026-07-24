@@ -65,24 +65,51 @@ function cleanLine(value) {
   return value.replace(/[—–]/g, "-").replace(/\s+/g, " ").trim();
 }
 
-// Translation-layer guard: hype vocabulary is banned in code, not just in the
-// prompt. A failing reader_headline drops the FIELD (falling back to the
-// factual headline), never the story.
+// Translation-layer guards: hype vocabulary, grounding, and qualifier
+// preservation are enforced in code, not just in the prompt. A failing
+// reader_headline drops the FIELD (falling back to the factual headline),
+// never the story. Each rejection carries a machine-readable reason.
 const BANNED_HYPE = /\b(revolutionary|game.?chang\w*|proven|transforms?|industry.?leading|unprecedented|shocking|unbelievable|won'?t believe|jaw.?dropping|must.?see)\b/i;
+// W2: company-claim markers in the story text vs metric + qualifier tokens in
+// the headline — a repeated company metric must keep its attribution.
+const CLAIM_MARKERS = /\b(company-reported|it says|the company says|per the company|claims?|reportedly|according to)\b/i;
+const METRIC_TOKENS = /(\d|percent|%|\bdoubl\w+|\btripl\w+|\btwice\b)/i;
+const QUALIFIER_TOKENS = /\b(it says|says|said|per |reportedly|claims?|company-reported|according to)\b/i;
 
-function validReaderHeadline(value) {
+export function validateReaderHeadline(value, { sourceText = "", modelSummary = "" } = {}) {
   const line = cleanLine(value);
-  if (!line || line.length > 100) return "";
-  if (/https?:\/\//i.test(line)) return "";
-  if (BANNED_HYPE.test(line)) return "";
-  return line;
+  if (!line) return { headline: "", reason: "empty" };
+  if (line.length > 100) return { headline: "", reason: "overlength" };
+  if (/https?:\/\//i.test(line)) return { headline: "", reason: "url" };
+  if (BANNED_HYPE.test(line)) return { headline: "", reason: "hype" };
+
+  const source = `${sourceText} ${modelSummary}`.toLowerCase();
+  if (source.trim()) {
+    // W1a: every numeric token must exist verbatim in the story's own text.
+    for (const num of line.match(/\d+(?:[.,]\d+)?%?/g) ?? []) {
+      if (!source.includes(num.toLowerCase())) return { headline: "", reason: "ungrounded_number" };
+    }
+    // W1b: every proper noun beyond the first word must exist in the story text.
+    const tokens = line.split(/\s+/);
+    for (let i = 1; i < tokens.length; i += 1) {
+      const word = tokens[i].replace(/[^A-Za-z0-9&.'-]/g, "").replace(/'s$/i, "");
+      if (word.length > 1 && /^[A-Z]/.test(word) && !source.includes(word.toLowerCase())) {
+        return { headline: "", reason: "ungrounded_entity" };
+      }
+    }
+    // W2: company-claimed metric repeated without its qualifier.
+    if (CLAIM_MARKERS.test(source) && METRIC_TOKENS.test(line) && !QUALIFIER_TOKENS.test(line)) {
+      return { headline: "", reason: "missing_qualifier" };
+    }
+  }
+  return { headline: line, reason: "" };
 }
 
 // Parse + validate the model's response into safe editorial output. Accepts the
 // current object shape ({week_overview, stories: []}) and the legacy bare array.
 // Returns { weekOverview, overrides }. Throws only when the whole payload is
 // unusable (caller treats that as fail-soft).
-export function parseSynthesis(data, { allowedStoryIds }) {
+export function parseSynthesis(data, { allowedStoryIds, storyTextById = new Map() }) {
   const text = (data?.content ?? [])
     .filter((block) => block && block.type === "text")
     .map((block) => block.text)
@@ -107,6 +134,8 @@ export function parseSynthesis(data, { allowedStoryIds }) {
 
   const overrides = [];
   const seen = new Set();
+  // W4: drift receipts — every reader-headline decision is accounted for.
+  const headlineStats = { attempted: 0, accepted: 0, drops: [] };
   for (const item of entries) {
     if (!item || typeof item !== "object") continue;
     const storyId = String(item.story_id ?? "");
@@ -117,7 +146,16 @@ export function parseSynthesis(data, { allowedStoryIds }) {
     if (/https?:\/\//i.test(`${summary} ${why}`)) continue; // model must not emit links
     const nextMoveRaw = cleanLine(item.next_move);
     const nextMove = nextMoveRaw && !/https?:\/\//i.test(nextMoveRaw) ? nextMoveRaw.slice(0, 160) : "";
-    const readerHeadline = validReaderHeadline(item.reader_headline);
+    const headlineAttempted = Boolean(cleanLine(item.reader_headline));
+    const { headline: readerHeadline, reason: headlineDropReason } = validateReaderHeadline(item.reader_headline, {
+      sourceText: storyTextById.get(storyId) ?? "",
+      modelSummary: summary
+    });
+    if (headlineAttempted) {
+      headlineStats.attempted += 1;
+      if (readerHeadline) headlineStats.accepted += 1;
+      else headlineStats.drops.push({ story_id: storyId, reason: headlineDropReason });
+    }
     const relevance = ["high", "medium", "low"].includes(item.relevance) ? item.relevance : "medium";
     seen.add(storyId);
     overrides.push({
@@ -129,7 +167,7 @@ export function parseSynthesis(data, { allowedStoryIds }) {
       relevance
     });
   }
-  return { weekOverview, overrides };
+  return { weekOverview, overrides, headlineStats };
 }
 
 // Deterministic synchronous-route cost estimate (standard, non-batch prices).

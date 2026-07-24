@@ -89,6 +89,7 @@ jobs:
             .newsletter-outbox
             .newsletter-logs
             site
+          include-hidden-files: true
           if-no-files-found: warn
           retention-days: 30
 
@@ -126,5 +127,6 @@ jobs:
         with:
           name: nk-ai-market-brief-observability-${{ github.run_id }}-${{ github.run_attempt }}
           path: .newsletter-logs
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

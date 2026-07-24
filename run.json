@@ -1,291 +1,130 @@
 {
-  "generatedAt": "2026-05-14T15:34:58.850Z",
-  "mode": "auto",
-  "skipped": false,
-  "outputDir": ".newsletter-outbox/2026-05-14",
-  "siteDir": "site",
+  "acceptedItemCount": 5,
+  "aiLane": null,
+  "automationConfigured": true,
+  "automationDefinitionConfigured": true,
+  "candidateItemCount": 26,
   "config": {
-    "timezone": "America/New_York",
-    "targetHourLocal": 8,
+    "activeLookbackHours": 168,
+    "emailEnabled": false,
+    "lookbackHours": 36,
     "maxItems": 8,
     "minItems": 3,
-    "lookbackHours": 36,
+    "minReviewItems": 5,
     "mondayLookbackHours": 84,
     "reviewLookbackHours": 168,
-    "minReviewItems": 5,
-    "activeLookbackHours": 36,
-    "outputDir": ".newsletter-outbox",
-    "emailEnabled": false
+    "targetHourLocal": 4,
+    "timezone": "America/New_York"
   },
-  "reviewReady": true,
-  "minReviewItems": 5,
-  "sourceCount": 12,
-  "sourceResults": [
-    {
-      "sourceId": "vogue_business_ai",
-      "sourceName": "Vogue Business AI",
-      "status": "ok",
-      "itemCount": 2
-    },
-    {
-      "sourceId": "business_of_fashion_ai",
-      "sourceName": "Business of Fashion AI",
-      "status": "ok",
-      "itemCount": 1
-    },
-    {
-      "sourceId": "glossy_ai_fashion_beauty",
-      "sourceName": "Glossy AI Fashion and Beauty",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "beautymatter_ai",
-      "sourceName": "BeautyMatter AI",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "retail_touchpoints_ai_shopping",
-      "sourceName": "Retail TouchPoints AI Shopping",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "shopify_agentic_commerce",
-      "sourceName": "Shopify Agentic Commerce",
-      "status": "ok",
-      "itemCount": 61
-    },
-    {
-      "sourceId": "openai_commerce",
-      "sourceName": "OpenAI Commerce",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "google_shopping_ai",
-      "sourceName": "Google Shopping AI",
-      "status": "ok",
-      "itemCount": 72
-    },
-    {
-      "sourceId": "brand_watchlist_ai_agents",
-      "sourceName": "Brand Watchlist AI Agents",
-      "status": "ok",
-      "itemCount": 76
-    },
-    {
-      "sourceId": "review_ai_fashion_beauty_market_scan",
-      "sourceName": "AI Fashion and Beauty Market Scan",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "status": "ok",
-      "itemCount": 100
-    },
-    {
-      "sourceId": "review_platform_ai_shopping_market_scan",
-      "sourceName": "Platform AI Shopping Market Scan",
-      "status": "ok",
-      "itemCount": 100
-    }
-  ],
-  "sourceErrors": [],
-  "sourceErrorCount": 0,
-  "fetchedItemCount": 912,
-  "candidateItemCount": 912,
-  "acceptedItemCount": 70,
-  "rejectedItemCount": 842,
-  "selectedItemCount": 8,
-  "itemCount": 8,
-  "rejectedReasonCounts": {
-    "outside_lookback": 820,
-    "not_relevant": 22
-  },
-  "sendStatus": "send_disabled",
-  "reviewReasons": [],
-  "stories": [
-    {
-      "id": "16r6wqu",
-      "sourceId": "review_platform_ai_shopping_market_scan",
-      "sourceName": "Platform AI Shopping Market Scan",
-      "sourceOutlet": "ALM Corp",
-      "scanLabel": "Platform AI Shopping Market Scan",
-      "title": "Amazon Alexa AI Shopping Assistant In The Search Bar: What It Means For Shoppers And Brands",
-      "headline": "Amazon Alexa AI Shopping Assistant In The Search Bar: What It Means For Shoppers And Brands.",
-      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE44aXN3RTgwc29taEFYNVNOeDBLNmtxdlhYelVINVVoRDR3cko1bXhhRzl6ZlFncHdTdk1xN2lhMmhiX1FERk4yTmM2UzhrUjYxTVRKU296UjNmTW1xdjljT1YzUjZZbVg2eXNmVEYzcFo5eFNjSlEwWFhBQQ?oc=5",
-      "publishedAt": "2026-05-14T15:25:13.000Z",
-      "summary": "This story shows AI assistants moving closer to the shopping interface on major platforms.",
-      "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
-      "category": "shopping",
-      "categories": [
-        "shopping",
-        "platform",
-        "ecommerce"
-      ],
-      "score": 103
-    },
-    {
-      "id": "1w92kqo",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "sourceOutlet": "Yahoo Finance Singapore",
-      "scanLabel": "Agentic Commerce Market Scan",
-      "title": "Stellagent Launches Agentic Commerce Studio for AI Agent Shopping Readiness",
-      "headline": "Stellagent Launches Agentic Commerce Studio for AI Agent Shopping Readiness.",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQNWcyNUVUTGFJUjducEdZYmtLLV9VRFJ2R2FRektjZXVRS095dmlmREp0bkU1SDRrWlJOeWtlT01ZQXRpeEU2TVBQaEtqcWtwM1JucVdqaGxxaTVxRFM2eWE3V3NSakUyMDcwbWZQY1Y3VEpXRng3c3ZUQUt5VjUxWTA0bFBVZWlWR013QkJCOWRHTmh4cnlB?oc=5",
-      "publishedAt": "2026-05-14T14:29:00.000Z",
-      "summary": "This story points to AI shopping becoming a new discovery path before customers reach a brand site.",
-      "whyItMatters": "This matters because agentic shopping channels can shift product discovery, checkout expectations, and catalog readiness.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 95
-    },
-    {
-      "id": "1l8db53",
-      "sourceId": "review_platform_ai_shopping_market_scan",
-      "sourceName": "Platform AI Shopping Market Scan",
-      "sourceOutlet": "NewsBytes",
-      "scanLabel": "Platform AI Shopping Market Scan",
-      "title": "Amazon's new AI shopping assistant automates purchases and personalizes recommendations",
-      "headline": "Amazon's new AI shopping assistant automates purchases and personalizes recommendations.",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxPYTJGUUw1T3YyWjFPaUtRV1pnM3VyMnd6SE9hQzZZN2tFa3pfNlBGZlp3R1JzRlRNTUxFVDhXX3NlQVkza3lwX0o1NWhjRmN0VThfRXhLVF9BV1lZVkg3VzZPc3hjSnAyQVBMb21LQjFnMnNoQ0d2VVJIRzJRVFU2SnZLTzBaaEJtV2k4THJ6ZmFzMmlpeXV3aV9VWDhVUmptcWdmQzRyYWpHUmdnS0dETTlUZ1R5Q0FnVzdEZGZadV93RW5L?oc=5",
-      "publishedAt": "2026-05-14T05:26:41.000Z",
-      "summary": "This story shows AI assistants moving closer to the shopping interface on major platforms.",
-      "whyItMatters": "This matters because OpenAI, Shopify, Google, Meta, and major retailers can change how products surface in AI-assisted shopping.",
-      "category": "shopping",
-      "categories": [
-        "shopping",
-        "platform",
-        "ecommerce"
-      ],
-      "score": 94
-    },
-    {
-      "id": "134wld7",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "sourceOutlet": "디지털투데이",
-      "scanLabel": "Agentic Commerce Market Scan",
-      "title": "Amazon overhauls AI shopping, putting Alexa at core to integrate search, recommendations and ads",
-      "headline": "Amazon overhauls AI shopping, putting Alexa at core to integrate search, recommendations and ads.",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQeUw0cWlLVUdiMVlENDhDXzB0X1d2MkFPdWVPYV9nbXR0V3hDc0ZoRWJUQlAySWE4ZHR0Q2FxZS1sQU14bGZqUDFCN01KXzFMRXNHQ2p5TEVHbFN0MmF3ajFFVjR4YkJiQl8xZEtzLUhpQmcxdnlVR2dIeUx3QmM2RHV4aXB2SHhnSmVTSktYWUo3V3N2aHRlREJ3aWxsM3VGTl9xMmNOQThHaUNhQUVZeWpjQ29tMU8wVlUxV3hFQ3N6QjRWOHc?oc=5",
-      "publishedAt": "2026-05-13T22:05:36.000Z",
-      "summary": "This signal points to AI becoming a more active layer in retail, commerce, or brand discovery.",
-      "whyItMatters": "This matters because brands may need cleaner catalog data and product metadata for AI-mediated shopping.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 93
-    },
-    {
-      "id": "o1ew91",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "sourceOutlet": "Android Police",
-      "scanLabel": "Agentic Commerce Market Scan",
-      "title": "Amazon's search bar is now an AI shopping assistant that remembers your conversations",
-      "headline": "Amazon's search bar is now an AI shopping assistant that remembers your conversations.",
-      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1PTTc5aEFzNEJkTDNZNTRqWGVkVTRoa1dXWlUzaDZzQ0VCa25QUVBwSkRMRkdpcjBvTVZ3azZxSzA5R0UxOTBpcXpPb0R1cUlTdlpYVVQ1d3ZyRUlkQWh3bTVUN0dndFhHWi1UYnpLUDBrNjFoSVE?oc=5",
-      "publishedAt": "2026-05-13T19:18:30.000Z",
-      "summary": "This story points to AI shopping becoming a discovery path before customers reach a brand site.",
-      "whyItMatters": "This matters because brands may need cleaner catalog data and product metadata for AI-mediated shopping.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 92
-    },
-    {
-      "id": "wt3zqs",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "sourceOutlet": "Gadget Review",
-      "scanLabel": "Agentic Commerce Market Scan",
-      "title": "Amazon Introduces Alexa+ Powered AI Shopping Assistant For The Search Bar",
-      "headline": "Amazon Introduces Alexa+ Powered AI Shopping Assistant For The Search Bar.",
-      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQOVR5Y1hjWXpWR3RpRHVNbDQwaks5SFBsRlhmbUxxNUgwcUY4MTRTanN6V2R1YTI3VDRZdVpDdGVpR2xHZ25YT0V5THA1RmhXVF9mNUo1Ql83dkkyLWNNRTVIOExQVDN3a0gxTWl2QzNjQ0FWSmNlWW96TWdWRFdodWVuTXl6blFxZnJYUGxxdnV2R0tIYnVtOGNya3FZNWZ4dUMw?oc=5",
-      "publishedAt": "2026-05-13T16:09:38.000Z",
-      "summary": "This story points to AI shopping becoming a discovery path before customers reach a brand site.",
-      "whyItMatters": "This matters because discovery and checkout expectations can move upstream into AI agents.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 92
-    },
-    {
-      "id": "1hifjv4",
-      "sourceId": "brand_watchlist_ai_agents",
-      "sourceName": "Brand Watchlist AI Agents",
-      "sourceOutlet": "The Indian Express",
-      "scanLabel": "Brand Watchlist AI Agents",
-      "title": "Amazon replaces Rufus with a new AI shopping assistant powered by Alexa+",
-      "headline": "Amazon replaces Rufus with a new AI shopping assistant powered by Alexa+.",
-      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxQV01ZczM0T0JaR1UydlJOVWtsNnRNY3FDazlzOC1OMkJVRlpwYTlBZXpnaG94MURJYWxsaWx6OTJOSzc5NjlIa2Z2Tm0zM2h4OEJoa0FZSnFwYW55R3RBek9Td19oQ2xDalUwSnJqNlotZV84aExjbGFCUlh3TGZROUh2Z1VndTJFdGR4TUVfOVV6dVZIc1FWcEdER3VrLTBVZXEyalhjVl9Tc3ExYW5HQ2NpNF9YMTlXOWZqRkFHSWJtZjZLRDMtTzhER1JyUkNVWmdPVV9Dcmh6NUlsb3hzctIB5wFBVV95cUxQSkNGRDM5NVhUREktSDFHSHdFRUU5VVNyYy14OFg0aWpRNnJtcHFfck5HU2xVY2g0Tk1hdmVSZ2hOMl85aVU5T2dEVXBCck9kaGs4ZVZCbk5jTVYwSEl5cFZuc0RMeExQNXphOGtaTW9oUXFBQU5vY3V0TW1VVkFja3RnQVh1Y1dFOXlWeGwwRmdCdTdudFFRclpmWEU4UnZHcmZRc08waHc0X3lnQmh4Q205V0NUNTBPV2ZpdWZ2bUtmSGVSd2Y2dkQ1LXlpVE0xRTZpUk0xNGliYkFBamFiZTliVmtRbmc?oc=5",
-      "publishedAt": "2026-05-14T06:53:26.000Z",
-      "summary": "This signal shows platforms competing to own the shopper's AI-assisted product search and checkout path.",
-      "whyItMatters": "This matters because discovery and checkout expectations can move upstream into AI agents.",
-      "category": "fashion",
-      "categories": [
-        "fashion",
-        "beauty",
-        "retail",
-        "agentic_commerce"
-      ],
-      "score": 85
-    },
-    {
-      "id": "10w2186",
-      "sourceId": "review_agentic_commerce_market_scan",
-      "sourceName": "Agentic Commerce Market Scan",
-      "sourceOutlet": "MarketWatch",
-      "scanLabel": "Agentic Commerce Market Scan",
-      "title": "Retailers keep tinkering with their AI shopping assistants, in search of better service",
-      "headline": "Retailers keep tinkering with their AI shopping assistants, in search of better service.",
-      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQSDFrWWF5LUFJQkItcEV3NXNFOVd6bHZSaFkwZC00cHN3ckg4SWtjS0FsYTlBdlpHRGVrNjlnRU9yMFFKenB0OVNIcjVBUThQd0ljTWdyWlE4T3E0c0tOUU5OdDQwOEVCcmNyUFh4M1A5LWZwNmN0ZFVDWVQ3dkpVcEpzMWlMcWk1UFlmdUtxMklySkVId3A1NzFHSXh6Y284cENyb3RZczhHNWdjU0dmaGtiTXdmLW0xRE85ZW9pcHBveXJmSW9oVw?oc=5",
-      "publishedAt": "2026-05-13T22:03:00.000Z",
-      "summary": "This signal shows platforms competing to own the shopper's AI-assisted product search and checkout path.",
-      "whyItMatters": "This matters because AI-assisted shopping can influence how consumers discover, compare, and buy products.",
-      "category": "agentic_commerce",
-      "categories": [
-        "agentic_commerce",
-        "ecommerce",
-        "shopping"
-      ],
-      "score": 85
-    }
-  ],
-  "send": {
-    "sent": false,
-    "messageId": "",
-    "skippedReason": "send_disabled"
-  },
-  "automationConfigured": true,
+  "correlationId": "manual-editorial-2026-07-24",
+  "fetchedItemCount": 5,
+  "generatedAt": "2026-07-24T20:06:33.330Z",
   "githubActionsWorkflowFound": true,
-  "scheduledRefreshConfigured": true,
   "githubPagesDeployConfigured": true,
   "githubPagesDeployGatedBy": "DEPLOY_GITHUB_PAGES",
-  "schedule": [
-    "17 12 * * 1-5",
-    "17 13 * * 1-5"
+  "health": {
+    "contentStatus": "ready",
+    "deploymentStatus": "not_verified",
+    "failedSourceCount": 0,
+    "liveStatus": "not_verified",
+    "pipelineStatus": "healthy",
+    "reasonCodes": [],
+    "sourceCount": 0,
+    "status": "healthy",
+    "successfulSourceCount": 0
+  },
+  "itemCount": 5,
+  "liveVerificationConfigured": true,
+  "manualPushRequiredAfterSetup": false,
+  "minReviewItems": 5,
+  "mode": "preview",
+  "modelPolicy": null,
+  "observability": {
+    "correlationId": "manual-editorial-2026-07-24",
+    "events": "",
+    "manifest": "",
+    "runId": "manual-editorial-2026-07-24",
+    "schemaVersion": 1,
+    "summary": ""
+  },
+  "observabilityConfigured": true,
+  "rejectedItemCount": 21,
+  "rejectedReasonCounts": {},
+  "reviewReady": true,
+  "reviewReasons": [
+    "Hand-curated weekly edition (2026-07-17 to 2026-07-24): stories researched, opened, and verified editorially this week by Claude Fable 5 using public web sources; the automated source pipeline and API-powered analysis lane were not used for this edition."
   ],
+  "runId": "manual-editorial-2026-07-24",
+  "schedule": [
+    "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *",
+    "17 10,11,12 * * *"
+  ],
+  "scheduledRefreshConfigured": true,
+  "schemaVersion": 1,
+  "selectedItemCount": 5,
+  "send": {
+    "sent": false,
+    "skippedReason": "send_disabled"
+  },
+  "sendStatus": "send_disabled",
+  "skipped": false,
+  "skippedReason": "",
+  "sourceCount": 40,
+  "sourceErrorCount": 0,
+  "sourceResults": [],
+  "sourceRings": {
+    "active": 40,
+    "rings": {
+      "core": {
+        "active": 23,
+        "total": 23
+      },
+      "discovery": {
+        "active": 4,
+        "total": 4
+      },
+      "extended": {
+        "active": 13,
+        "total": 30
+      }
+    },
+    "shadow": 17,
+    "total": 57
+  },
+  "stackProfile": {
+    "capabilityCount": 11,
+    "generatedAt": "2026-07-24T00:00:00.000Z",
+    "profileVersion": "1.0.0",
+    "sourceCommit": "519422f06f00",
+    "status": "recorded"
+  },
+  "targetHourLocal": 4,
   "timezone": "America/New_York",
-  "targetHourLocal": 8,
-  "manualPushRequiredAfterSetup": false
+  "watchlist": [
+    {
+      "id": "watch-1",
+      "normaRelevance": {
+        "capabilities": [
+          "Shopify / headless commerce"
+        ]
+      },
+      "publishedAt": "2026-07-21T00:00:00.000Z",
+      "sourceOutlet": "Shopify developer changelog",
+      "title": "Shopify ships full-stack analytics capabilities for apps (developer changelog, July 21)",
+      "url": "https://shopify.dev/changelog/full-stack-capabilities-to-power-app-analytics"
+    },
+    {
+      "id": "watch-2",
+      "normaRelevance": {
+        "capabilities": [
+          "Agent platforms / model providers"
+        ]
+      },
+      "publishedAt": "2026-07-20T00:00:00.000Z",
+      "sourceOutlet": "TechCrunch",
+      "title": "Natural raises a $30M Series A led by Forerunner to build payment rails for AI agents (TechCrunch, July 20)",
+      "url": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe/"
+    }
+  ],
+  "editorialNote": "Hand-curated weekly edition (2026-07-17 to 2026-07-24): stories researched, opened, and verified editorially this week by Claude Fable 5 using public web sources; the automated source pipeline and API-powered analysis lane were not used for this edition."
 }

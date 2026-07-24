@@ -203,10 +203,10 @@ function renderCurationFolio(run) {
 function renderTheMoves(stories) {
   const rows = stories
     .map((story, index) => ({ story, index }))
-    .filter((entry) => entry.story.nextMove);
+    .filter((entry) => entry.story.connection);
   if (rows.length < 2) return "";
   const items = rows.map(({ story, index }) =>
-    `    <li><span class="five-num">${padNum(index + 1)}</span><span class="move-text">${escapeHtml(story.nextMove)}</span><a class="move-ref" href="#story-${index + 1}">Story ${padNum(index + 1)}</a></li>`
+    `    <li><span class="five-num">${padNum(index + 1)}</span><span class="move-text">${escapeHtml(story.connection)}</span><a class="move-ref" href="#story-${index + 1}">Story ${padNum(index + 1)}</a></li>`
   ).join("\n");
   return `<section>
   <h2>Where this connects</h2>
@@ -303,14 +303,14 @@ function renderCard(story, index) {
 // C + I: "Why it matters" and the operator "Next move" as one calm two-line
 // callout. The next-move line renders only when the edition provides it.
 function whyCallout(story) {
-  if (!story.whyItMatters && !story.nextMove) return "";
+  if (!story.whyItMatters && !story.connection) return "";
   const why = story.whyItMatters
     ? `<span class="callout-line"><strong>Why it matters</strong> ${escapeHtml(story.whyItMatters)}</span>`
     : "";
-  const move = story.nextMove
-    ? `<span class="callout-line next-move"><strong>Next move</strong> ${escapeHtml(story.nextMove)}</span>`
+  const connection = story.connection
+    ? `<span class="callout-line next-move"><strong>The connection</strong> ${escapeHtml(story.connection)}</span>`
     : "";
-  return `<p class="why-callout">${why}${move}</p>`;
+  return `<p class="why-callout">${why}${connection}</p>`;
 }
 
 function padNum(value) {

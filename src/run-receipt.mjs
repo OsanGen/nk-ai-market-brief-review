@@ -86,6 +86,9 @@ function publicAiLane(lane) {
         dropped: lane.readerHeadlines.dropped ?? 0,
         dropReasons: lane.readerHeadlines.dropReasons ?? []
       }
+      : null,
+    voiceGate: lane.voiceGate
+      ? { dropped: lane.voiceGate.dropped ?? 0, drops: lane.voiceGate.drops ?? [] }
       : null
   };
 }

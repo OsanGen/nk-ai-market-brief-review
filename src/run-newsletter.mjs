@@ -339,9 +339,9 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
       for (const story of stories) {
         const override = byId.get(String(story.id));
         if (!override) continue;
-        story.summary = override.summary;
-        story.whyItMatters = override.why_it_matters;
-        if (override.next_move) story.nextMove = override.next_move;
+        if (override.summary) story.summary = override.summary;
+        if (override.why_it_matters) story.whyItMatters = override.why_it_matters;
+        if (override.connection) story.connection = override.connection;
         // Translation layer: only adopt a reader headline that actually differs.
         if (override.reader_headline
           && override.reader_headline.toLowerCase() !== String(story.headline ?? "").toLowerCase()) {
@@ -469,6 +469,7 @@ function publicStory(story) {
     title: story.title,
     headline: story.headline,
     readerHeadline: story.readerHeadline ?? null,
+    connection: story.connection ?? null,
     url: story.url,
     publishedAt: story.publishedAt,
     summary: story.summary,

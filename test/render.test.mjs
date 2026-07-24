@@ -288,11 +288,11 @@ test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and colla
 });
 
 test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are data-conditional and coherent", () => {
-  const graded = (index, aiRelevance, nextMove) => ({
+  const graded = (index, aiRelevance, connection) => ({
     headline: `Story ${index}`,
     summary: "S.",
     whyItMatters: "W.",
-    nextMove,
+    connection,
     aiRelevance,
     sourceName: "Scan",
     sourceOutlet: "Outlet",
@@ -302,7 +302,7 @@ test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are
   });
 
   const full = renderReviewPage({
-    stories: [graded(1, "high", "Audit the feed."), graded(2, "medium", "Test the queries."), graded(3, undefined, undefined)],
+    stories: [graded(1, "high", "The feed overlaps NK's catalog."), graded(2, "medium", "The queries overlap NK's search."), graded(3, undefined, undefined)],
     run: { mode: "preview", candidateItemCount: 26, acceptedItemCount: 7, selectedItemCount: 3 },
     generatedAt: "2026-07-24T08:00:00.000Z"
   });
@@ -316,12 +316,12 @@ test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are
   assert.match(full, /aria-label="Signal: high, 3 of 3, AI-assessed"/);
 
   const incoherent = renderReviewPage({
-    stories: [graded(1, undefined, "Only move.")],
+    stories: [graded(1, undefined, "Only connection.")],
     run: { mode: "preview", candidateItemCount: 5, acceptedItemCount: 9, selectedItemCount: 1 },
     generatedAt: "2026-07-24T08:00:00.000Z"
   });
   assert.doesNotMatch(incoherent, /class="curation-folio"/, "incoherent funnel prints nothing");
-  assert.doesNotMatch(incoherent, /<h2>Where this connects<\/h2>/, "a single move stays in its story callout");
+  assert.doesNotMatch(incoherent, /<h2>Where this connects<\/h2>/, "a single connection stays in its story callout");
   assert.doesNotMatch(incoherent, /class="sig"/, "no grade, no ink");
 
   const equalFunnel = renderReviewPage({

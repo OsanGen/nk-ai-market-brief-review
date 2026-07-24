@@ -209,7 +209,7 @@ test("parseSynthesis handles the object shape: week overview, next_move, and das
           story_id: "abc123",
           summary: "Good summary.",
           why_it_matters: "Real reason.",
-          next_move: "Audit UCP feed readiness before Q4.",
+          connection: "UCP feeds overlap NK's Shopify catalog.",
           relevance: "high"
         }]
       })
@@ -217,7 +217,7 @@ test("parseSynthesis handles the object shape: week overview, next_move, and das
   };
   const { overrides, weekOverview } = parseSynthesis(data, allowed);
   assert.equal(weekOverview, "The agent layer got rails - and consumers noticed.");
-  assert.equal(overrides[0].next_move, "Audit UCP feed readiness before Q4.");
+  assert.equal(overrides[0].connection, "UCP feeds overlap NK's Shopify catalog.");
 });
 
 test("synthesis prompt carries only public projections inside evidence delimiters", () => {
@@ -232,7 +232,7 @@ test("reader_headline validation: hype, overlength, and URLs drop the field, nev
   const allowed = { allowedStoryIds: new Set(["a", "b", "c", "d"]) };
   const entry = (id, readerHeadline) => ({
     story_id: id, summary: "Good.", why_it_matters: "Real.", relevance: "high",
-    next_move: "Audit it.", reader_headline: readerHeadline
+    connection: "This overlaps NK's catalog.", reader_headline: readerHeadline
   });
   const data = { content: [{ type: "text", text: JSON.stringify({
     week_overview: "A week.",
@@ -258,7 +258,7 @@ test("anti-drift corpus: grounding gate and qualifier rule catch each drift clas
   const attempt = (readerHeadline) => {
     const data = { content: [{ type: "text", text: JSON.stringify({
       week_overview: "A week.",
-      stories: [{ story_id: "s1", summary: "The company says conversion doubled.", why_it_matters: "W.", next_move: "Audit.", reader_headline: readerHeadline, relevance: "high" }]
+      stories: [{ story_id: "s1", summary: "The company says conversion doubled.", why_it_matters: "W.", connection: "This overlaps NK's stylist build.", reader_headline: readerHeadline, relevance: "high" }]
     }) }] };
     return parseSynthesis(data, allowed);
   };
@@ -299,7 +299,7 @@ test("lane summary carries reader-headline drift receipts", async () => {
         return {
           content: [{ type: "text", text: JSON.stringify({
             week_overview: "A week.",
-            stories: [{ story_id: "abc123", summary: "S.", why_it_matters: "W.", next_move: "Audit.", reader_headline: "Totally invented Walmart figure of 99% growth", relevance: "high" }]
+            stories: [{ story_id: "abc123", summary: "S.", why_it_matters: "W.", connection: "This overlaps NK's build.", reader_headline: "Totally invented Walmart figure of 99% growth", relevance: "high" }]
           }) }],
           usage: { input_tokens: 10, output_tokens: 10 }
         };
@@ -311,4 +311,46 @@ test("lane summary carries reader-headline drift receipts", async () => {
   assert.equal(result.summary.readerHeadlines.accepted, 0);
   assert.equal(result.summary.readerHeadlines.dropped, 1);
   assert.ok(["ungrounded_entity", "ungrounded_number"].includes(result.summary.readerHeadlines.dropReasons[0]));
+});
+
+
+test("connections-not-commands: directive language drops in editorial voice, quoted advice survives in summaries", () => {
+  const allowed = { allowedStoryIds: new Set(["s1"]), storyTextById: new Map([["s1", "An AI shopping story about Google."]]) };
+  const attempt = (fields) => {
+    const data = { content: [{ type: "text", text: JSON.stringify({
+      week_overview: fields.week_overview ?? "A descriptive week.",
+      stories: [{ story_id: "s1", summary: fields.summary ?? "A thing happened.", why_it_matters: fields.why ?? "It relates to the market.",
+        connection: fields.connection ?? "This overlaps NK's build.", reader_headline: fields.reader_headline ?? "", relevance: "high" }]
+    }) }] };
+    return parseSynthesis(data, allowed);
+  };
+
+  // Imperative-lead connection -> dropped
+  let r = attempt({ connection: "Audit the catalog feed before Q4." });
+  assert.equal(r.overrides[0].connection, "");
+  assert.ok(r.voiceDrops.some((d) => d.field === "connection" && d.reason === "directive_language"));
+
+  // Advice tokens in why -> dropped, story survives
+  r = attempt({ why: "This is worth evaluating for the storefront." });
+  assert.equal(r.overrides[0].why_it_matters, "");
+  assert.equal(r.overrides[0].connection, "This overlaps NK's build.");
+
+  // NK-directed summary -> dropped; market-quoted advice in summary -> kept
+  r = attempt({ summary: "NK should move quickly on this." });
+  assert.equal(r.overrides[0].summary, "");
+  r = attempt({ summary: "Analysts say retailers should prepare for agentic checkout." });
+  assert.equal(r.overrides[0].summary, "Analysts say retailers should prepare for agentic checkout.");
+
+  // Directive week overview -> dropped entirely
+  r = attempt({ week_overview: "Brands must get ready now: it's time to invest in agents." });
+  assert.equal(r.weekOverview, "");
+
+  // Directive reader headline -> dropped with reason
+  r = attempt({ reader_headline: "NK should watch this AI shopping shift closely" });
+  assert.equal(r.overrides[0].reader_headline, "");
+  assert.equal(r.headlineStats.drops[0].reason, "directive_language");
+
+  // Sales lexicon -> dropped
+  r = attempt({ connection: "A major opportunity to leverage the new rails." });
+  assert.equal(r.overrides[0].connection, "");
 });

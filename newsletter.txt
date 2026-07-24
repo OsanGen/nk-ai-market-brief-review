@@ -1,5 +1,5 @@
 NK AI Market Brief
-Generated 2026-07-24T22:52:49.641Z
+Generated 2026-07-24T23:09:52.673Z
 
 AI, fashion, beauty, e-commerce, AI shopping, and agentic commerce signals.
 
@@ -11,7 +11,7 @@ Category: agentic_commerce
 Scan: Weekly Editorial Curation
 Date: 2026-07-22
 Summary: On Alphabet's July 22 earnings call, Google's chief business officer said the company "established the open-source Universal Commerce Protocol, UCP, as the new standard for agentic commerce," naming Target and Steve Madden as merchants now live. Google also described Universal Cart, which lets shoppers add items from different retailers across Google services and buy in a single checkout. The framing and adoption pace are Google's own on-the-record claims, not independent findings.
-Why it matters: Google is building the rails that decide which catalogs its shopping agents can see and transact, and a first fashion merchant is already live - UCP feed readiness becomes a near-term checklist item for a Shopify fashion brand.
+Why it matters: Google is building the rails that decide which catalogs its shopping agents can see and transact, and a first fashion merchant is already live on them.
 Read source: https://stockanalysis.com/stocks/googl/transcripts/657320-q2-2026/
 
 STORY 2
@@ -32,7 +32,7 @@ Source: Bloomreach newsroom
 Category: consumer_research
 Scan: Weekly Editorial Curation
 Date: 2026-07-22
-Summary: In a Bloomreach-commissioned survey of 4,040 US and UK consumers (fielded May 11-21 by Propeller Insights, published July 22), 41.4% said they would choose to shop through an AI tool versus 38% directly on a brand's site. 75.4% reported having used AI tools such as Claude, ChatGPT, or Gemini for shopping decisions, and 80.4% said those experiences met or exceeded expectations. Bloomreach sells personalization software, so the research supports its commercial narrative and should be read as vendor-commissioned.
+Summary: In a Bloomreach-commissioned survey of 4,040 US and UK consumers (fielded May 11-21 by Propeller Insights, published July 22), 41.4% said they would choose to shop through an AI tool versus 38% directly on a brand's site. 75.4% reported having used AI tools such as Claude, ChatGPT, or Gemini for shopping decisions, and 80.4% said those experiences met or exceeded expectations. Bloomreach sells personalization software, and the research supports its commercial narrative; the survey is vendor-commissioned.
 Why it matters: If product discovery keeps shifting into AI assistants, a brand's own assistant and its visibility inside third-party agents both become traffic-defense strategies rather than experiments.
 Read source: https://www.bloomreach.com/en/news/2026/from-novelty-to-necessity-new-bloomreach-consumer-survey-finds-shoppers-now-prefer-ai-tools-to-shop/
 
@@ -44,7 +44,7 @@ Category: search_discovery
 Scan: Weekly Editorial Curation
 Date: 2026-07-21
 Summary: Algolia announced on July 21 that Dynamic Facets is generally available to its customers: the feature surfaces and reorders the most relevant filters (such as size, color, or occasion) in real time based on the query and shopper behavior, replacing fixed facet lists. Algolia's vendor-reported early results cite 10-15% higher click-through on filters in its strongest-performing markets.
-Why it matters: Facet quality is disproportionately important in fashion search, where size and fit filters drive conversion - adaptive facets are worth evaluating for any headless storefront's discovery layer.
+Why it matters: Facet quality is disproportionately important in fashion search, where size and fit filters carry much of the conversion.
 Read source: https://www.algolia.com/about/news/algolia-launches-dynamic-facets-to-make-product-discovery-faster-smarter-and-more-relevant
 
 STORY 5

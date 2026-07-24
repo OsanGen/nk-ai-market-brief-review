@@ -198,7 +198,7 @@ function renderStoryMeta(story) {
     <span><strong>Category:</strong> ${escapeHtml(story.category ?? "market")}</span>
     ${scan ? `<span><strong>Scan:</strong> ${escapeHtml(scan)}</span>` : ""}
     <span><strong>Date:</strong> ${escapeHtml(formatDate(story.publishedAt))}</span>
-  </p>${renderNormaBadge(story.normaRelevance)}`;
+  </p>${story.aiWritten ? `<p class="story-meta"><span><strong>Analysis:</strong> AI-written (Opus), evidence-bound</span></p>` : ""}${renderNormaBadge(story.normaRelevance)}`;
 }
 
 // NK-relevance badge: names the House capabilities this story touches, derived
@@ -263,8 +263,10 @@ function aiLaneLabel(aiLane) {
   const status = aiLane?.status || "unavailable";
   if (status === "ready_pending_key") return "AI review: ready, pending API key";
   if (status === "disabled_by_flag") return "AI review: built, flag off";
+  if (status === "synthesized") return "AI review: active (Opus-written analysis)";
   if (status === "submitted" || status === "active") return "AI review: active";
   if (status === "blocked_over_cap") return "AI review: blocked by budget cap";
+  if (status === "submit_failed" || status === "synthesis_invalid") return "AI review: errored, template copy shown";
   return "AI review: unavailable";
 }
 

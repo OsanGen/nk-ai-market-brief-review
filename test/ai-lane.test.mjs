@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { blocksPrivateRouting, budgetPreflight, estimateBatchCost, getPrivacyReceipt } from "../src/ai/budget.mjs";
-import { ANTHROPIC_BATCHES_URL, laneReadiness, runAiLane } from "../src/ai/lane.mjs";
+import { laneReadiness, runAiLane } from "../src/ai/lane.mjs";
 import {
   EVIDENCE_CLOSE,
   EVIDENCE_OPEN,
@@ -10,6 +10,7 @@ import {
   buildPublicPackets,
   validateModelOutput
 } from "../src/ai/packets.mjs";
+import { ANTHROPIC_MESSAGES_URL, buildSynthesisRequest, buildSynthesisItems, parseSynthesis } from "../src/ai/synthesize.mjs";
 
 const story = {
   id: "abc123",
@@ -108,7 +109,20 @@ test("without a key the lane dry-runs: real packets and budget, zero network cal
   assert.equal(result.summary.privateRoutingBlocked, true);
 });
 
-test("with key + flag the lane submits to the Batches API and never leaks the key into the summary", async () => {
+function anthropicResponse(payload) {
+  return {
+    ok: true,
+    status: 200,
+    async json() {
+      return {
+        content: [{ type: "text", text: JSON.stringify(payload) }],
+        usage: { input_tokens: 900, output_tokens: 250 }
+      };
+    }
+  };
+}
+
+test("with key + flag the lane synthesizes via the sync Messages API and never leaks the key", async () => {
   const calls = [];
   const result = await runAiLane({
     stories: [story],
@@ -117,14 +131,21 @@ test("with key + flag the lane submits to the Batches API and never leaks the ke
     capabilityIds: ["voice_commerce"],
     fetchImpl: async (url, options) => {
       calls.push({ url, options });
-      return { ok: true, status: 200, async json() { return { id: "batch_123" }; } };
+      return anthropicResponse([
+        { story_id: "abc123", summary: "A voice agent launched for fashion retail.", why_it_matters: "It competes with NK's conversational stylist.", relevance: "high" }
+      ]);
     }
   });
   assert.equal(calls.length, 1);
-  assert.equal(calls[0].url, ANTHROPIC_BATCHES_URL);
+  assert.equal(calls[0].url, ANTHROPIC_MESSAGES_URL);
   assert.equal(calls[0].options.headers["x-api-key"], "unit-test-placeholder-key");
-  assert.equal(result.mode, "submitted");
-  assert.equal(result.summary.batchId, "batch_123");
+  const body = JSON.parse(calls[0].options.body);
+  assert.equal(body.model, "claude-opus-4-8");
+  assert.match(body.messages[0].content, new RegExp(EVIDENCE_OPEN));
+  assert.equal(result.mode, "synthesized");
+  assert.equal(result.summary.status, "synthesized");
+  assert.equal(result.summary.synthesizedCount, 1);
+  assert.equal(result.overrides[0].summary, "A voice agent launched for fashion retail.");
   assert.doesNotMatch(JSON.stringify(result.summary), /unit-test-placeholder-key/);
   assert.doesNotMatch(JSON.stringify(result.budget), /unit-test-placeholder-key/);
 });
@@ -139,4 +160,47 @@ test("a provider error surfaces as submit_failed without throwing", async () => 
   });
   assert.equal(result.mode, "submit_failed");
   assert.equal(result.summary.providerStatus, 429);
+});
+
+test("garbage model output degrades to synthesis_invalid, keeping template copy", async () => {
+  const result = await runAiLane({
+    stories: [story],
+    env: { ANTHROPIC_API_KEY: "k", NEWSLETTER_AI_LANE_ENABLED: "true" },
+    runId: "run-4",
+    capabilityIds: [],
+    fetchImpl: async () => ({
+      ok: true,
+      status: 200,
+      async json() { return { content: [{ type: "text", text: "I cannot help with that." }] }; }
+    })
+  });
+  assert.equal(result.mode, "synthesis_invalid");
+  assert.equal(result.summary.reasonCode, "synthesis_unparseable");
+});
+
+test("parseSynthesis drops spoofed ids, URLs, and empty fields; strips code fences", () => {
+  const allowed = { allowedStoryIds: new Set(["abc123"]) };
+  const data = {
+    content: [{
+      type: "text",
+      text: "```json\n" + JSON.stringify([
+        { story_id: "abc123", summary: "Good summary.", why_it_matters: "Real reason.", relevance: "high" },
+        { story_id: "spoofed", summary: "x", why_it_matters: "y", relevance: "low" },
+        { story_id: "abc123", summary: "duplicate", why_it_matters: "dup", relevance: "low" },
+        { story_id: "abc123", summary: "see https://evil.com", why_it_matters: "link", relevance: "low" }
+      ]) + "\n```"
+    }]
+  };
+  const outputs = parseSynthesis(data, allowed);
+  assert.equal(outputs.length, 1);
+  assert.equal(outputs[0].summary, "Good summary.");
+  assert.equal(outputs[0].relevance, "high");
+});
+
+test("synthesis prompt carries only public projections inside evidence delimiters", () => {
+  const items = buildSynthesisItems([story]);
+  assert.deepEqual(Object.keys(items[0]).sort(), ["nk_capabilities", "outlet", "story_id", "summary", "title"]);
+  const request = buildSynthesisRequest(items, { model: "claude-opus-4-8" });
+  assert.doesNotMatch(request.messages[0].content, /example\.com|token=|matchSignals|secretish/);
+  assert.match(request.messages[0].content, new RegExp(EVIDENCE_CLOSE));
 });

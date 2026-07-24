@@ -52,6 +52,10 @@ jobs:
         if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
         env:
           NEWSLETTER_RUN_ID: ${{ steps.refresh_gate.outputs.run_id }}
+          # AI synthesis lane: key-gated + flag-gated. Absent secret/variable
+          # degrades safely to the deterministic template copy (dry-run receipts).
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEWSLETTER_AI_LANE_ENABLED: ${{ vars.NEWSLETTER_AI_LANE_ENABLED }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "send" ]; then

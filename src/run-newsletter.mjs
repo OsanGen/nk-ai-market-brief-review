@@ -316,14 +316,28 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
       runId: telemetry.runId,
       capabilityIds
     });
+    const failedModes = ["submit_failed", "synthesis_invalid"];
     await telemetry.event({
       event: result.mode === "dry_run" ? "ai.lane.dry_run" : `ai.lane.${result.mode}`,
       component: "ai_lane",
-      status: result.mode === "submit_failed" ? "failed" : "completed",
-      level: result.mode === "submit_failed" ? "warn" : "info",
+      status: failedModes.includes(result.mode) ? "failed" : "completed",
+      level: failedModes.includes(result.mode) ? "warn" : "info",
       reasonCode: result.mode === "dry_run" ? result.summary.status : "",
       attributes: result.summary
     });
+    // Apply validated Opus-written copy in place. Unknown story ids were already
+    // dropped by parseSynthesis; anything unmatched keeps its template copy.
+    if (result.mode === "synthesized") {
+      const byId = new Map(result.overrides.map((override) => [override.story_id, override]));
+      for (const story of stories) {
+        const override = byId.get(String(story.id));
+        if (!override) continue;
+        story.summary = override.summary;
+        story.whyItMatters = override.why_it_matters;
+        story.aiWritten = true;
+        story.aiRelevance = override.relevance;
+      }
+    }
     return result.summary;
   } catch (error) {
     await telemetry.event({
@@ -445,6 +459,8 @@ function publicStory(story) {
     category: story.category,
     categories: story.categories,
     score: story.score,
+    aiWritten: Boolean(story.aiWritten),
+    aiRelevance: story.aiRelevance ?? null,
     normaRelevance: story.normaRelevance
       ? {
         bonus: story.normaRelevance.bonus,

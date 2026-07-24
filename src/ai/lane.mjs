@@ -14,6 +14,13 @@
 import { describeModelPolicy, loadModelRegistry, resolveModel } from "../model-registry.mjs";
 import { blocksPrivateRouting, budgetPreflight, estimateBatchCost, getPrivacyReceipt } from "./budget.mjs";
 import { buildBatchRequests, buildPublicPackets } from "./packets.mjs";
+import {
+  ANTHROPIC_MESSAGES_URL,
+  buildSynthesisItems,
+  buildSynthesisRequest,
+  estimateSyncCost,
+  parseSynthesis
+} from "./synthesize.mjs";
 
 export const ANTHROPIC_BATCHES_URL = "https://api.anthropic.com/v1/messages/batches";
 export const ANTHROPIC_VERSION = "2023-06-01";
@@ -69,36 +76,68 @@ export async function runAiLane({
   if (readiness !== "active") {
     return { mode: "dry_run", summary, budget, privacy, requestCount: requests.length };
   }
-  if (!budget.within_cap) {
-    return { mode: "blocked_over_cap", summary: { ...summary, status: "blocked_over_cap" }, budget, privacy, requestCount: requests.length };
+
+  // ACTIVE path (key + flag): V1 uses the synchronous route so Opus-written
+  // copy lands in the same run — the batch route stays for the future weekly
+  // deep lane. The key is passed as a header and never returned, logged, or
+  // attached to any receipt.
+  const syncRequest = buildSynthesisRequest(buildSynthesisItems(stories), { model: role.primary });
+  const syncEstimate = estimateSyncCost(syncRequest, model);
+  const syncBudget = budgetPreflight({ estimate: syncEstimate, capUsd, runId });
+  const activeSummary = {
+    ...summary,
+    transport: "synchronous_messages_api",
+    estimatedCostUsd: syncBudget.estimated_cost_usd,
+    withinBudgetCap: syncBudget.within_cap
+  };
+  if (!syncBudget.within_cap) {
+    return { mode: "blocked_over_cap", summary: { ...activeSummary, status: "blocked_over_cap" }, budget: syncBudget, privacy, requestCount: 1 };
   }
 
-  // Live submission (only reachable with key + flag). The key is passed as a
-  // header and never returned, logged, or attached to any receipt.
-  const response = await fetchImpl(ANTHROPIC_BATCHES_URL, {
+  const response = await fetchImpl(ANTHROPIC_MESSAGES_URL, {
     method: "POST",
     headers: {
       "x-api-key": env.ANTHROPIC_API_KEY,
       "anthropic-version": ANTHROPIC_VERSION,
       "content-type": "application/json"
     },
-    body: JSON.stringify({ requests })
+    body: JSON.stringify(syncRequest)
   });
   if (!response.ok) {
     return {
       mode: "submit_failed",
-      summary: { ...summary, status: "submit_failed", providerStatus: response.status },
-      budget,
+      summary: { ...activeSummary, status: "submit_failed", providerStatus: response.status },
+      budget: syncBudget,
       privacy,
-      requestCount: requests.length
+      requestCount: 1
     };
   }
   const data = await response.json();
+  let overrides = [];
+  try {
+    overrides = parseSynthesis(data, { allowedStoryIds: new Set(stories.map((story) => String(story.id))) });
+  } catch (error) {
+    return {
+      mode: "synthesis_invalid",
+      summary: { ...activeSummary, status: "synthesis_invalid", reasonCode: error.message },
+      budget: syncBudget,
+      privacy,
+      requestCount: 1
+    };
+  }
+  const usage = data.usage ?? {};
   return {
-    mode: "submitted",
-    summary: { ...summary, status: "submitted", batchId: data.id ?? "" },
-    budget,
+    mode: "synthesized",
+    overrides,
+    summary: {
+      ...activeSummary,
+      status: "synthesized",
+      synthesizedCount: overrides.length,
+      inputTokens: usage.input_tokens ?? 0,
+      outputTokens: usage.output_tokens ?? 0
+    },
+    budget: syncBudget,
     privacy,
-    requestCount: requests.length
+    requestCount: 1
   };
 }

@@ -75,7 +75,9 @@ function publicAiLane(lane) {
     budgetCapUsd: lane.budgetCapUsd ?? 0,
     withinBudgetCap: Boolean(lane.withinBudgetCap),
     privateRoutingBlocked: lane.privateRoutingBlocked !== false,
-    privacyStatus: lane.privacyStatus || "unverified"
+    privacyStatus: lane.privacyStatus || "unverified",
+    transport: lane.transport || "",
+    synthesizedCount: lane.synthesizedCount ?? 0
   };
 }
 

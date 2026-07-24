@@ -229,14 +229,14 @@ test("V1 review page renders NK-relevance badges, watchlist, ring stats, and the
     generatedAt: "2026-07-24T08:00:00.000Z"
   });
 
-  assert.match(html, /NK stack signal:/);
+  assert.match(html, /Why this touches NK:/);
   assert.match(html, /Voice AI \/ voice commerce/);
   assert.match(html, /AI review: ready, pending API key/);
   assert.match(html, /claude-opus-4-8/);
-  assert.match(html, /Watchlist/);
+  assert.match(html, /Also worth knowing/);
   assert.match(html, /Klaviyo ships AI flows/);
   assert.match(html, /40\/57/);
-  assert.match(html, /NK stack-aware ranking/);
+  assert.match(html, /Ranked for NK relevance/);
   assert.match(html, /blocked until ZDR verification/);
 });
 
@@ -307,8 +307,9 @@ test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are
     generatedAt: "2026-07-24T08:00:00.000Z"
   });
 
-  assert.match(full, /class="curation-folio">From 26 signals scanned · 7 qualified · 3 published</);
-  assert.match(full, /<h2>The moves<\/h2>/);
+  assert.match(full, /class="curation-folio">This week we went through 26 stories · shortlisted 7 · chose these 3</);
+  assert.match(full, /<h2>Where this connects<\/h2>/);
+  assert.match(full, /Five ways this week's news lines up with what NK is already building\./);
   assert.equal((full.match(/class="move-text"/g) || []).length, 2, "only stories with moves get rows");
   assert.match(full, /class="move-ref" href="#story-2">Story 02</);
   assert.equal((full.match(/class="sig"/g) || []).length, 4, "high+medium marked in index and story; ungraded story unmarked");
@@ -320,7 +321,7 @@ test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are
     generatedAt: "2026-07-24T08:00:00.000Z"
   });
   assert.doesNotMatch(incoherent, /class="curation-folio"/, "incoherent funnel prints nothing");
-  assert.doesNotMatch(incoherent, /<h2>The moves<\/h2>/, "a single move stays in its story callout");
+  assert.doesNotMatch(incoherent, /<h2>Where this connects<\/h2>/, "a single move stays in its story callout");
   assert.doesNotMatch(incoherent, /class="sig"/, "no grade, no ink");
 
   const equalFunnel = renderReviewPage({

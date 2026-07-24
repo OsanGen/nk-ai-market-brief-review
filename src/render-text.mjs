@@ -27,9 +27,9 @@ export function renderText({ stories, generatedAt, curation }) {
   // Curation-funnel parity with the web page (renders only when coherent).
   if (curation && curation.candidate > curation.selected && curation.selected > 0) {
     const middle = curation.accepted > 0 && curation.candidate >= curation.accepted && curation.accepted >= curation.selected
-      ? ` | ${curation.accepted} qualified`
+      ? `, shortlisted ${curation.accepted},`
       : "";
-    lines.push(`From ${curation.candidate} signals scanned${middle} | ${curation.selected} published`, "");
+    lines.push(`This week we went through ${curation.candidate} stories${middle} and chose these ${curation.selected}.`, "");
   }
   lines.push("Internal NK market brief. Summaries are deterministic and based on RSS metadata only.");
   return `${lines.join("\n").trim()}\n`;

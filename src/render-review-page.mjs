@@ -132,14 +132,13 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
         <span class="badge">Email disabled</span>
         <span class="badge">Internal review</span>
         <span class="badge">${escapeHtml(aiLaneLabel(run.aiLane))}</span>
-        ${run.stackProfile?.sourceCommit ? `<span class="badge">NK stack-aware ranking</span>` : ""}
+        ${run.stackProfile?.sourceCommit ? `<span class="badge">Ranked for NK relevance</span>` : ""}
       </div>
-      <p class="status-line"><strong>Review status:</strong> ${escapeHtml(reviewLabel)}</p>
       ${renderReviewNote(run)}
     </header>
     ${renderWeekOverview(run.weekOverview)}
     <section>
-      <p class="signals-label">Today's selected signals</p>
+      <p class="signals-label">This week's stories</p>
       ${renderCurationFolio(run)}
       ${renderWeekInFive(stories)}
     </section>
@@ -154,6 +153,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     </section>
     <details class="ops">
       <summary>System details</summary>
+      <p class="status-line"><strong>Review status:</strong> ${escapeHtml(reviewLabel)}</p>
       ${renderRunSummary(run, sendLabel)}
       ${renderRingStats(run.sourceRings)}
       ${renderAiLanePanel(run.aiLane, run.modelPolicy)}
@@ -188,12 +188,12 @@ function renderCurationFolio(run) {
   const selected = Number(run.selectedItemCount ?? run.itemCount);
   if (!Number.isFinite(candidate) || !Number.isFinite(selected)) return "";
   if (candidate <= 0 || selected <= 0 || candidate <= selected) return "";
-  const parts = [`From ${candidate.toLocaleString("en-US")} signals scanned`];
+  const parts = [`This week we went through ${candidate.toLocaleString("en-US")} stories`];
   if (Number.isFinite(accepted) && accepted > 0) {
     if (!(candidate >= accepted && accepted >= selected)) return "";
-    parts.push(`${accepted.toLocaleString("en-US")} qualified`);
+    parts.push(`shortlisted ${accepted.toLocaleString("en-US")}`);
   }
-  parts.push(`${selected.toLocaleString("en-US")} published`);
+  parts.push(`chose these ${selected.toLocaleString("en-US")}`);
   return `<p class="curation-folio">${escapeHtml(parts.join(" · "))}</p>`;
 }
 
@@ -209,7 +209,8 @@ function renderTheMoves(stories) {
     `    <li><span class="five-num">${padNum(index + 1)}</span><span class="move-text">${escapeHtml(story.nextMove)}</span><a class="move-ref" href="#story-${index + 1}">Story ${padNum(index + 1)}</a></li>`
   ).join("\n");
   return `<section>
-  <h2>The moves</h2>
+  <h2>Where this connects</h2>
+  <p class="meta">Five ways this week's news lines up with what NK is already building.</p>
   <ol class="moves">
 ${items}
   </ol>
@@ -412,7 +413,7 @@ function renderNormaBadge(normaRelevance) {
   const capabilities = normaRelevance?.capabilities ?? [];
   if (!capabilities.length) return "";
   const labels = capabilities.map((capability) => capability.label).join(", ");
-  return `<p class="nk-relevance"><strong>NK stack signal:</strong> ${escapeHtml(labels)}</p>`;
+  return `<p class="nk-relevance"><strong>Why this touches NK:</strong> ${escapeHtml(labels)}</p>`;
 }
 
 function renderWatchlist(watchlist) {
@@ -427,8 +428,8 @@ function renderWatchlist(watchlist) {
     return `<li>${title}${outlet}${badge}</li>`;
   }).join("\n");
   return `<section>
-  <h2>Watchlist</h2>
-  <p class="meta">Qualifying signals that did not make today's selection.</p>
+  <h2>Also worth knowing</h2>
+  <p class="meta">Stories that made the shortlist but not this week's five.</p>
   <ul>
 ${items}
   </ul>

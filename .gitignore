@@ -2,5 +2,8 @@
 .env
 node_modules/
 .newsletter-outbox/
+.newsletter-logs/
 dist/
 site/
+._*
+config/._*

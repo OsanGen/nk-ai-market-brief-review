@@ -1,0 +1,2975 @@
+{
+ "schema_version": 2,
+ "registry_version": "2.1.0",
+ "src002_status": "pending",
+ "sources": [
+  {
+   "schema_version": 2,
+   "record_id": "vogue_business_ai",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Vogue Business AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_scoped_vogue_business_query_covering_ai_in_fashion_and_beauty_retail",
+   "claim_scope": [
+    "ai_fashion_retail_developments",
+    "ai_beauty_retail_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:vogue.com/business/technology/artificial-intelligence (\"AI fashion\" OR \"AI beauty\" OR \"AI shopping\" OR \"agentic commerce\" OR \"virtual try-on\")",
+    "homepage_url": "https://www.vogue.com/business/technology/artificial-intelligence",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 10,
+   "categories": [
+    "fashion",
+    "beauty",
+    "technology"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "extended"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "business_of_fashion_ai",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Business of Fashion AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_scoped_business_of_fashion_query_covering_ai_in_fashion_and_luxury_retail",
+   "claim_scope": [
+    "ai_fashion_retail_developments",
+    "luxury_ai_adoption_signals"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:businessoffashion.com/topics/technology/artificial-intelligence (\"AI fashion\" OR \"AI beauty\" OR \"AI shopping\" OR \"agentic commerce\" OR \"virtual try-on\")",
+    "homepage_url": "https://www.businessoffashion.com/topics/technology/artificial-intelligence/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 10,
+   "categories": [
+    "fashion",
+    "beauty",
+    "luxury",
+    "technology"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "extended"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "glossy_ai_fashion_beauty",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Glossy AI Fashion and Beauty",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_scoped_glossy_query_covering_ai_in_fashion_beauty_and_luxury_commerce",
+   "claim_scope": [
+    "ai_fashion_retail_developments",
+    "ai_beauty_retail_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:glossy.co (fashion OR beauty OR luxury) (AI OR \"artificial intelligence\" OR \"AI shopping\" OR agentic OR \"virtual try-on\" OR \"AI search\")",
+    "homepage_url": "https://www.glossy.co/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "fashion",
+    "beauty",
+    "luxury",
+    "commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "extended"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "beautymatter_ai",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "BeautyMatter AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_scoped_beautymatter_query_covering_ai_in_beauty_retail_and_discovery",
+   "claim_scope": [
+    "ai_beauty_retail_developments",
+    "ai_product_discovery_signals"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:beautymatter.com (beauty AND (AI OR \"artificial intelligence\" OR \"AI shopping\" OR \"AI discovery\" OR agentic OR recommendations))",
+    "homepage_url": "https://beautymatter.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "beauty",
+    "technology",
+    "commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "extended"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "retail_touchpoints_ai_shopping",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Retail TouchPoints AI Shopping",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_scoped_retail_touchpoints_query_covering_ai_shopping_and_agentic_commerce",
+   "claim_scope": [
+    "ai_shopping_developments",
+    "agentic_commerce_announcements"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:retailtouchpoints.com (\"AI shopping\" OR \"agentic commerce\" OR \"generative AI\" OR OpenAI OR Shopify OR Google OR Meta OR Amazon) (retail OR ecommerce OR commerce OR shopping)",
+    "homepage_url": "https://www.retailtouchpoints.com/tag/ai-shopping/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "retail",
+    "ecommerce",
+    "agentic_commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "core"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "shopify_agentic_commerce",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Shopify Agentic Commerce",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "official_shopify_news_scoped_query_covering_agentic_commerce_platform_changes",
+   "claim_scope": [
+    "shopify_platform_changes",
+    "agentic_commerce_announcements"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:shopify.com/news (\"agentic commerce\" OR \"AI commerce\" OR \"Agentic Storefronts\" OR \"Shopify Catalog\" OR \"AI shopping\" OR OpenAI OR Google)",
+    "homepage_url": "https://www.shopify.com/news",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 10,
+   "categories": [
+    "ecommerce",
+    "agentic_commerce",
+    "platform"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "core"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "openai_commerce",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "OpenAI Commerce",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "official_openai_scoped_query_covering_commerce_and_agentic_checkout_announcements",
+   "claim_scope": [
+    "openai_commerce_announcements",
+    "agentic_commerce_announcements"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:openai.com (shopping OR commerce OR \"agentic commerce\" OR \"Instant Checkout\" OR \"Agentic Commerce Protocol\" OR merchants)",
+    "homepage_url": "https://openai.com/news/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 10,
+   "categories": [
+    "agentic_commerce",
+    "platform",
+    "technology"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "core"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "google_shopping_ai",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Google Shopping AI",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "official_google_shopping_blog_scoped_query_covering_ai_shopping_platform_changes",
+   "claim_scope": [
+    "google_shopping_ai_announcements",
+    "agentic_commerce_announcements"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:blog.google/products-and-platforms/products/shopping (\"AI shopping\" OR \"AI Mode\" OR \"virtual try-on\" OR \"agentic checkout\" OR \"Universal Commerce Protocol\" OR Gemini)",
+    "homepage_url": "https://blog.google/products-and-platforms/products/shopping/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopping",
+    "platform",
+    "agentic_commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "core"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "brand_watchlist_ai_agents",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Brand Watchlist AI Agents",
+   "source_role": "independent_reporting",
+   "authority_tier": "c",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "unknown",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_open_brand_watchlist_discovery_query_for_ai_agent_adoption_signals",
+   "claim_scope": [
+    "brand_ai_agent_adoption_signals",
+    "ai_shopping_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "(Nike OR \"Ralph Lauren\" OR Sephora OR Ulta OR LVMH OR Kering OR Zara OR \"H&M\" OR Revolve OR Walmart OR Target OR Amazon) (\"AI agent\" OR \"AI assistant\" OR \"AI stylist\" OR \"AI shopping\" OR \"virtual try-on\" OR \"product discovery\" OR \"agentic commerce\")",
+    "homepage_url": null,
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 10,
+   "categories": [
+    "fashion",
+    "beauty",
+    "retail",
+    "agentic_commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "discovery"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "review_ai_fashion_beauty_market_scan",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "AI Fashion and Beauty Market Scan",
+   "source_role": "independent_reporting",
+   "authority_tier": "c",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "unknown",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_open_market_scan_discovery_query_for_ai_fashion_and_beauty_coverage",
+   "claim_scope": [
+    "ai_fashion_retail_developments",
+    "ai_beauty_retail_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "(\"AI fashion\" OR \"AI beauty\" OR \"AI stylist\" OR \"virtual try-on\" OR \"AI recommendations\") (fashion OR beauty OR retail OR shopping OR luxury)",
+    "homepage_url": null,
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "fashion",
+    "beauty",
+    "commerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "discovery"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "review_agentic_commerce_market_scan",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Agentic Commerce Market Scan",
+   "source_role": "independent_reporting",
+   "authority_tier": "c",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "unknown",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_open_market_scan_discovery_query_for_agentic_commerce_coverage",
+   "claim_scope": [
+    "agentic_commerce_announcements",
+    "ai_shopping_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "(\"agentic commerce\" OR \"AI shopping\" OR \"AI product discovery\" OR \"instant checkout\" OR \"commerce protocol\") (retail OR ecommerce OR shopping OR Shopify OR OpenAI OR Google)",
+    "homepage_url": null,
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "agentic_commerce",
+    "ecommerce",
+    "shopping"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "discovery"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "review_platform_ai_shopping_market_scan",
+   "status": "active",
+   "created_at": "2026-07-23T00:00:00Z",
+   "producer_version": "registry-migration-1.0.0",
+   "source_refs": [
+    "legacy_newsletter_sources_v1"
+   ],
+   "confidence": 0.9,
+   "display_name": "Platform AI Shopping Market Scan",
+   "source_role": "independent_reporting",
+   "authority_tier": "c",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "unknown",
+   "activation_wave": "seed",
+   "rank": null,
+   "inclusion_reason": "legacy_seed_open_market_scan_discovery_query_for_platform_ai_shopping_coverage",
+   "claim_scope": [
+    "platform_ai_shopping_announcements",
+    "ai_shopping_developments"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "(OpenAI OR Shopify OR Google OR Meta OR Amazon OR Walmart) (\"AI shopping\" OR \"AI search for shopping\" OR \"AI agent\" OR \"AI assistant\" OR \"product discovery\" OR \"virtual try-on\")",
+    "homepage_url": null,
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "shopping",
+    "platform",
+    "ecommerce"
+   ],
+   "activation_gate": null,
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily",
+    "stale_after_hours": 168,
+    "silent_after_days": 30,
+    "consecutive_failure_pause_threshold": 10
+   },
+   "caps": {
+    "max_items_per_run": 50,
+    "max_items_per_week": 120
+   },
+   "access_class": "public_feed",
+   "source_ring": "discovery"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "anthropic_news",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Anthropic News",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 2,
+   "inclusion_reason": "source_rings_seed_catalog_src_002_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "model_release",
+    "api_release",
+    "product_release"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:anthropic.com (shopping OR commerce OR retail OR agentic OR \"AI agent\" OR \"AI shopping\")",
+    "homepage_url": "https://anthropic.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "model_release",
+    "api_release",
+    "product_release",
+    "policy_change"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "google_deepmind_news",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Google DeepMind News",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 4,
+   "inclusion_reason": "source_rings_seed_catalog_src_004_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "model_release",
+    "capability_change"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:deepmind.google (agentic OR \"AI agent\" OR commerce OR shopping OR retail OR multimodal)",
+    "homepage_url": "https://deepmind.google/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "model_release",
+    "capability_change"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "microsoft_research_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Microsoft Research Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 5,
+   "inclusion_reason": "source_rings_seed_catalog_src_005_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "model_or_agent_capability"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:microsoft.com (AI OR \"artificial intelligence\" OR agentic OR \"AI agent\" OR copilot) (retail OR commerce OR shopping OR research)",
+    "homepage_url": "https://microsoft.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "model_or_agent_capability"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "meta_ai_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Meta AI Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 6,
+   "inclusion_reason": "source_rings_seed_catalog_src_006_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "model_release",
+    "research_release",
+    "open_source_release"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:ai.meta.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR Llama)",
+    "homepage_url": "https://ai.meta.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "model_release",
+    "research_release",
+    "open_source_release"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "hugging_face_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Hugging Face Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 7,
+   "inclusion_reason": "source_rings_seed_catalog_src_007_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "open_source_model",
+    "tooling_release",
+    "research_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:huggingface.co (AI OR \"artificial intelligence\" OR agentic OR \"open source model\" OR ecommerce)",
+    "homepage_url": "https://huggingface.co/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "open_source_model",
+    "tooling_release",
+    "research_context"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "aws_machine_learning_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "AWS Machine Learning Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 8,
+   "inclusion_reason": "source_rings_seed_catalog_src_008_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "cloud_ai_release",
+    "implementation_pattern",
+    "case_study"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:aws.amazon.com (AI OR \"artificial intelligence\" OR agentic OR Bedrock) (retail OR commerce OR shopping OR personalization)",
+    "homepage_url": "https://aws.amazon.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "cloud_ai_release",
+    "implementation_pattern",
+    "case_study"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "nvidia_developer_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "NVIDIA Developer Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 9,
+   "inclusion_reason": "source_rings_seed_catalog_src_009_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "ai_infrastructure",
+    "model_tooling",
+    "developer_release"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:developer.nvidia.com (AI OR \"artificial intelligence\" OR agentic OR inference) (retail OR commerce OR recommendation)",
+    "homepage_url": "https://developer.nvidia.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "ai_infrastructure",
+    "model_tooling",
+    "developer_release"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "apple_machine_learning_research",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Apple Machine Learning Research",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_ai_labs_and_model_providers",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 10,
+   "inclusion_reason": "source_rings_seed_catalog_src_010_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "on_device_ai",
+    "multimodal_capability"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:machinelearning.apple.com (AI OR \"machine learning\" OR \"on-device\" OR multimodal OR agentic)",
+    "homepage_url": "https://machinelearning.apple.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "ai_labs_and_model_platforms",
+    "research_release",
+    "on_device_ai",
+    "multimodal_capability"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "shopify_developer_changelog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Shopify Developer Changelog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 11,
+   "inclusion_reason": "source_rings_seed_catalog_src_011_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "shopify_and_commerce_platforms",
+    "shopify_api_change",
+    "app_platform_change",
+    "theme_or_checkout_change"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:shopify.dev (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR checkout OR API)",
+    "homepage_url": "https://shopify.dev/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopify_and_commerce_platforms",
+    "shopify_api_change",
+    "app_platform_change",
+    "theme_or_checkout_change"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "shopify_merchant_changelog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Shopify Merchant Changelog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 12,
+   "inclusion_reason": "source_rings_seed_catalog_src_012_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "shopify_and_commerce_platforms",
+    "merchant_product_change",
+    "admin_change",
+    "native_capability"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:changelog.shopify.com (AI OR \"artificial intelligence\" OR agentic OR Magic OR Sidekick)",
+    "homepage_url": "https://changelog.shopify.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopify_and_commerce_platforms",
+    "merchant_product_change",
+    "admin_change",
+    "native_capability"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "shopify_engineering",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Shopify Engineering",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 13,
+   "inclusion_reason": "source_rings_seed_catalog_src_013_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "shopify_and_commerce_platforms",
+    "platform_architecture",
+    "commerce_ai",
+    "implementation_pattern"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:shopify.engineering (AI OR \"artificial intelligence\" OR agentic OR \"machine learning\" OR commerce)",
+    "homepage_url": "https://shopify.engineering/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopify_and_commerce_platforms",
+    "platform_architecture",
+    "commerce_ai",
+    "implementation_pattern"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "google_merchant_api_latest_updates",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Google Merchant API Latest Updates",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 15,
+   "inclusion_reason": "source_rings_seed_catalog_src_015_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "shopify_and_commerce_platforms",
+    "merchant_api_change",
+    "feed_or_catalog_change"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:developers.google.com (\"Merchant API\" OR \"Merchant Center\" OR \"product feed\") (AI OR update OR release)",
+    "homepage_url": "https://developers.google.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopify_and_commerce_platforms",
+    "merchant_api_change",
+    "feed_or_catalog_change"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "meta_business_news",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Meta Business News",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 17,
+   "inclusion_reason": "source_rings_seed_catalog_src_017_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "shopify_and_commerce_platforms",
+    "ads_change",
+    "commerce_channel_change",
+    "business_messaging_change"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:facebook.com (AI OR \"artificial intelligence\" OR agentic) (business OR ads OR commerce OR shopping)",
+    "homepage_url": "https://facebook.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "shopify_and_commerce_platforms",
+    "ads_change",
+    "commerce_channel_change",
+    "business_messaging_change"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "listrak",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Listrak",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p0",
+   "rank": 18,
+   "inclusion_reason": "source_rings_seed_catalog_src_018_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "norma_stack_and_adjacent_vendors",
+    "vendor_release",
+    "crm_email_sms_capability",
+    "published_price_or_setup"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:listrak.com (AI OR \"artificial intelligence\" OR agentic OR personalization OR \"AI shopping\")",
+    "homepage_url": "https://listrak.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "norma_stack_and_adjacent_vendors",
+    "vendor_release",
+    "crm_email_sms_capability",
+    "published_price_or_setup"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "searchspring_athos_commerce",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Searchspring / Athos Commerce",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p0",
+   "rank": 19,
+   "inclusion_reason": "source_rings_seed_catalog_src_019_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "norma_stack_and_adjacent_vendors",
+    "vendor_release",
+    "search_merchandising_capability",
+    "published_case_study"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:searchspring.com (AI OR \"artificial intelligence\" OR agentic OR \"site search\" OR merchandising)",
+    "homepage_url": "https://searchspring.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "norma_stack_and_adjacent_vendors",
+    "vendor_release",
+    "search_merchandising_capability",
+    "published_case_study"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "datafeedwatch_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "DataFeedWatch Blog",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p0",
+   "rank": 20,
+   "inclusion_reason": "source_rings_seed_catalog_src_020_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "norma_stack_and_adjacent_vendors",
+    "feed_capability",
+    "channel_change",
+    "vendor_release"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:datafeedwatch.com (AI OR \"artificial intelligence\" OR agentic OR \"product feed\" OR \"Google Shopping\")",
+    "homepage_url": "https://datafeedwatch.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "norma_stack_and_adjacent_vendors",
+    "feed_capability",
+    "channel_change",
+    "vendor_release"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "retail_dive",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Retail Dive",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 21,
+   "inclusion_reason": "source_rings_seed_catalog_src_021_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_retail_ecommerce_reporting",
+    "retail_adoption",
+    "market_context",
+    "independent_reporting"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:retaildive.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR chatbot)",
+    "homepage_url": "https://retaildive.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_retail_ecommerce_reporting",
+    "retail_adoption",
+    "market_context",
+    "independent_reporting"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "digital_commerce_360_ai_in_ecommerce",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Digital Commerce 360 AI in Ecommerce",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 22,
+   "inclusion_reason": "source_rings_seed_catalog_src_022_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_retail_ecommerce_reporting",
+    "ecommerce_ai_adoption",
+    "retailer_case",
+    "market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:digitalcommerce360.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\")",
+    "homepage_url": "https://digitalcommerce360.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_retail_ecommerce_reporting",
+    "ecommerce_ai_adoption",
+    "retailer_case",
+    "market_context"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "practical_ecommerce",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Practical Ecommerce",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p0",
+   "rank": 23,
+   "inclusion_reason": "source_rings_seed_catalog_src_023_core_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_retail_ecommerce_reporting",
+    "ecommerce_operations",
+    "tool_roundup",
+    "implementation_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:practicalecommerce.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR automation)",
+    "homepage_url": "https://practicalecommerce.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_retail_ecommerce_reporting",
+    "ecommerce_operations",
+    "tool_roundup",
+    "implementation_context"
+   ],
+   "source_ring": "core",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "tiktok_for_business_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "TikTok for Business Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 25,
+   "inclusion_reason": "source_rings_seed_catalog_src_025_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "commerce_channels_and_marketing",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:tiktok.com (AI OR \"artificial intelligence\" OR agentic) (business OR shop OR commerce OR ads)",
+    "homepage_url": "https://tiktok.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "commerce_channels_and_marketing",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "pinterest_newsroom",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Pinterest Newsroom",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_commerce_platforms_and_developer_changelogs",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 26,
+   "inclusion_reason": "source_rings_seed_catalog_src_026_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "commerce_channels_and_marketing",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:newsroom.pinterest.com (AI OR \"artificial intelligence\" OR agentic OR shopping OR \"visual search\")",
+    "homepage_url": "https://newsroom.pinterest.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "commerce_channels_and_marketing",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "algolia_changelog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Algolia Changelog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 27,
+   "inclusion_reason": "source_rings_seed_catalog_src_027_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:algolia.com (AI OR \"artificial intelligence\" OR agentic OR \"AI search\" OR NeuralSearch)",
+    "homepage_url": "https://algolia.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "constructor_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Constructor Blog",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p1",
+   "rank": 28,
+   "inclusion_reason": "source_rings_seed_catalog_src_028_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:constructor.com (AI OR \"artificial intelligence\" OR agentic OR \"product discovery\" OR search)",
+    "homepage_url": "https://constructor.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "nosto_blog",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Nosto Blog",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p1",
+   "rank": 29,
+   "inclusion_reason": "source_rings_seed_catalog_src_029_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:nosto.com (AI OR \"artificial intelligence\" OR agentic OR personalization OR merchandising)",
+    "homepage_url": "https://nosto.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "search_merchandising_and_discovery",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "klaviyo",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Klaviyo",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p1",
+   "rank": 30,
+   "inclusion_reason": "source_rings_seed_catalog_src_030_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "crm_messaging_and_retention",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:klaviyo.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR automation)",
+    "homepage_url": "https://klaviyo.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "crm_messaging_and_retention",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "gorgias",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Gorgias",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p1",
+   "rank": 31,
+   "inclusion_reason": "source_rings_seed_catalog_src_031_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "customer_service_and_support",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:gorgias.com (AI OR \"artificial intelligence\" OR agentic OR \"AI agent\" OR \"customer support\")",
+    "homepage_url": "https://gorgias.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "customer_service_and_support",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "rebuy",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Rebuy",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p1",
+   "rank": 32,
+   "inclusion_reason": "source_rings_seed_catalog_src_032_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "personalization_and_upsell",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:rebuyengine.com (AI OR \"artificial intelligence\" OR agentic OR personalization OR upsell)",
+    "homepage_url": "https://rebuyengine.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "personalization_and_upsell",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "modern_retail",
+   "status": "active",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Modern Retail",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 33,
+   "inclusion_reason": "source_rings_seed_catalog_src_033_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_retail_ecommerce_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:modernretail.co (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\")",
+    "homepage_url": "https://modernretail.co/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_retail_ecommerce_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": {
+    "gate_id": "GATE-SOURCE-SMOKE",
+    "passed_at": "2026-07-24T00:00:00.000Z",
+    "evidence_refs": [
+     "config/activation-evidence/GATE-SOURCE-SMOKE-2026-07-24.json"
+    ]
+   },
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "techcrunch_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "TechCrunch AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 35,
+   "inclusion_reason": "source_rings_seed_catalog_src_035_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:techcrunch.com (AI OR \"artificial intelligence\" OR agentic) (commerce OR shopping OR retail OR ecommerce)",
+    "homepage_url": "https://techcrunch.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "venturebeat_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "VentureBeat AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 36,
+   "inclusion_reason": "source_rings_seed_catalog_src_036_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:venturebeat.com (AI OR \"artificial intelligence\" OR agentic) (commerce OR shopping OR retail OR enterprise)",
+    "homepage_url": "https://venturebeat.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "ars_technica_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Ars Technica AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 37,
+   "inclusion_reason": "source_rings_seed_catalog_src_037_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:arstechnica.com (AI OR \"artificial intelligence\" OR agentic OR \"AI agent\" OR \"AI shopping\")",
+    "homepage_url": "https://arstechnica.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "mit_technology_review_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "MIT Technology Review AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 38,
+   "inclusion_reason": "source_rings_seed_catalog_src_038_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:technologyreview.com (AI OR \"artificial intelligence\" OR agentic OR \"AI agent\")",
+    "homepage_url": "https://technologyreview.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "mit_news_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "MIT News AI",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "independent_retail_ecommerce_fashion_reporting",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 39,
+   "inclusion_reason": "source_rings_seed_catalog_src_039_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:news.mit.edu (AI OR \"artificial intelligence\" OR agentic OR \"machine learning\")",
+    "homepage_url": "https://news.mit.edu/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "independent_ai_reporting",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "google_search_central_blog",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Google Search Central Blog",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "ux_performance_accessibility_trust_experimentation",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p1",
+   "rank": 40,
+   "inclusion_reason": "source_rings_seed_catalog_src_040_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_ux_and_web_standards",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:developers.google.com (\"Search Central\" OR \"search console\" OR ranking) (AI OR \"AI Overviews\" OR structured data)",
+    "homepage_url": "https://developers.google.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "search_ux_and_web_standards",
+    "release_or_reporting_context",
+    "implementation_or_market_signal"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "daily"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "yotpo",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Yotpo",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p2",
+   "rank": 42,
+   "inclusion_reason": "source_rings_seed_catalog_src_042_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "crm_messaging_and_retention",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:yotpo.com (AI OR \"artificial intelligence\" OR agentic OR reviews OR loyalty)",
+    "homepage_url": "https://yotpo.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "crm_messaging_and_retention",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "attentive",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Attentive",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p2",
+   "rank": 43,
+   "inclusion_reason": "source_rings_seed_catalog_src_043_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "crm_messaging_and_retention",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:attentive.com (AI OR \"artificial intelligence\" OR agentic OR SMS OR personalization)",
+    "homepage_url": "https://attentive.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "crm_messaging_and_retention",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "bloomreach",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Bloomreach",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p2",
+   "rank": 44,
+   "inclusion_reason": "source_rings_seed_catalog_src_044_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_merchandising_and_discovery",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:bloomreach.com (AI OR \"artificial intelligence\" OR agentic OR \"product discovery\" OR personalization)",
+    "homepage_url": "https://bloomreach.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "search_merchandising_and_discovery",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "adobe_experience_cloud_blog",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Adobe Experience Cloud Blog",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p2",
+   "rank": 45,
+   "inclusion_reason": "source_rings_seed_catalog_src_045_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "commerce_platforms_and_marketing",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:business.adobe.com (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR commerce)",
+    "homepage_url": "https://business.adobe.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "commerce_platforms_and_marketing",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "salesforce_retail",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Salesforce Retail",
+   "source_role": "vendor_signal",
+   "authority_tier": "c",
+   "source_family": "official_martech_and_ecommerce_vendors",
+   "commercial_bias_class": "vendor_interest",
+   "activation_wave": "p2",
+   "rank": 46,
+   "inclusion_reason": "source_rings_seed_catalog_src_046_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "commerce_platforms_and_marketing",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:salesforce.com (AI OR \"artificial intelligence\" OR agentic OR Agentforce) (retail OR commerce OR shopping)",
+    "homepage_url": "https://salesforce.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 7,
+   "categories": [
+    "commerce_platforms_and_marketing",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "search_engine_land",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Search Engine Land",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "ux_performance_accessibility_trust_experimentation",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 47,
+   "inclusion_reason": "source_rings_seed_catalog_src_047_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:searchengineland.com (AI OR \"artificial intelligence\" OR agentic OR \"AI Overviews\" OR \"AI search\")",
+    "homepage_url": "https://searchengineland.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "martech",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "MarTech",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "ux_performance_accessibility_trust_experimentation",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 48,
+   "inclusion_reason": "source_rings_seed_catalog_src_048_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:martech.org (AI OR \"artificial intelligence\" OR agentic OR \"AI shopping\" OR automation)",
+    "homepage_url": "https://martech.org/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "arxiv_cs_ai",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "arXiv cs.AI",
+   "source_role": "primary_research",
+   "authority_tier": "d",
+   "source_family": "primary_research_feeds",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 49,
+   "inclusion_reason": "source_rings_seed_catalog_src_049_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "primary_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:arxiv.org (\"cs.AI\" OR \"artificial intelligence\" OR agentic OR \"AI agent\" OR recommendation)",
+    "homepage_url": "https://arxiv.org/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 6,
+   "categories": [
+    "primary_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "arxiv_cs_ir",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "arXiv cs.IR",
+   "source_role": "primary_research",
+   "authority_tier": "d",
+   "source_family": "primary_research_feeds",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 50,
+   "inclusion_reason": "source_rings_seed_catalog_src_050_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "primary_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:arxiv.org (\"cs.IR\" OR \"information retrieval\" OR \"recommender system\" OR \"product search\")",
+    "homepage_url": "https://arxiv.org/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 6,
+   "categories": [
+    "primary_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "web_dev",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "web.dev",
+   "source_role": "official_authority",
+   "authority_tier": "a",
+   "source_family": "ux_performance_accessibility_trust_experimentation",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 51,
+   "inclusion_reason": "source_rings_seed_catalog_src_051_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:web.dev (AI OR \"artificial intelligence\" OR performance OR \"Core Web Vitals\" OR accessibility)",
+    "homepage_url": "https://web.dev/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 9,
+   "categories": [
+    "search_ux_and_web_standards",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  },
+  {
+   "schema_version": 2,
+   "record_id": "baymard_institute_blog",
+   "status": "shadow",
+   "created_at": "2026-07-24T00:00:00.000Z",
+   "producer_version": "source-ring-migration-1.0.0",
+   "source_refs": [
+    "NORMA_WEEKLY_AI_SOURCE_RINGS_AND_RSS_UPGRADE"
+   ],
+   "confidence": 0.9,
+   "display_name": "Baymard Institute Blog",
+   "source_role": "independent_reporting",
+   "authority_tier": "b",
+   "source_family": "ux_performance_accessibility_trust_experimentation",
+   "commercial_bias_class": "none_declared",
+   "activation_wave": "p2",
+   "rank": 52,
+   "inclusion_reason": "source_rings_seed_catalog_src_052_extended_ring_scoped_ai_commerce_scan",
+   "claim_scope": [
+    "search_ux_and_web_standards",
+    "ux_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "intake_method": "rss",
+   "intake_config": {
+    "aggregator": "google_news_rss",
+    "query": "site:baymard.com (AI OR \"artificial intelligence\" OR UX OR checkout OR \"product page\")",
+    "homepage_url": "https://baymard.com/",
+    "per_item_authority_resolution": true
+   },
+   "legacy_weight": 8,
+   "categories": [
+    "search_ux_and_web_standards",
+    "ux_research",
+    "discovery",
+    "technical_or_market_context"
+   ],
+   "source_ring": "extended",
+   "activation_gate": "GATE-SOURCE-SMOKE",
+   "activation_evidence": null,
+   "health_policy": {
+    "poll_cadence": "weekly"
+   },
+   "caps": {
+    "max_items_per_run": 10,
+    "max_items_per_week": 50
+   },
+   "access_class": "public_feed"
+  }
+ ]
+}

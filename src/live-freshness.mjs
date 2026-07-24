@@ -1,3 +1,5 @@
+import { serializeError } from "./observability/redaction.mjs";
+
 export const DEFAULT_LIVE_RUN_JSON_URL = "https://osangen.github.io/nk-ai-market-brief-review/run.json";
 export const DEFAULT_MAX_ACTIVE_LOOKBACK_HOURS = 84;
 
@@ -24,7 +26,8 @@ export function localHour(date = new Date(), timezone = "America/New_York") {
 export function evaluateLiveFreshness(run, {
   now = new Date(),
   timezone = "America/New_York",
-  maxActiveLookbackHours = DEFAULT_MAX_ACTIVE_LOOKBACK_HOURS
+  maxActiveLookbackHours = DEFAULT_MAX_ACTIVE_LOOKBACK_HOURS,
+  expectedRunId = ""
 } = {}) {
   if (!run || typeof run !== "object") return stale("missing_run_json");
 
@@ -32,11 +35,17 @@ export function evaluateLiveFreshness(run, {
   if (Number.isNaN(generatedAt.getTime())) return stale("invalid_generated_at");
   if (localDateKey(generatedAt, timezone) !== localDateKey(now, timezone)) return stale("stale_generated_date");
   if (run.mode !== "auto") return stale("not_auto_mode");
+  if (expectedRunId && run.runId !== expectedRunId) return stale("run_id_mismatch");
+
+  if (run.health?.pipelineStatus === "failed") return stale("pipeline_failed");
+  const sourceCount = Number(run.sourceCount);
+  const sourceErrorCount = Number(run.sourceErrorCount);
+  if (sourceCount > 0 && sourceErrorCount >= sourceCount) return stale("all_sources_failed");
 
   const activeLookbackHours = Number(run.config?.activeLookbackHours);
   if (!Number.isFinite(activeLookbackHours)) return stale("missing_active_lookback");
   if (activeLookbackHours > maxActiveLookbackHours) return stale("active_lookback_too_wide");
-  if (run.automationConfigured !== true) return stale("automation_not_configured");
+  if ((run.automationDefinitionConfigured ?? run.automationConfigured) !== true) return stale("automation_not_configured");
   if (run.send?.sent !== false) return stale("send_not_disabled");
 
   return { fresh: true, reason: "fresh" };
@@ -47,6 +56,7 @@ export async function getLiveFreshness({
   now = new Date(),
   timezone = "America/New_York",
   maxActiveLookbackHours = DEFAULT_MAX_ACTIVE_LOOKBACK_HOURS,
+  expectedRunId = "",
   fetchImpl = globalThis.fetch,
   timeoutMs = 10000
 } = {}) {
@@ -55,14 +65,16 @@ export async function getLiveFreshness({
     return {
       reachable: true,
       run,
-      ...evaluateLiveFreshness(run, { now, timezone, maxActiveLookbackHours })
+      ...evaluateLiveFreshness(run, { now, timezone, maxActiveLookbackHours, expectedRunId })
     };
   } catch (error) {
+    const failure = serializeError(error);
     return {
       reachable: false,
       fresh: false,
       reason: "fetch_failed",
-      error: error instanceof Error ? error.message : String(error)
+      errorCode: failure.errorCode,
+      errorFingerprint: failure.errorFingerprint
     };
   }
 }
@@ -91,12 +103,15 @@ export async function waitForLiveFreshness({
   intervalMs = 10000,
   ...options
 } = {}) {
+  const startedAt = Date.now();
+  let attemptCount = 1;
   let result = await getLiveFreshness(options);
   for (let attempt = 0; attempt < retries && !result.fresh; attempt += 1) {
     await sleep(intervalMs);
     result = await getLiveFreshness(options);
+    attemptCount += 1;
   }
-  return result;
+  return { ...result, attemptCount, durationMs: Date.now() - startedAt };
 }
 
 async function fetchLiveRunJson({ url, now, fetchImpl, timeoutMs }) {

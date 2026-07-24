@@ -1,5 +1,15 @@
 const CLUSTERS = [
   {
+    id: "ai_stylist_agents",
+    label: "AI stylists / personal-shopper agents",
+    terms: ["ai stylist", "personal shopper", "styling agent", "ai concierge"]
+  },
+  {
+    id: "voice_conversational_commerce",
+    label: "voice / conversational commerce",
+    terms: ["voice assistant", "voice shopping", "voice commerce", "conversational commerce", "chat commerce"]
+  },
+  {
     id: "meta_instagram_shopping_agents",
     label: "Meta / Instagram / Hatch shopping agents",
     terms: ["meta", "instagram", "hatch", "tiktok shop"]

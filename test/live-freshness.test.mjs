@@ -93,6 +93,39 @@ test("Live freshness rejects preview-mode output", () => {
   assert.equal(result.reason, "not_auto_mode");
 });
 
+test("Live freshness rejects an all-source pipeline failure even when output is dated today", () => {
+  const result = evaluateLiveFreshness(
+    {
+      ...freshRun,
+      health: { pipelineStatus: "failed", reasonCodes: ["all_sources_failed"] },
+      sourceCount: 2,
+      sourceErrorCount: 2
+    },
+    { now: new Date("2026-07-15T12:00:00.000Z"), timezone: "America/New_York" }
+  );
+  assert.deepEqual(result, { fresh: false, reason: "pipeline_failed" });
+});
+
+test("Live freshness rejects legacy receipts that report every source failed", () => {
+  const result = evaluateLiveFreshness(
+    { ...freshRun, sourceCount: 2, sourceErrorCount: 2 },
+    { now: new Date("2026-07-15T12:00:00.000Z"), timezone: "America/New_York" }
+  );
+  assert.deepEqual(result, { fresh: false, reason: "all_sources_failed" });
+});
+
+test("Live verification can require the exact current run instead of any same-day output", () => {
+  const result = evaluateLiveFreshness(
+    { ...freshRun, runId: "older-run" },
+    {
+      now: new Date("2026-07-15T12:00:00.000Z"),
+      timezone: "America/New_York",
+      expectedRunId: "current-run"
+    }
+  );
+  assert.deepEqual(result, { fresh: false, reason: "run_id_mismatch" });
+});
+
 test("Live freshness fetch fails open after target hour", async () => {
   const freshness = await getLiveFreshness({
     now: new Date("2026-07-15T10:17:00.000Z"),
@@ -108,4 +141,30 @@ test("Live freshness fetch fails open after target hour", async () => {
   });
   assert.equal(freshness.reason, "fetch_failed");
   assert.equal(decision.shouldRun, true);
+});
+
+const onNow = { now: new Date("2026-07-15T12:00:00.000Z"), timezone: "America/New_York" };
+
+test("Live freshness accepts a fully-valid same-day auto run", () => {
+  assert.deepEqual(evaluateLiveFreshness(freshRun, onNow), { fresh: true, reason: "fresh" });
+});
+
+test("Live freshness rejects a page that reports email was actually sent", () => {
+  const result = evaluateLiveFreshness({ ...freshRun, send: { sent: true } }, onNow);
+  assert.deepEqual(result, { fresh: false, reason: "send_not_disabled" });
+});
+
+test("Live freshness rejects an over-wide active lookback window", () => {
+  const result = evaluateLiveFreshness({ ...freshRun, config: { activeLookbackHours: 200 } }, onNow);
+  assert.deepEqual(result, { fresh: false, reason: "active_lookback_too_wide" });
+});
+
+test("Live freshness rejects a run missing its active lookback window", () => {
+  const result = evaluateLiveFreshness({ ...freshRun, config: {} }, onNow);
+  assert.deepEqual(result, { fresh: false, reason: "missing_active_lookback" });
+});
+
+test("Live freshness rejects a run whose automation is not configured", () => {
+  const result = evaluateLiveFreshness({ ...freshRun, automationConfigured: false }, onNow);
+  assert.deepEqual(result, { fresh: false, reason: "automation_not_configured" });
 });

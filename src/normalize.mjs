@@ -54,7 +54,7 @@ export function escapeHtml(value = "") {
 export function sanitizeDisplayText(value = "") {
   return String(value)
     .replace(/javascript:/gi, "blocked-protocol:")
-    .replace(/\bon(?:error|click)\s*=/gi, "blocked-event=")
+    .replace(/\bon[a-z]+\s*=/gi, "blocked-event=")
     .replace(/\s+/g, " ")
     .trim();
 }

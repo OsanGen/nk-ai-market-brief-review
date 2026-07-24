@@ -26,10 +26,20 @@ jobs:
       - run: npm test
       - run: npm run daily
       - run: npm run build
+      - run: npm run logs:verify
       - run: NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
       - run: npm run check:live
+        env:
+          NEWSLETTER_EXPECT_LIVE_RUN_ID: current-run
+          DEPLOYMENT_OUTCOME: steps.deployment.outcome
       - run: npm run check:deploy
       - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          path: |
+            site
+            .newsletter-logs
+          retention-days: 30
       - uses: actions/upload-pages-artifact@v3
       - uses: actions/deploy-pages@v4
         if: \${{ vars.DEPLOY_GITHUB_PAGES == 'true' }}
@@ -46,7 +56,7 @@ test("check-deploy passes for built review page files", async () => {
       "utf8"
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
-    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
     writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow, "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
@@ -67,7 +77,7 @@ test("check-deploy fails when reviewReady is false", async () => {
       "utf8"
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
-    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":false,\"reviewReasons\":[\"too few stories\"],\"automationConfigured\":true,\"scheduledRefreshConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":false,\"reviewReasons\":[\"too few stories\"],\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
     writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow, "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
@@ -112,7 +122,7 @@ test("check-deploy fails when workflow is missing", async () => {
       "utf8"
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
-    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
     writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")
@@ -132,7 +142,7 @@ test("check-deploy fails when scheduled cron entries are missing", async () => {
       "utf8"
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
-    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
     writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow.replace('    - cron: "17 10,11,12 * * *"\n', ""), "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
@@ -140,6 +150,20 @@ test("check-deploy fails when scheduled cron entries are missing", async () => {
   ]);
 
   await assert.rejects(checkDeploy(root), /Workflow missing configured daily refresh cron entries/);
+});
+
+test("check-deploy fails when exact-run live verification wiring is missing", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-no-exact-live-"));
+  await writeDeployFixture(root, {
+    run: {
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true
+    },
+    workflowText: workflow.replace("NEWSLETTER_EXPECT_LIVE_RUN_ID", "REMOVED_EXPECTED_RUN_ID")
+  });
+
+  await assert.rejects(checkDeploy(root), /Workflow missing exact live run verification/);
 });
 
 test("check-deploy passes expected daily auto output", async () => {
@@ -164,6 +188,39 @@ test("check-deploy passes expected daily auto output", async () => {
   }, async () => {
     await assert.doesNotReject(checkDeploy(root));
   });
+});
+
+test("check-deploy rejects a current-looking artifact when the pipeline failed", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-pipeline-failed-"));
+  await writeDeployFixture(root, {
+    run: {
+      generatedAt: "2026-07-22T12:00:00.000Z",
+      mode: "auto",
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      sourceCount: 2,
+      sourceErrorCount: 2,
+      health: { pipelineStatus: "failed", reasonCodes: ["all_sources_failed"] },
+      config: { activeLookbackHours: 36, timezone: "America/New_York" }
+    }
+  });
+
+  await assert.rejects(checkDeploy(root), /pipeline health failed: all_sources_failed/);
+});
+
+test("check-deploy rejects sensitive fields in the public run receipt", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-check-public-sensitive-"));
+  await writeDeployFixture(root, {
+    run: {
+      reviewReady: true,
+      automationConfigured: true,
+      scheduledRefreshConfigured: true,
+      messageIdFingerprint: "private-fingerprint"
+    }
+  });
+
+  await assert.rejects(checkDeploy(root), /Forbidden public site\/run\.json field: messageIdFingerprint/);
 });
 
 test("check-deploy fails when expected daily output is stale", async () => {
@@ -239,7 +296,7 @@ async function writeDeployFixture(root, { run, workflowText = workflow }) {
       "utf8"
     ),
     writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
-    writeFile(path.join(root, "site", "run.json"), `${JSON.stringify(run)}\n`, "utf8"),
+    writeFile(path.join(root, "site", "run.json"), `${JSON.stringify({ observabilityConfigured: true, liveVerificationConfigured: true, ...run })}\n`, "utf8"),
     writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflowText, "utf8"),
     writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
     writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),

@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "gate_id": "GATE-SOURCE-SMOKE",
+  "run_date": "2026-07-24",
+  "generated_at": "2026-07-24T00:00:00.000Z",
+  "method": "live_google_news_rss_fetch_parse",
+  "results": [
+    {
+      "record_id": "anthropic_news",
+      "catalog_id": "src_002",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "google_deepmind_news",
+      "catalog_id": "src_004",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "microsoft_research_blog",
+      "catalog_id": "src_005",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "meta_ai_blog",
+      "catalog_id": "src_006",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "hugging_face_blog",
+      "catalog_id": "src_007",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "aws_machine_learning_blog",
+      "catalog_id": "src_008",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "nvidia_developer_blog",
+      "catalog_id": "src_009",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "apple_machine_learning_research",
+      "catalog_id": "src_010",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "shopify_developer_changelog",
+      "catalog_id": "src_011",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "shopify_merchant_changelog",
+      "catalog_id": "src_012",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 57,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "shopify_engineering",
+      "catalog_id": "src_013",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "google_merchant_api_latest_updates",
+      "catalog_id": "src_015",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "meta_business_news",
+      "catalog_id": "src_017",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "listrak",
+      "catalog_id": "src_018",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "searchspring_athos_commerce",
+      "catalog_id": "src_019",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 16,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "datafeedwatch_blog",
+      "catalog_id": "src_020",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "retail_dive",
+      "catalog_id": "src_021",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "digital_commerce_360_ai_in_ecommerce",
+      "catalog_id": "src_022",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "practical_ecommerce",
+      "catalog_id": "src_023",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "tiktok_for_business_blog",
+      "catalog_id": "src_025",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "pinterest_newsroom",
+      "catalog_id": "src_026",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "algolia_changelog",
+      "catalog_id": "src_027",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "constructor_blog",
+      "catalog_id": "src_028",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "nosto_blog",
+      "catalog_id": "src_029",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "klaviyo",
+      "catalog_id": "src_030",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "gorgias",
+      "catalog_id": "src_031",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "rebuy",
+      "catalog_id": "src_032",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    },
+    {
+      "record_id": "modern_retail",
+      "catalog_id": "src_033",
+      "gate_id": "GATE-SOURCE-SMOKE",
+      "passed": true,
+      "http_status": 200,
+      "item_count": 100,
+      "passed_at": "2026-07-24T00:00:00.000Z"
+    }
+  ]
+}

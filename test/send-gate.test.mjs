@@ -19,7 +19,7 @@ test("Send gate refuses when NEWSLETTER_SEND_ENABLED=false", async () => {
     ...base,
     config: { sendEnabled: false, from: "", to: [], cc: [], minItems: 3, resendApiKey: "" }
   });
-  assert.deepEqual(result, { sent: false, messageId: "", skippedReason: "send_disabled" });
+  assert.deepEqual(result, { sent: false, messageIdFingerprint: "", skippedReason: "send_disabled" });
 });
 
 test("Send gate refuses when recipients or API key are missing", async () => {
@@ -71,6 +71,51 @@ test("Send gate refuses below NEWSLETTER_MIN_ITEMS", async () => {
   assert.equal(result.skippedReason, "below_min_items");
 });
 
+test("Provider HTTP error is reported as resend_http_error with the status, never sent", async () => {
+  let parsed = false;
+  const result = await sendNewsletter({
+    ...base,
+    config: { sendEnabled: true, from: fromEmail, to: [toEmail], cc: [], minItems: 3, resendApiKey: "secret" },
+    fetchImpl: async () => ({
+      ok: false,
+      status: 503,
+      async json() {
+        parsed = true;
+        return {};
+      }
+    })
+  });
+
+  assert.equal(result.sent, false);
+  assert.equal(result.skippedReason, "resend_http_error");
+  assert.equal(result.providerStatus, 503);
+  assert.equal(parsed, false, "must not read the body of a failed response");
+});
+
+test("Send gate refuses when a recipient in the list is invalid", async () => {
+  let called = false;
+  const result = await sendNewsletter({
+    ...base,
+    config: { sendEnabled: true, from: fromEmail, to: [toEmail, "not-an-email"], cc: [], minItems: 3, resendApiKey: "secret" },
+    fetchImpl: async () => {
+      called = true;
+      return { ok: true, async json() { return { id: "x" }; } };
+    }
+  });
+
+  assert.equal(result.sent, false);
+  assert.equal(result.skippedReason, "missing_valid_recipients");
+  assert.equal(called, false, "must not call the provider when a recipient is invalid");
+});
+
+test("Send gate refuses when sender is missing even with valid recipients", async () => {
+  const result = await sendNewsletter({
+    ...base,
+    config: { sendEnabled: true, from: "", to: [toEmail], cc: [], minItems: 3, resendApiKey: "secret" }
+  });
+  assert.equal(result.skippedReason, "missing_from");
+});
+
 test("Recipient parsing handles comma-separated values and validates entries", () => {
   const secondEmail = ["ops", ["example", "invalid"].join(".")].join("@");
   const config = loadConfig({
@@ -100,6 +145,9 @@ test("Successful send uses Resend idempotency header without logging recipients"
   });
 
   assert.equal(result.sent, true);
+  assert.equal(result.messageIdFingerprint.length, 16);
+  assert.equal(result.messageId, undefined);
+  assert.notEqual(result.messageIdFingerprint, "message_123");
   assert.equal(calls.length, 1);
   assert.match(calls[0].options.headers["Resend-Idempotency-Key"], /^nk-ai-market-brief:2026-05-08:/);
 });

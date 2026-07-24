@@ -5,6 +5,8 @@ import { pathToFileURL } from "node:url";
 
 import { AUTOMATION_SCHEDULE, getAutomationStatus, WORKFLOW_PATH } from "../src/automation-status.mjs";
 import { localDateKey } from "../src/live-freshness.mjs";
+import { writeMachineRecord } from "../src/observability/machine-record.mjs";
+import { serializeError } from "../src/observability/redaction.mjs";
 
 const required = [
   "site/index.html",
@@ -22,6 +24,9 @@ export async function checkDeploy(root = process.cwd()) {
   for (const file of required) await access(path.join(root, file));
   const run = JSON.parse(await readFile(path.join(root, "site/run.json"), "utf8"));
   const expectsDaily = process.env.NEWSLETTER_EXPECT_MODE?.trim() === "auto";
+
+  checkPublicRunReceipt(run);
+  checkPipelineHealth(run);
 
   for (const file of ["site/index.html", "site/newsletter.txt"]) {
     const text = await readFile(path.join(root, file), "utf8");
@@ -42,6 +47,36 @@ export async function checkDeploy(root = process.cwd()) {
   await checkWorkflow(root);
   if (run.automationConfigured !== true) throw new Error("site/run.json automationConfigured is not true");
   if (run.scheduledRefreshConfigured !== true) throw new Error("site/run.json scheduledRefreshConfigured is not true");
+  if (run.observabilityConfigured !== true) throw new Error("site/run.json observabilityConfigured is not true");
+  if (run.liveVerificationConfigured !== true) throw new Error("site/run.json liveVerificationConfigured is not true");
+  return run;
+}
+
+function checkPipelineHealth(run) {
+  if (run.health?.pipelineStatus === "failed") {
+    throw new Error(`site/run.json pipeline health failed: ${(run.health.reasonCodes ?? []).join(",") || "pipeline_failed"}`);
+  }
+  const sourceCount = Number(run.sourceCount);
+  const sourceErrorCount = Number(run.sourceErrorCount);
+  if (sourceCount > 0 && sourceErrorCount >= sourceCount) {
+    throw new Error("site/run.json reports all configured sources failed");
+  }
+}
+
+function checkPublicRunReceipt(run) {
+  const forbiddenKeys = /^(?:messageId|messageIdFingerprint|error|errorMessage|stack|authorization|password|secret|token|cookie|recipients?|to|cc|bcc|replyTo)$/i;
+  const email = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i;
+  const visit = (value) => {
+    if (!value || typeof value !== "object") {
+      if (typeof value === "string" && email.test(value)) throw new Error("Public site/run.json contains an email address");
+      return;
+    }
+    for (const [key, child] of Object.entries(value)) {
+      if (forbiddenKeys.test(key)) throw new Error(`Forbidden public site/run.json field: ${key}`);
+      visit(child);
+    }
+  };
+  visit(run);
 }
 
 function indexMarkersFor(run, expectsDaily) {
@@ -100,11 +135,17 @@ async function checkWorkflow(root) {
     ["NEWSLETTER_TARGET_HOUR_LOCAL: \"4\"", workflow.includes('NEWSLETTER_TARGET_HOUR_LOCAL: "4"')],
     ["npm run should:refresh", workflow.includes("npm run should:refresh")],
     ["npm run daily", workflow.includes("npm run daily")],
+    ["npm run logs:verify", workflow.includes("npm run logs:verify")],
     ["NEWSLETTER_EXPECT_MODE=auto", workflow.includes("NEWSLETTER_EXPECT_MODE=auto")],
     ["NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84", workflow.includes("NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84")],
     ["NEWSLETTER_EXPECT_FRESH_DATE=true", workflow.includes("NEWSLETTER_EXPECT_FRESH_DATE=true")],
     ["npm run check:live", workflow.includes("npm run check:live")],
     ["actions/upload-artifact", workflow.includes("actions/upload-artifact")],
+    ["machine log artifact", workflow.includes(".newsletter-logs")],
+    ["explicit artifact retention", workflow.includes("retention-days: 30")],
+    ["failure evidence upload", workflow.includes("always()")],
+    ["exact live run verification", workflow.includes("NEWSLETTER_EXPECT_LIVE_RUN_ID")],
+    ["deployment outcome correlation", workflow.includes("steps.deployment.outcome")],
     ["actions/upload-pages-artifact", workflow.includes("actions/upload-pages-artifact")],
     ["actions/deploy-pages", workflow.includes("actions/deploy-pages")],
     ["pages: write", workflow.includes("pages: write")],
@@ -120,10 +161,31 @@ async function checkWorkflow(root) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    await checkDeploy();
-    console.log("Deploy check passed");
+    const run = await checkDeploy();
+    writeMachineRecord({
+      event: "deployment.candidate.verify.completed",
+      component: "deploy_check",
+      phase: "deploy_verify",
+      status: "completed",
+      runId: run.runId,
+      attributes: {
+        mode: run.mode,
+        itemCount: run.itemCount,
+        pipelineStatus: run.health?.pipelineStatus,
+        contentStatus: run.health?.contentStatus
+      }
+    });
   } catch (error) {
-    console.error(error.message);
+    const failure = serializeError(error);
+    writeMachineRecord({
+      event: "deployment.candidate.verify.failed",
+      level: "error",
+      component: "deploy_check",
+      phase: "deploy_verify",
+      status: "failed",
+      reasonCode: failure.errorCode,
+      attributes: { error: failure }
+    });
     process.exitCode = 1;
   }
 }

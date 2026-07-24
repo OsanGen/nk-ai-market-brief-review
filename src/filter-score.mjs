@@ -112,20 +112,45 @@ export function filterAndScoreItems(items, options = {}) {
   const rejected = [];
   const now = options.now ? new Date(options.now) : new Date();
   const lookbackHours = options.lookbackHours ?? 36;
+  // Optional Norma stack-profile relevance groups ([{id,label,terms}], from
+  // src/stack-profile.mjs). Absent groups leave scoring byte-identical.
+  const relevanceGroups = Array.isArray(options.relevanceGroups) ? options.relevanceGroups : [];
 
   for (const item of items) {
-    const result = evaluateItem(item, now, lookbackHours);
+    const result = evaluateItem(item, now, lookbackHours, relevanceGroups);
     if (!result.include) {
       rejected.push({ sourceId: item.sourceId, sourceName: item.sourceName, reason: result.reason });
       continue;
     }
-    accepted.push({ ...item, score: result.score, matchSignals: result.signals });
+    accepted.push({ ...item, score: result.score, matchSignals: result.signals, normaRelevance: result.normaRelevance });
   }
 
   return { accepted: accepted.sort(sortByScore), rejected };
 }
 
-export function evaluateItem(item, now = new Date(), lookbackHours = 36) {
+// Norma-relevance: a story matters more when it touches a capability the House
+// platform actually runs (AI stylist, try-on, headless Shopify, Klaviyo, ...).
+// A capability "hits" when any of its terms word-boundary-matches; title hits
+// score higher than summary-only hits, and the total boost is capped so stack
+// affinity sharpens ranking without drowning the editorial signals.
+const NORMA_TITLE_BONUS = 7;
+const NORMA_SUMMARY_BONUS = 3;
+const NORMA_BONUS_CAP = 24;
+
+export function evaluateNormaRelevance(title, summary, relevanceGroups) {
+  const capabilities = [];
+  let bonus = 0;
+  for (const group of relevanceGroups) {
+    const inTitle = group.terms.some((term) => matchesTerm(title, term));
+    const inSummary = !inTitle && group.terms.some((term) => matchesTerm(summary, term));
+    if (!inTitle && !inSummary) continue;
+    capabilities.push({ id: group.id, label: group.label, matchedIn: inTitle ? "title" : "summary" });
+    bonus += inTitle ? NORMA_TITLE_BONUS : NORMA_SUMMARY_BONUS;
+  }
+  return { capabilities, bonus: Math.min(bonus, NORMA_BONUS_CAP) };
+}
+
+export function evaluateItem(item, now = new Date(), lookbackHours = 36, relevanceGroups = []) {
   if (!item.title || !item.url) return reject("missing_title_or_url");
 
   const published = item.publishedAt ? new Date(item.publishedAt) : null;
@@ -151,7 +176,14 @@ export function evaluateItem(item, now = new Date(), lookbackHours = 36) {
   const marketSummary = countMatches(summary, MARKET_TERMS);
   const marketMatches = marketTitle + marketSummary;
   const highPriorityMatches = highPriorityTitle + highPrioritySummary;
-  const contextualPriorityMatches = marketMatches > 0 ? contextualPriorityTitle + contextualPrioritySummary : 0;
+  // The contextual phrase ("ai search") only counts as a signal in a commerce
+  // context. Gate its SCORE contribution on the same marketMatches condition as
+  // its inclusion contribution, so a non-commerce item cannot collect ranking
+  // points for a signal the pipeline has decided is meaningless (and so the score
+  // never contradicts the emitted contextualPriorityMatches signal).
+  const contextualTitleScore = marketMatches > 0 ? contextualPriorityTitle : 0;
+  const contextualSummaryScore = marketMatches > 0 ? contextualPrioritySummary : 0;
+  const contextualPriorityMatches = contextualTitleScore + contextualSummaryScore;
   const totalPriorityMatches = highPriorityMatches + contextualPriorityMatches;
   const aiMatches = aiTitle + aiSummary;
   const verticalMatches = verticalTitle + verticalSummary;
@@ -162,27 +194,32 @@ export function evaluateItem(item, now = new Date(), lookbackHours = 36) {
   if (!include) return reject("not_relevant");
 
   const recency = Math.max(0, 10 - Math.floor(Math.max(ageHours, 0) / 6));
+  const normaRelevance = evaluateNormaRelevance(title, summary, relevanceGroups);
   const score =
     highPriorityTitle * 18 +
-    contextualPriorityTitle * 12 +
+    contextualTitleScore * 12 +
     highPrioritySummary * 10 +
-    contextualPrioritySummary * 6 +
+    contextualSummaryScore * 6 +
     aiTitle * 8 +
     aiSummary * 3 +
     verticalTitle * 6 +
     verticalSummary * 2 +
+    normaRelevance.bonus +
     Number(item.sourceWeight ?? 1) +
     recency;
 
   return {
     include: true,
     score,
+    normaRelevance,
     signals: {
       highPriorityMatches,
       contextualPriorityMatches,
       aiMatches,
       verticalMatches,
       marketMatches,
+      normaRelevanceMatches: normaRelevance.capabilities.length,
+      normaRelevanceBonus: normaRelevance.bonus,
       ageHours: Number(ageHours.toFixed(2))
     }
   };

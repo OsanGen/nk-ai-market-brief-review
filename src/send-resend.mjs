@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
 
+import { fingerprint } from "./observability/redaction.mjs";
+
 export async function sendNewsletter({ mode, html, text, stories, config, date, fetchImpl = globalThis.fetch }) {
   const itemCount = stories.length;
 
@@ -30,13 +32,18 @@ export async function sendNewsletter({ mode, html, text, stories, config, date, 
     body: JSON.stringify(payload)
   });
 
-  if (!response.ok) return skip(`resend_http_${response.status}`);
+  if (!response.ok) return skip("resend_http_error", { providerStatus: response.status });
   const data = await response.json();
-  return { sent: true, messageId: data.id ?? "", skippedReason: "" };
+  return {
+    sent: true,
+    messageIdFingerprint: data.id ? fingerprint(data.id) : "",
+    skippedReason: "",
+    providerStatus: response.status
+  };
 }
 
-function skip(skippedReason) {
-  return { sent: false, messageId: "", skippedReason };
+function skip(skippedReason, details = {}) {
+  return { sent: false, messageIdFingerprint: "", skippedReason, ...details };
 }
 
 export function isValidEmail(value) {

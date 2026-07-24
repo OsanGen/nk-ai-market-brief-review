@@ -19,19 +19,24 @@ Generate a daily internal NK AI Market Brief focused only on AI plus fashion, be
 - `site/index.html`
 - `site/newsletter.txt`
 - `site/run.json`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/events.jsonl`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/run-manifest.json`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/summary.json`
+- `.newsletter-logs/commands.jsonl`
 - GitHub Actions artifact: `nk-ai-market-brief`
 - Cyril evidence pack: `CYRIL_VERIFICATION_PACK.md`
 - Cyril share instructions: `SHARE_WITH_CYRIL.md`
 
 ## State
 
-No database and no durable remote state. Every run creates a dated outbox and refreshes the latest static `site/` output.
+No database and no durable application state. Every run creates a dated outbox, refreshes the latest static `site/` output, and appends private machine evidence under `.newsletter-logs/`. `LATEST.json` points only to a finalized run; the workflow verifies the exact current run ID rather than trusting that mutable pointer.
 
 Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS` with a 168-hour default so the share page can demonstrate enough current signals. The public daily path uses `npm run daily`, forces `auto` mode, targets 4 a.m. America/New_York through workflow scheduling, and keeps the normal daily windows: `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
 
 ## Edge Cases
 
 - One source can fail without failing the whole run.
+- Some source failures mark the run degraded; every configured source failing marks the pipeline and command failed.
 - Preview/build work without secrets.
 - Auto mode outside the target window writes a safe static skip state and exits successfully.
 - Send mode fails safely when send gates are not met.
@@ -47,11 +52,14 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `site/index.html` is a static review page, while `.newsletter-outbox/YYYY-MM-DD/newsletter.html` remains the email-style newsletter HTML.
 - Review readiness is recorded in `site/run.json`; `npm run check:deploy` fails when `reviewReady` is false unless `ALLOW_NOT_READY_REVIEW=true` is set for debugging.
 - Automation readiness is recorded in `site/run.json`; `npm run check:deploy` fails when scheduled refresh or workflow-backed Pages support is missing.
+- Observability/live-proof readiness is recorded in `site/run.json`; deploy checks require retained machine evidence and exact-run live verification wiring.
 - Public daily deploy checks can require `NEWSLETTER_EXPECT_MODE=auto`, `NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84`, and `NEWSLETTER_EXPECT_FRESH_DATE=true` so preview-mode, stale-date, or 168-hour review output is not accidentally deployed as the daily page.
 - Public daily deploys prioritize freshness over review-story count: limited-story daily output may publish with a current date, while manual review builds keep the stricter `reviewReady` check.
 - Review story selection uses `src/story-diversity.mjs` to avoid over-representing repeated clusters such as Meta shopping agents, Google virtual try-on, OpenAI commerce, Shopify catalog/storefronts, beauty AI discovery, fashion AI discovery, and agentic commerce platform race. It does not drop valid items below the minimum review threshold only for diversity.
 - Normalized stories carry both the actual RSS outlet source and the configured scan label. Renderers show the outlet as `Source` and the query family as `Scan` so configured scans are not mistaken for publications.
 - Deterministic summary copy avoids repeating the same summary or why-it-matters sentence more than twice in one issue and keeps implementation-language filter explanations out of client-facing output.
+- A successful source fetch with zero qualifying items is `contentStatus=empty_valid`; it is distinct from a failed source pipeline.
+- Public `site/run.json` contains only the recursively sanitized receipt allowlist. Stories, raw provider errors, recipient data, and provider message IDs remain private.
 
 ## Dependencies
 
@@ -68,8 +76,24 @@ Preview/build mode is review-oriented and uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS
 - `npm test`
 - `npm run build`
 - `npm run check:deploy`
+- `npm run logs:status`
+- `npm run logs:verify`
+- `npm run logs:query -- --run latest --event source.fetch.summary`
 - `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy`
 - `NEWSLETTER_SEND_ENABLED=true npm run send || true`
 - `gh workflow run newsletter.yml -f mode=preview --ref main`
 - `env -u RESEND_API_KEY -u NEWSLETTER_FROM -u NEWSLETTER_TO NEWSLETTER_SEND_ENABLED=true npm run send || true`
 - Unsafe-output grep has no matches for secrets, scripts, event handlers, `javascript:` URLs, `metadata matched`, or `matched filters`.
+
+## Observability
+
+- One compact JSON object per event with schema/event versions, timestamp, unique event ID, run/correlation IDs, sequence, level, event, component, status, optional phase/reason/duration, execution context, and bounded attributes.
+- Phase wrappers emit started/completed/failed pairs. Each finalized run has exactly one terminal `run.completed` or `run.failed` event.
+- The manifest auto-discovers emitting components and records SHA-256 plus byte count for `events.jsonl`.
+- `commands.jsonl` records scheduler decisions and standalone verification results, including skipped refreshes.
+
+## Security Notes
+
+- Recursive redaction covers sensitive keys, emails, bearer/provider token patterns, URL credentials/query/fragment, multiline strings, oversized values, circular objects, and deep structures.
+- Detailed logs are gitignored and never written into `site/`. GitHub artifacts retain them for 30 days.
+- `NEWSLETTER_LOG_DIR` may select another private log root; it must not point to a public output directory.

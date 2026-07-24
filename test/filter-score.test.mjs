@@ -59,3 +59,69 @@ test("AI + beauty story is included", () => {
 test("Agentic commerce story is included", () => {
   assert.equal(evaluateItem(item("Agentic commerce checkout expands", "", ["agentic_commerce"]), now).include, true);
 });
+
+test("Item older than the lookback window is rejected as outside_lookback", () => {
+  const stale = { ...item("AI fashion search tools launch"), publishedAt: "2026-05-06T20:00:00.000Z" };
+  const result = evaluateItem(stale, now, 36); // 40h old vs 36h window
+  assert.equal(result.include, false);
+  assert.equal(result.reason, "outside_lookback");
+});
+
+test("Item dated in the future beyond tolerance is rejected as future_date", () => {
+  const future = { ...item("AI fashion search tools launch"), publishedAt: "2026-05-08T14:00:00.000Z" };
+  const result = evaluateItem(future, now, 36); // +2h in the future
+  assert.equal(result.include, false);
+  assert.equal(result.reason, "future_date");
+});
+
+test("Item with an empty or invalid date is rejected as missing_or_invalid_date", () => {
+  assert.equal(evaluateItem({ ...item("AI fashion"), publishedAt: "" }, now).reason, "missing_or_invalid_date");
+  assert.equal(evaluateItem({ ...item("AI fashion"), publishedAt: "not-a-date" }, now).reason, "missing_or_invalid_date");
+});
+
+test("Item missing a url is rejected as missing_title_or_url", () => {
+  assert.equal(evaluateItem({ ...item("AI fashion"), url: "" }, now).reason, "missing_title_or_url");
+});
+
+test("Norma-relevance groups boost stack-adjacent stories and tag capabilities", () => {
+  const groups = [
+    { id: "virtual_try_on_image_gen", label: "Virtual try-on / AI imagery", terms: ["virtual try-on", "try-on"] },
+    { id: "headless_shopify", label: "Shopify / headless commerce", terms: ["shopify"] }
+  ];
+  const base = item("Virtual try-on expands for Shopify retailers");
+  const plain = evaluateItem(base, now, 36);
+  const boosted = evaluateItem(base, now, 36, groups);
+
+  assert.equal(boosted.include, true);
+  assert.equal(boosted.normaRelevance.capabilities.length, 2);
+  assert.equal(boosted.normaRelevance.bonus, 14);
+  assert.equal(boosted.score, plain.score + 14);
+  assert.equal(boosted.signals.normaRelevanceMatches, 2);
+  const ids = boosted.normaRelevance.capabilities.map((capability) => capability.id);
+  assert.deepEqual(ids.sort(), ["headless_shopify", "virtual_try_on_image_gen"]);
+});
+
+test("Norma-relevance bonus is capped and absent groups change nothing", () => {
+  const manyGroups = Array.from({ length: 8 }, (_, index) => ({
+    id: `g${index}`,
+    label: `G${index}`,
+    terms: ["virtual try-on"]
+  }));
+  const capped = evaluateItem(item("Virtual try-on launches"), now, 36, manyGroups);
+  assert.equal(capped.normaRelevance.bonus, 24);
+
+  const noGroups = evaluateItem(item("Virtual try-on launches"), now, 36);
+  assert.equal(noGroups.normaRelevance.capabilities.length, 0);
+  assert.equal(noGroups.normaRelevance.bonus, 0);
+});
+
+test("Contextual 'ai search' signal is gated by market context in the score, not just inclusion", () => {
+  // Both items are included via the 'virtual try-on' high-priority phrase and both
+  // contain 'ai search', but only the market-context item may count the contextual
+  // signal. Before the fix the non-market item still collected the +12 score boost.
+  const nonMarket = evaluateItem(item("Virtual try-on with ai search rollout", ""), now);
+  const withMarket = evaluateItem(item("Virtual try-on with ai search rollout", "for retail commerce"), now);
+  assert.equal(nonMarket.include, true);
+  assert.equal(nonMarket.signals.contextualPriorityMatches, 0);
+  assert.equal(withMarket.signals.contextualPriorityMatches, 1);
+});

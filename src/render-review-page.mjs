@@ -41,6 +41,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .summary-cell { border: 1px solid #999; padding: 8px; }
     .summary-cell strong { display: block; color: #000; font-size: 16px; }
     .story-meta { color: #333; font-size: 13px; }
+    .nk-relevance { border-left: 3px solid #000; padding-left: 8px; font-size: 13px; color: #000; }
     .story-meta span { display: inline-block; margin-right: 10px; }
     .debug { color: #666; font-size: 12px; border-top-color: #ddd; margin-top: 30px; }
     .debug h2 { font-size: 15px; color: #333; }
@@ -59,6 +60,8 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
         <span class="badge">${escapeHtml(modeLabel(run.mode))}</span>
         <span class="badge">Email disabled</span>
         <span class="badge">Internal review</span>
+        <span class="badge">${escapeHtml(aiLaneLabel(run.aiLane))}</span>
+        ${run.stackProfile?.sourceCommit ? `<span class="badge">NK stack-aware ranking</span>` : ""}
       </div>
       <p class="status-line"><strong>Review status:</strong> ${escapeHtml(reviewLabel)}</p>
       ${renderReviewNote(run)}
@@ -68,11 +71,14 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     </section>
     ${lead ? renderLead(lead) : renderEmpty()}
     ${renderCards(rest)}
+    ${renderWatchlist(run.watchlist ?? [])}
     <section>
       <h2>Text version</h2>
       <p><a href="newsletter.txt">Open newsletter.txt</a></p>
     </section>
     ${renderRunSummary(run, sendLabel)}
+    ${renderRingStats(run.sourceRings)}
+    ${renderAiLanePanel(run.aiLane, run.modelPolicy)}
     ${renderSourceHealth(sourceResults)}
     ${renderAutomationStatus(run)}
     <footer>
@@ -149,12 +155,14 @@ function renderAutomationStatus(run) {
   const autoLabel = run.automationConfigured ? "configured" : "not configured";
   const pagesLabel = run.githubPagesDeployConfigured ? `GitHub Pages when ${escapeHtml(run.githubPagesDeployGatedBy || "DEPLOY_GITHUB_PAGES")}=true` : "not configured";
   const schedule = Array.isArray(run.schedule) && run.schedule.length ? run.schedule.join(" and ") : "not configured";
+  const liveLabel = run.health?.liveStatus || "not verified by this static build";
   return `<section class="debug">
   <h2>Automation status</h2>
   <ul>
-    <li>Auto-refresh: ${escapeHtml(autoLabel)}</li>
+    <li>Workflow definition: ${escapeHtml(autoLabel)}</li>
     <li>Schedule: daily around 4 a.m. Eastern with retry/watchdog runs (${escapeHtml(schedule)})</li>
-    <li>Page deploy: ${pagesLabel}</li>
+    <li>Page deploy definition: ${pagesLabel}</li>
+    <li>Live health: ${escapeHtml(liveLabel)}</li>
     <li>Fallback: GitHub Actions artifact</li>
     <li>Email: disabled unless explicitly enabled</li>
   </ul>
@@ -190,7 +198,74 @@ function renderStoryMeta(story) {
     <span><strong>Category:</strong> ${escapeHtml(story.category ?? "market")}</span>
     ${scan ? `<span><strong>Scan:</strong> ${escapeHtml(scan)}</span>` : ""}
     <span><strong>Date:</strong> ${escapeHtml(formatDate(story.publishedAt))}</span>
-  </p>`;
+  </p>${renderNormaBadge(story.normaRelevance)}`;
+}
+
+// NK-relevance badge: names the House capabilities this story touches, derived
+// from the repo-truth stack profile — the "why this matters to what NK is
+// actually building" marker.
+function renderNormaBadge(normaRelevance) {
+  const capabilities = normaRelevance?.capabilities ?? [];
+  if (!capabilities.length) return "";
+  const labels = capabilities.map((capability) => capability.label).join(", ");
+  return `<p class="nk-relevance"><strong>NK stack signal:</strong> ${escapeHtml(labels)}</p>`;
+}
+
+function renderWatchlist(watchlist) {
+  if (!watchlist.length) return "";
+  const items = watchlist.map((entry) => {
+    const url = safeUrl(entry.url);
+    const title = url ? `<a href="${escapeHtml(url)}">${escapeHtml(entry.title)}</a>` : escapeHtml(entry.title);
+    const outlet = entry.sourceOutlet ? ` — ${escapeHtml(entry.sourceOutlet)}` : "";
+    const capabilities = entry.normaRelevance?.capabilities ?? [];
+    const labels = capabilities.map((capability) => capability.label ?? capability).join(", ");
+    const badge = labels ? ` <span class="story-meta">[NK: ${escapeHtml(labels)}]</span>` : "";
+    return `<li>${title}${outlet}${badge}</li>`;
+  }).join("\n");
+  return `<section>
+  <h2>Watchlist</h2>
+  <p class="meta">Qualifying signals that did not make today's selection.</p>
+  <ul>
+${items}
+  </ul>
+</section>`;
+}
+
+function renderRingStats(sourceRings) {
+  if (!sourceRings) return "";
+  const rings = Object.entries(sourceRings.rings ?? {})
+    .map(([ring, stats]) => `<div class="summary-cell"><strong>${escapeHtml(stats.active)}/${escapeHtml(stats.total)}</strong>${escapeHtml(ring)} ring active</div>`)
+    .join("\n    ");
+  return `<section class="debug">
+  <h2>Source network</h2>
+  <div class="summary-grid">
+    <div class="summary-cell"><strong>${escapeHtml(sourceRings.active)}/${escapeHtml(sourceRings.total)}</strong>Sources active</div>
+    ${rings}
+  </div>
+</section>`;
+}
+
+function renderAiLanePanel(aiLane, modelPolicy) {
+  if (!aiLane) return "";
+  const model = aiLane.model || modelPolicy?.primaryReasoningModel || "";
+  return `<section class="debug">
+  <h2>AI review lane</h2>
+  <ul>
+    <li>Status: ${escapeHtml(aiLaneLabel(aiLane))}</li>
+    <li>Model: ${escapeHtml(model)} (fallbacks: ${escapeHtml((aiLane.fallbacks ?? []).join(", ") || "none")})</li>
+    <li>Prepared packets: ${escapeHtml(aiLane.packetCount ?? 0)} | Estimated cost: $${escapeHtml(aiLane.estimatedCostUsd ?? 0)} (cap $${escapeHtml(aiLane.budgetCapUsd ?? 0)})</li>
+    <li>Private-context routing: ${escapeHtml(aiLane.privateRoutingBlocked === false ? "permitted" : "blocked until ZDR verification")}</li>
+  </ul>
+</section>`;
+}
+
+function aiLaneLabel(aiLane) {
+  const status = aiLane?.status || "unavailable";
+  if (status === "ready_pending_key") return "AI review: ready, pending API key";
+  if (status === "disabled_by_flag") return "AI review: built, flag off";
+  if (status === "submitted" || status === "active") return "AI review: active";
+  if (status === "blocked_over_cap") return "AI review: blocked by budget cap";
+  return "AI review: unavailable";
 }
 
 function modeLabel(mode) {

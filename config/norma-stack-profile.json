@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "profile_version": "1.0.0",
+  "generated_at": "2026-07-24T00:00:00.000Z",
+  "source": {
+    "repo": "MaisonMeta/NormaKamali",
+    "branch": "main",
+    "commit": "519422f06f00e7e5ab01d10ddb669c7c03bdd535",
+    "access": "read_only",
+    "note": "Deterministic repo-truth snapshot (REC-REPO-SNAPSHOT-lite). Derived from public-safe structural facts only: dependency names, doc/section titles, directory names. No code, credentials, env values, client data, or business terms."
+  },
+  "platform": {
+    "name": "NK digital platform",
+    "summary": "AI-assisted commerce platform: conversational stylist interface, personalization, wellness and community content, headless Shopify commerce."
+  },
+  "stack": {
+    "commerce": [
+      "shopify_headless",
+      "shopify_admin_api",
+      "shopify_storefront_cart_checkout",
+      "shopify_functions_migration",
+      "shopify_theme_envs"
+    ],
+    "ai": [
+      "google_gemini_text_and_image",
+      "ai_stylist_agent",
+      "voice_agent",
+      "ai_virtual_try_on",
+      "ai_image_studio"
+    ],
+    "data": [
+      "supabase_auth_profiles_storage",
+      "ga4_analytics"
+    ],
+    "marketing": [
+      "klaviyo_events_and_flows",
+      "discount_code_issuance"
+    ],
+    "frontend": [
+      "react_spa_vite",
+      "vercel_serverless"
+    ],
+    "engagement": [
+      "loyalty_tiers",
+      "launch_games",
+      "wellness_content",
+      "onboarding_fit_profile"
+    ]
+  },
+  "capabilities": [
+    {
+      "id": "ai_stylist_conversational_commerce",
+      "label": "AI stylist / conversational shopping",
+      "why": "A conversational AI stylist is the platform's primary shopping interface.",
+      "terms": [
+        "ai stylist",
+        "stylist",
+        "shopping agent",
+        "shopping assistant",
+        "personal shopper",
+        "conversational commerce",
+        "chat commerce",
+        "ai concierge"
+      ]
+    },
+    {
+      "id": "voice_commerce",
+      "label": "Voice AI / voice commerce",
+      "why": "The platform includes a voice-enabled assistant surface.",
+      "terms": [
+        "voice assistant",
+        "voice ai",
+        "voice shopping",
+        "voice commerce",
+        "speech"
+      ]
+    },
+    {
+      "id": "virtual_try_on_image_gen",
+      "label": "Virtual try-on / AI imagery",
+      "why": "Try-on imagery and an AI image studio are live product surfaces.",
+      "terms": [
+        "virtual try-on",
+        "try-on",
+        "ai image",
+        "image generation",
+        "ai imagery",
+        "ai photos",
+        "diffusion"
+      ]
+    },
+    {
+      "id": "headless_shopify",
+      "label": "Shopify / headless commerce",
+      "why": "The storefront is a headless React SPA on Shopify APIs; Functions migration underway.",
+      "terms": [
+        "shopify",
+        "headless commerce",
+        "storefront api",
+        "checkout",
+        "cart api",
+        "shopify functions",
+        "hydrogen"
+      ]
+    },
+    {
+      "id": "personalization_client_memory",
+      "label": "AI personalization / client memory",
+      "why": "Profiles store fit data, mood history, style preferences that feed the agent.",
+      "terms": [
+        "personalization",
+        "personalisation",
+        "client memory",
+        "user profiles",
+        "preference",
+        "preferences",
+        "fit data",
+        "size guidance",
+        "recommendations"
+      ]
+    },
+    {
+      "id": "crm_retention",
+      "label": "CRM / email flows",
+      "why": "Klaviyo events and flows power lifecycle marketing.",
+      "terms": [
+        "klaviyo",
+        "email marketing",
+        "crm",
+        "retention",
+        "lifecycle marketing",
+        "flows"
+      ]
+    },
+    {
+      "id": "data_platform",
+      "label": "Auth / data platform",
+      "why": "Supabase holds auth, profiles, and storage; GA4 analytics.",
+      "terms": [
+        "supabase",
+        "postgres",
+        "google analytics",
+        "ga4"
+      ]
+    },
+    {
+      "id": "google_gemini",
+      "label": "Google Gemini AI",
+      "why": "Gemini powers current text, image, and try-on generation.",
+      "terms": [
+        "gemini",
+        "google ai",
+        "generative ai",
+        "google deepmind"
+      ]
+    },
+    {
+      "id": "agent_platforms",
+      "label": "Agent platforms / model providers",
+      "why": "Model-provider capability shifts change what the stylist agent can do.",
+      "terms": [
+        "openai",
+        "chatgpt",
+        "anthropic",
+        "claude",
+        "agents",
+        "agentic",
+        "ai agent",
+        "assistants api",
+        "mcp"
+      ]
+    },
+    {
+      "id": "loyalty_engagement",
+      "label": "Loyalty / gamified engagement",
+      "why": "Launch games mint real discount codes tied to loyalty tiers.",
+      "terms": [
+        "loyalty",
+        "gamification",
+        "discount code",
+        "rewards",
+        "engagement"
+      ]
+    },
+    {
+      "id": "wellness_lifestyle",
+      "label": "Wellness / lifestyle commerce",
+      "why": "Fashion is wrapped in wellness, astro, and community content.",
+      "terms": [
+        "wellness",
+        "breathwork",
+        "astrology",
+        "community commerce",
+        "lifestyle brand"
+      ]
+    }
+  ]
+}

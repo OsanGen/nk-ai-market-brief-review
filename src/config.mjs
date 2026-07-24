@@ -7,7 +7,7 @@ export function loadConfig(env = process.env, now = new Date(), options = {}) {
   const reviewLookbackHours = toInt(env.NEWSLETTER_REVIEW_LOOKBACK_HOURS, 168);
   const minReviewItems = toInt(env.NEWSLETTER_MIN_REVIEW_ITEMS, 5);
   const normalLookbackHours = isMonday(now, env.NEWSLETTER_TIMEZONE || "America/New_York") ? mondayLookbackHours : lookbackHours;
-  const reviewMode = options.reviewMode ?? options.mode === "preview";
+  const reviewMode = options.reviewMode ?? (options.mode === "preview" || options.mode === "weekly");
 
   return {
     timezone: env.NEWSLETTER_TIMEZONE || "America/New_York",

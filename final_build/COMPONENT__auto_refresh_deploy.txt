@@ -19,6 +19,7 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 - Optional GitHub Pages deployment of generated `site/`
 - Automation metadata in `site/run.json`
 - Automation status section in `site/index.html`
+- Private `.newsletter-logs` run/command evidence in 30-day GitHub Actions artifacts
 - Live Pages URL: `https://osangen.github.io/nk-ai-market-brief-review/`
 
 ## Schedule Behavior
@@ -47,15 +48,18 @@ Refresh the NK AI Market Brief page automatically through GitHub Actions and opt
 
 ## Artifact Fallback Behavior
 
-If Pages is not enabled, the workflow still uploads `.newsletter-outbox` and `site` as the `nk-ai-market-brief` artifact.
+If Pages is not enabled, the workflow still uploads `.newsletter-outbox`, `.newsletter-logs`, and `site` as the `nk-ai-market-brief` artifact. A final observability artifact runs under `always()` and retains scheduler-skip or failure evidence for 30 days.
 
 ## Live Freshness Behavior
 
 - `scripts/check-live-freshness.mjs` fetches `https://osangen.github.io/nk-ai-market-brief-review/run.json` with cache busting after Pages deploy.
 - It retries before failing the workflow.
-- It passes only when `generatedAt` is today in America/New_York, `mode` is `auto`, `config.activeLookbackHours <= 84`, `automationConfigured` is true, and `send.sent` is false.
+- In workflow execution it passes only when live `runId` matches the exact current run, `generatedAt` is today in America/New_York, `mode` is `auto`, `config.activeLookbackHours <= 84`, `automationConfigured` is true, pipeline health has not failed, all sources have not failed, and `send.sent` is false.
+- If Pages deploy is disabled or skipped, an older same-day live page cannot satisfy the current run's live proof.
 
 ## Latest Live Verification
+
+This is the prior hosted baseline and was not reverified or changed by the 2026-07-22 local observability implementation.
 
 - Public workflow run: `25918494116`.
 - Public Pages repo commit: `fe843cf2a40c7eab913048b6975d69a89089ab4e`.
@@ -86,15 +90,18 @@ The final shareable review page still records send state in `site/run.json` and 
 - `npm test`
 - `npm run build`
 - `npm run check:deploy`
+- `npm run logs:verify`
 - `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy`
 - `site/run.json` has `automationConfigured: true`
+- `site/run.json` has `observabilityConfigured: true` and `liveVerificationConfigured: true`
 - `site/run.json` has `manualPushRequiredAfterSetup: false`
 - Daily public `site/run.json` has `mode: "auto"` and `config.activeLookbackHours <= 84`
-- Workflow has manual dispatch, both daily retry/watchdog cron entries, schedule gate, artifact upload, Pages upload/deploy, live freshness check, and Pages permissions.
+- Workflow has manual dispatch, both daily retry/watchdog cron entries, persistent schedule-gate event, exact-run log verification under `always()`, 30-day machine-evidence artifacts, Pages upload/deploy, live freshness event, and Pages permissions.
 - `site/index.html` shows Automation status below the selected signals and technical diagnostics.
 - GitHub Pages deploy support remains gated by `DEPLOY_GITHUB_PAGES=true`; artifact upload remains available independently.
 
 ## Remaining Setup Steps
 
 - Keep email disabled until sender, recipients, and explicit approval are provided.
+- Publish the locally verified observability changes only with explicit push/deploy approval, then inspect one hosted final observability artifact and public receipt.
 - Monitor GitHub's Node 20 action runtime deprecation warning and move actions to Node 24-compatible versions if needed.

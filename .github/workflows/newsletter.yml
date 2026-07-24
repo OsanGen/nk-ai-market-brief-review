@@ -50,6 +50,8 @@ jobs:
 
       - name: Build newsletter page
         if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
+        env:
+          NEWSLETTER_RUN_ID: ${{ steps.refresh_gate.outputs.run_id }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "send" ]; then
@@ -60,8 +62,16 @@ jobs:
             npm run build
           fi
 
+      - name: Verify machine logging
+        if: ${{ always() && steps.refresh_gate.outputs.should_run == 'true' }}
+        env:
+          NEWSLETTER_RUN_ID: ${{ steps.refresh_gate.outputs.run_id }}
+        run: npm run logs:verify
+
       - name: Check deploy output
         if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
+        env:
+          NEWSLETTER_RUN_ID: ${{ steps.refresh_gate.outputs.run_id }}
         run: |
           MODE="${RUN_MODE:-auto}"
           if [ "$MODE" = "auto" ]; then
@@ -70,13 +80,17 @@ jobs:
             npm run check:deploy
           fi
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ steps.refresh_gate.outputs.should_run == 'true' }}
+      - name: Upload newsletter artifact
+        uses: actions/upload-artifact@v4
+        if: ${{ always() && steps.refresh_gate.outputs.should_run == 'true' }}
         with:
           name: nk-ai-market-brief
           path: |
             .newsletter-outbox
+            .newsletter-logs
             site
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Configure Pages
         if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' }}
@@ -94,5 +108,23 @@ jobs:
         uses: actions/deploy-pages@v4
 
       - name: Verify live page freshness
-        if: ${{ steps.refresh_gate.outputs.should_run == 'true' && vars.DEPLOY_GITHUB_PAGES == 'true' && (github.event_name == 'schedule' || github.event.inputs.mode == 'auto') }}
-        run: npm run check:live
+        if: ${{ always() && steps.refresh_gate.outputs.should_run == 'true' && (github.event_name == 'schedule' || github.event.inputs.mode == 'auto') }}
+        env:
+          NEWSLETTER_RUN_ID: ${{ steps.refresh_gate.outputs.run_id }}
+        run: |
+          if [ "${{ vars.DEPLOY_GITHUB_PAGES }}" = "true" ] && [ "${{ steps.deployment.outcome }}" = "success" ]; then
+            NEWSLETTER_DEPLOYMENT_STATUS=attempted NEWSLETTER_EXPECT_LIVE_RUN_ID="$NEWSLETTER_RUN_ID" npm run check:live
+          elif [ "${{ vars.DEPLOY_GITHUB_PAGES }}" = "true" ]; then
+            NEWSLETTER_DEPLOYMENT_STATUS=failed_${{ steps.deployment.outcome }} NEWSLETTER_EXPECT_LIVE_RUN_ID="$NEWSLETTER_RUN_ID" NEWSLETTER_LIVE_FRESHNESS_RETRIES=0 npm run check:live
+          else
+            NEWSLETTER_DEPLOYMENT_STATUS=skipped_disabled NEWSLETTER_EXPECT_LIVE_RUN_ID="$NEWSLETTER_RUN_ID" NEWSLETTER_LIVE_FRESHNESS_RETRIES=0 npm run check:live
+          fi
+
+      - name: Upload final observability evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nk-ai-market-brief-observability-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .newsletter-logs
+          if-no-files-found: error
+          retention-days: 30

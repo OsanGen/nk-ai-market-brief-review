@@ -24,6 +24,12 @@ test("Workflow includes artifact and GitHub Pages deployment support", async () 
   assert.match(workflow, /npm run check:live/);
   assert.doesNotMatch(workflow, /\n\s*-\s*run: npm run build\n/);
   assert.match(workflow, /actions\/upload-artifact/);
+  assert.match(workflow, /npm run logs:verify/);
+  assert.match(workflow, /\.newsletter-logs/);
+  assert.match(workflow, /retention-days: 30/);
+  assert.match(workflow, /if: \$\{\{ always\(\) \}\}/);
+  assert.match(workflow, /NEWSLETTER_EXPECT_LIVE_RUN_ID/);
+  assert.match(workflow, /steps\.deployment\.outcome/);
   assert.match(workflow, /actions\/upload-pages-artifact/);
   assert.match(workflow, /actions\/deploy-pages/);
   assert.match(workflow, /DEPLOY_GITHUB_PAGES == 'true'/);
@@ -40,6 +46,8 @@ test("Automation status is configured when workflow exists", async () => {
   assert.equal(status.githubActionsWorkflowFound, true);
   assert.equal(status.scheduledRefreshConfigured, true);
   assert.equal(status.githubPagesDeployConfigured, true);
+  assert.equal(status.observabilityConfigured, true);
+  assert.equal(status.liveVerificationConfigured, true);
   assert.equal(status.automationConfigured, true);
   assert.equal(status.manualPushRequiredAfterSetup, false);
 });

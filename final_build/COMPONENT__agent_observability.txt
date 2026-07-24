@@ -1,0 +1,77 @@
+# Component: Agent-First Observability
+
+## Purpose
+
+Give coding agents and automation a compact, queryable, integrity-checked account of every newsletter, scheduler, deployment-check, and live-verification outcome without relying on human prose or leaking private data.
+
+## Inputs
+
+- Pipeline lifecycle calls from `src/run-newsletter.mjs`
+- Per-source events from `src/fetch-feeds.mjs`
+- Standalone events from scheduler and command scripts
+- Optional `NEWSLETTER_LOG_DIR`
+- Optional `NEWSLETTER_RUN_ID`
+- Safe GitHub execution metadata such as run ID, attempt, event name, and commit SHA
+
+## Outputs
+
+- `.newsletter-logs/event-catalog.json`
+- `.newsletter-logs/LATEST.json`
+- `.newsletter-logs/commands.jsonl`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/events.jsonl`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/run-manifest.json`
+- `.newsletter-logs/YYYY-MM-DD/<run-id>/summary.json`
+- Sanitized observability reference in public `site/run.json`
+- 30-day GitHub Actions evidence artifacts
+
+## State
+
+Run event streams and manifests are immutable after finalization. `LATEST.json` is an atomic convenience pointer, while workflow verification selects the exact `NEWSLETTER_RUN_ID`. `commands.jsonl` is append-only operational evidence. Logs are gitignored and are not application state or a database.
+
+## Event Contract
+
+- Compact JSONL, schema version 1 and event version 1.
+- Required envelope: timestamp, unique event ID, run/correlation IDs, sequence, level, event, component, and status.
+- Optional phase, stable reason code, duration, execution metadata, and bounded attributes.
+- Event/component/phase identifiers are lowercase machine identifiers.
+- Any valid component is auto-discovered when it emits; explicit registration only adds manifest metadata.
+- Every run starts once and ends with exactly one final `run.completed` or `run.failed` event.
+
+## Edge Cases
+
+- Partial source failure is degraded; all-source failure is failed; successful zero-result content is `empty_valid`.
+- Exceptions produce stable error code/fingerprint and a redacted message, never a raw stack or external body.
+- Interrupted/incomplete exact runs fail verification because the manifest/terminal evidence is missing; an older `LATEST.json` cannot substitute in CI.
+- Tampered/truncated events fail required-field, sequence, terminal, byte-count, or SHA-256 checks.
+- Scheduler skips still persist in `commands.jsonl` and the final artifact.
+- Hosted verification requires the exact current run ID, so an older same-day live receipt cannot prove the current deployment.
+- New future components require no catalog edit; valid event emission adds them to the manifest.
+- Events after finalization and direct caller-written terminal events are rejected.
+
+## Dependencies
+
+- Node built-ins: `async_hooks`, `crypto`, `fs`, `path`, and `util`
+- No new production package
+
+## Acceptance Checks
+
+- `TMPDIR=/Volumes/data/.codex-runtime/newsletter-tests npm test`
+- `npm run build`
+- `npm run logs:verify -- --run <exact-run-id>`
+- `npm run logs:status`
+- `npm run logs:query -- --run <exact-run-id> --event source.fetch.summary`
+- `npm run logs:query -- --stream commands --run all --level error`
+- `npm run check:deploy`
+- Tamper, path-traversal, redaction, terminal-count, dynamic-component, all-source-failure, and public-allowlist regression tests pass.
+
+## Observability
+
+This component observes itself through `observability.verify.completed` or `observability.verify.failed` command events. Persistence failures emit `observability.persistence.failed` to the error stream and fail the process.
+
+## Security Notes
+
+- Recursive redaction covers secret-like keys, email/recipient keys and values, bearer/provider token patterns, URL credentials/query/fragment, multiline values, depth/size bounds, and cycles.
+- Public `site/run.json` uses explicit nested allowlists plus recursive sanitization.
+- Raw provider payloads, raw errors/stacks, stories, recipients, secret values, and provider message IDs are forbidden from public receipts.
+- Detailed logs stay outside `site/`; `NEWSLETTER_LOG_DIR` must remain private.
+- No secrets were required or used for the local implementation and verification.

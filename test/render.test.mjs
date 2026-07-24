@@ -91,7 +91,8 @@ test("Review page renderer creates shareable static page", () => {
   assert.match(html, /Source fetch status/);
   assert.match(html, /Technical diagnostics/);
   assert.match(html, /Automation status/);
-  assert.match(html, /Auto-refresh: configured/);
+  assert.match(html, /Workflow definition: configured/);
+  assert.match(html, /Live health: not verified by this static build/);
   assert.match(html, /daily around 4 a\.m\. Eastern/);
   assert.doesNotMatch(html, /<script|onerror|onclick|javascript:/i);
 });
@@ -180,4 +181,61 @@ test("Malicious RSS fixture cannot inject script, event handlers, or javascript 
 
   assert.equal(stories.length, 1);
   assert.doesNotMatch(`${html}\n${text}`, /<script|onerror|onclick|javascript:/i);
+});
+
+test("V1 review page renders NK-relevance badges, watchlist, ring stats, and the AI-lane chip", () => {
+  const html = renderReviewPage({
+    stories: [{
+      headline: "Voice AI stylist launches",
+      summary: "A voice agent for fashion.",
+      whyItMatters: "Matters.",
+      sourceName: "Scan",
+      sourceOutlet: "Outlet",
+      scanLabel: "Scan",
+      category: "fashion",
+      publishedAt: "2026-07-24T04:00:00.000Z",
+      url: "https://example.com/a",
+      normaRelevance: {
+        bonus: 14,
+        capabilities: [
+          { id: "voice_commerce", label: "Voice AI / voice commerce", matchedIn: "title" },
+          { id: "ai_stylist_conversational_commerce", label: "AI stylist / conversational shopping", matchedIn: "title" }
+        ]
+      }
+    }],
+    run: {
+      mode: "preview",
+      reviewReady: true,
+      aiLane: {
+        status: "ready_pending_key",
+        model: "claude-opus-4-8",
+        fallbacks: ["claude-sonnet-5", "claude-haiku-4-5"],
+        packetCount: 1,
+        estimatedCostUsd: 0.01,
+        budgetCapUsd: 8,
+        privateRoutingBlocked: true
+      },
+      modelPolicy: { primaryReasoningModel: "claude-opus-4-8" },
+      stackProfile: { sourceCommit: "519422f06f00" },
+      sourceRings: { total: 57, active: 40, shadow: 17, rings: { core: { total: 23, active: 23 }, extended: { total: 30, active: 13 }, discovery: { total: 4, active: 4 } } },
+      watchlist: [{
+        id: "w1",
+        title: "Klaviyo ships AI flows",
+        url: "https://example.com/w1",
+        sourceOutlet: "Klaviyo",
+        normaRelevance: { capabilities: [{ label: "CRM / email flows" }] }
+      }]
+    },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+
+  assert.match(html, /NK stack signal:/);
+  assert.match(html, /Voice AI \/ voice commerce/);
+  assert.match(html, /AI review: ready, pending API key/);
+  assert.match(html, /claude-opus-4-8/);
+  assert.match(html, /Watchlist/);
+  assert.match(html, /Klaviyo ships AI flows/);
+  assert.match(html, /40\/57/);
+  assert.match(html, /NK stack-aware ranking/);
+  assert.match(html, /blocked until ZDR verification/);
 });

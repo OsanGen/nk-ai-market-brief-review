@@ -27,6 +27,7 @@ export async function getAutomationStatus(root = process.cwd()) {
     "npm test",
     "npm run should:refresh",
     "npm run daily",
+    "npm run logs:verify",
     "npm run check:deploy",
     "npm run check:live"
   ].every((command) => workflow.includes(command));
@@ -37,19 +38,32 @@ export async function getAutomationStatus(root = process.cwd()) {
     && workflow.includes("pages: write")
     && workflow.includes("id-token: write")
     && workflow.includes(PAGES_GATE_VARIABLE);
+  const observabilityConfigured = workflowFound
+    && workflow.includes(".newsletter-logs")
+    && workflow.includes("retention-days: 30")
+    && workflow.includes("npm run logs:verify")
+    && workflow.includes("always()");
+  const liveVerificationConfigured = workflowFound
+    && workflow.includes("NEWSLETTER_EXPECT_LIVE_RUN_ID")
+    && workflow.includes("steps.deployment.outcome")
+    && workflow.includes("npm run check:live");
 
   const automationConfigured = workflowFound
     && manualDispatchConfigured
     && scheduledRefreshConfigured
     && ciConfigured
     && artifactUploadConfigured
-    && githubPagesDeployConfigured;
+    && githubPagesDeployConfigured
+    && observabilityConfigured
+    && liveVerificationConfigured;
 
   return {
     automationConfigured,
     githubActionsWorkflowFound: workflowFound,
     scheduledRefreshConfigured,
     githubPagesDeployConfigured,
+    observabilityConfigured,
+    liveVerificationConfigured,
     githubPagesDeployGatedBy: PAGES_GATE_VARIABLE,
     schedule: AUTOMATION_SCHEDULE,
     timezone: "America/New_York",

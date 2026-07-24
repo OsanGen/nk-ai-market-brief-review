@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "registry_version": "1.0.0",
+  "authority": {
+    "primary_spec": "docs/NORMA_WEEKLY_AI_MODEL_QUALITY_UPGRADE.md",
+    "overlay_id": "norma-weekly-ai-model-quality-upgrade",
+    "overlay_version": "1.0.0",
+    "effective_at": "2026-07-23",
+    "binding_note": "This registry is the single source of truth for model-role bindings (REQ-ROUTE-015: domain logic resolves models by role, never by hardcoded id). Every reasoning role binds to claude-opus-4-8 as primary.",
+    "supersedes_note": "The Claude Haiku 4.5 / Sonnet 5 rows in docs/NORMA_WEEKLY_AI_NEWS_ROI_SYSTEM_ARCHITECTURE_SPEC.md sections 17.3 and 38.2 are dated FALLBACK price snapshots, NOT the primary binding. Opus 4.8 is primary; Haiku 4.5 and Sonnet 5 are fallbacks only."
+  },
+  "lane_status": {
+    "active": false,
+    "status": "planned",
+    "gated_by": [
+      "ANTHROPIC_API_KEY present",
+      "positive unexpired REC-PRIVACY (ZDR) receipt",
+      "human REC-DECISION approval"
+    ],
+    "feature_flags_default": false,
+    "reason": "P7 model lane. No model call exists in code yet; this record fixes the authoritative plan so no run can silently bind a weaker model."
+  },
+  "budget_usd": {
+    "provider_console_cap": 50,
+    "application_hard_stop": 40,
+    "weekly_hard_stop": 8,
+    "protected_reserve": 10
+  },
+  "deterministic_authority": {
+    "gates": "code",
+    "numeric_scores": "code",
+    "q3_prioritization": "code",
+    "maximum_allowed_disposition": "code",
+    "evidence_id_validation": "code",
+    "final_report_rendering": "code",
+    "model_may_upgrade_disposition": false
+  },
+  "prohibited_for_private_context": [
+    "claude-fable-5",
+    "claude-mythos-5"
+  ],
+  "prohibited_reason": "requires_30_day_retention_and_not_available_under_zdr",
+  "roles": {
+    "public_semantic_parser": {
+      "primary": "claude-opus-4-8",
+      "fallbacks": ["claude-sonnet-5", "claude-haiku-4-5"],
+      "transport": "message_batches_api",
+      "effort": "medium",
+      "data_classification": "public_only",
+      "structured_output": true,
+      "thinking": "adaptive",
+      "enabled_by_default": false,
+      "description": "Stage 1: parse public story clusters into atomic claims. Sees zero private context."
+    },
+    "private_finalist_reviewer": {
+      "primary": "claude-opus-4-8",
+      "fallbacks": ["claude-sonnet-5"],
+      "transport": "synchronous_messages_api",
+      "effort": "high",
+      "data_classification": "minimum_required_internal_metadata",
+      "structured_output": true,
+      "thinking": "adaptive",
+      "enabled_by_default": false,
+      "description": "Stage 3: compare up to 5 finalists. Requires a positive REC-PRIVACY receipt. May only downgrade disposition."
+    },
+    "private_adversarial_reviewer": {
+      "primary": "claude-opus-4-8",
+      "fallbacks": ["claude-sonnet-5"],
+      "transport": "synchronous_messages_api",
+      "effort": "xhigh",
+      "data_classification": "minimum_required_internal_metadata",
+      "structured_output": true,
+      "thinking": "adaptive",
+      "enabled_by_default": false,
+      "description": "Stage 4: independently attack the provisional winner. Prompt-independent. May keep or downgrade only."
+    },
+    "public_web_discovery": {
+      "primary": "claude-sonnet-5",
+      "fallbacks": [],
+      "transport": "synchronous_messages_api_with_web_search",
+      "effort": "medium",
+      "data_classification": "public_only",
+      "structured_output": true,
+      "thinking": "adaptive",
+      "enabled_by_default": false,
+      "description": "Optional bounded discovery. Output authority: candidate domains only, never evidence."
+    }
+  },
+  "models": {
+    "claude-opus-4-8": {
+      "provider": "anthropic",
+      "model_id": "claude-opus-4-8",
+      "tier": "opus",
+      "role_binding": "primary_reasoning",
+      "input_price_per_million_usd": 5.0,
+      "output_price_per_million_usd": 25.0,
+      "batch_input_price_per_million_usd": 2.5,
+      "batch_output_price_per_million_usd": 12.5,
+      "batch_discount": 0.5,
+      "retention_class": "standard_not_zdr",
+      "max_input_tokens": 1000000,
+      "max_output_tokens": 128000,
+      "structured_output_supported": true,
+      "adaptive_thinking_supported": true,
+      "effort_supported": ["low", "medium", "high", "xhigh", "max"],
+      "effective_date": "2026-07-23",
+      "price_verified_at": "2026-07-23",
+      "policy_verified_at": "2026-07-23",
+      "source_refs": ["R01", "R02"]
+    },
+    "claude-sonnet-5": {
+      "provider": "anthropic",
+      "model_id": "claude-sonnet-5",
+      "tier": "sonnet",
+      "role_binding": "fallback",
+      "input_price_per_million_usd": 2.0,
+      "output_price_per_million_usd": 10.0,
+      "input_price_per_million_usd_starting_2026_09_01": 3.0,
+      "output_price_per_million_usd_starting_2026_09_01": 15.0,
+      "batch_discount": 0.5,
+      "retention_class": "standard_not_zdr",
+      "structured_output_supported": true,
+      "adaptive_thinking_supported": true,
+      "effective_date": "2026-07-23",
+      "price_verified_at": "2026-07-23",
+      "policy_verified_at": "2026-07-23",
+      "source_refs": ["R01", "R02"]
+    },
+    "claude-haiku-4-5": {
+      "provider": "anthropic",
+      "model_id": "claude-haiku-4-5",
+      "tier": "haiku",
+      "role_binding": "fallback",
+      "input_price_per_million_usd": 1.0,
+      "output_price_per_million_usd": 5.0,
+      "batch_discount": 0.5,
+      "retention_class": "standard_not_zdr",
+      "structured_output_supported": true,
+      "adaptive_thinking_supported": true,
+      "effective_date": "2026-07-23",
+      "price_verified_at": "2026-07-23",
+      "policy_verified_at": "2026-07-23",
+      "source_refs": ["R01", "R02"]
+    }
+  },
+  "price_snapshot_refresh_days": 30,
+  "policy_snapshot_refresh_days": 90,
+  "snapshot_note": "Prices are a dated snapshot backed by R01/R02/R03; re-verify before any paid model request (REQ-38-005, REQ-43-010)."
+}

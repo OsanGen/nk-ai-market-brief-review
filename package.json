@@ -10,12 +10,16 @@
   "scripts": {
     "preview": "node scripts/preview.mjs",
     "daily": "node scripts/daily.mjs",
+    "weekly": "node scripts/weekly.mjs",
     "should:refresh": "node scripts/should-refresh.mjs",
     "check:live": "node scripts/check-live-freshness.mjs",
     "send": "node scripts/send.mjs",
     "build": "node scripts/build-site.mjs",
     "test": "node --test",
-    "check:deploy": "node scripts/check-deploy.mjs"
+    "check:deploy": "node scripts/check-deploy.mjs",
+    "logs:status": "node scripts/logs-status.mjs",
+    "logs:verify": "node scripts/logs-verify.mjs",
+    "logs:query": "node scripts/logs-query.mjs"
   },
   "dependencies": {
     "rss-parser": "^3.13.0"

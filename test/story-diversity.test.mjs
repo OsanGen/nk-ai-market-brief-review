@@ -45,6 +45,24 @@ test("Diverse selection limits repeated topic clusters when enough items exist",
   assert.equal(selected.some((entry) => entry.title.includes("OpenAI")), true);
 });
 
+test("Cluster-capped items are backfilled to reach the minimum, without duplicates", () => {
+  // Six items all land in the Meta cluster (>= MIN_REVIEW_ITEMS, so the cap is
+  // active). The main loop admits only MAX_PER_CLUSTER (2) and skips the other 4;
+  // the backfill loop must re-admit skipped items until the minimum (5) is met.
+  const items = [
+    item("Meta launches AI shopping agents for Instagram one", 100),
+    item("Meta launches AI shopping agents for Instagram two", 99),
+    item("Meta launches AI shopping agents for Instagram three", 98),
+    item("Meta launches AI shopping agents for Instagram four", 97),
+    item("Meta launches AI shopping agents for Instagram five", 96),
+    item("Meta launches AI shopping agents for Instagram six", 95)
+  ];
+  const selected = selectDiverseItems(items, 8);
+  assert.equal(selected.length, 5);
+  const ids = selected.map((entry) => entry.id);
+  assert.equal(new Set(ids).size, 5, "backfilled items must be unique");
+});
+
 test("Diverse selection does not remove valid items below the minimum review threshold", () => {
   const selected = selectDiverseItems([
     item("Meta Develops Agentic AI Shopping Assistant for Instagram", 100),

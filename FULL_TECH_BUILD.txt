@@ -2,26 +2,28 @@
 
 ## 1. Snapshot header
 
-- UpdatedAt: 2026-05-13T00:05:40Z
+- UpdatedAt: 2026-07-22T18:43:00Z
 - RepoName: nk-ai-market-newsletter
 - Branch: main
-- HEAD commit hash: 40a8765c0bdcb3bfcc74e882493d8a9316944a80
+- HEAD commit hash: 7f1e538c06d80aba1445820d78d2f2aa2cc864c8
 - Dirty state: yes
-- Dirty summary: daily public refresh implementation, workflow/deploy-check tests, docs, `_codex_build/`, and pre-existing `FULL_TECH_BUILD.txt`
+- Dirty summary: uncommitted agent-first observability implementation and docs/tests, plus pre-existing untracked `_codex_build/` run notes; no push or deployment performed
 - Primary languages: JavaScript ESM, JSON, Markdown, YAML
 - Package managers detected: npm (`package.json`, `package-lock.json`)
+- Applicable instructions: user-provided global `AGENTS.md`; no repo-local `AGENTS.md` or `AGENTS.override.md` found
 
 ## 2. What this repo is
 
-This repo is a free, standalone internal NK AI Market Brief MVP. It produces a weekday market brief focused only on AI plus fashion, beauty, e-commerce, agentic commerce, AI shopping, and AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands. The default mode uses Google News RSS metadata, deterministic filtering/scoring, local/static outputs, GitHub Actions artifacts, no secrets, no database, no LLM, and no page scraping.
+This repo is a free, standalone internal NK AI Market Brief MVP. It produces a daily market brief focused only on AI plus fashion, beauty, e-commerce, agentic commerce, AI shopping, and AI agents or assistants used by major fashion, beauty, retail, and commerce platforms or brands. The default mode uses Google News RSS metadata, deterministic filtering/scoring, local/static outputs, GitHub Actions artifacts, no secrets, no database, no LLM, and no page scraping.
 
 User-facing artifacts:
 - Local preview: `npm run preview`
 - Public daily refresh: `npm run daily`
 - Build static site: `npm run build`
 - Deploy check: `npm run check:deploy`
+- Machine status/integrity/query: `npm run logs:status`, `npm run logs:verify`, `npm run logs:query`
 - Optional send: `npm run send`
-- Outputs: `.newsletter-outbox/YYYY-MM-DD/newsletter.html`, `.newsletter-outbox/YYYY-MM-DD/newsletter.txt`, `.newsletter-outbox/YYYY-MM-DD/run.json`, `site/index.html`, `site/newsletter.txt`, `site/run.json`
+- Outputs: `.newsletter-outbox/YYYY-MM-DD/newsletter.html`, `.newsletter-outbox/YYYY-MM-DD/newsletter.txt`, `.newsletter-outbox/YYYY-MM-DD/run.json`, `site/index.html`, `site/newsletter.txt`, `site/run.json`, `.newsletter-logs/YYYY-MM-DD/<run-id>/{events.jsonl,run-manifest.json,summary.json}`, and `.newsletter-logs/commands.jsonl`
 - GitHub repository: `https://github.com/OsanGen/nk-ai-market-newsletter` (private)
 - Live review page: `https://osangen.github.io/nk-ai-market-brief-review/`
 - Public workflow-capable Pages repo: `https://github.com/OsanGen/nk-ai-market-brief-review`
@@ -32,10 +34,13 @@ User-facing artifacts:
 
 Components:
 - `newsletter-sources.json`: nine original source definitions from the NK context plus three review-yield market scan source definitions.
-- `src/config.mjs`: no-secret defaults, comma-separated recipient parsing, optional env parsing, daily lookback windows, and review-mode lookback.
+- `src/config.mjs`: no-secret defaults, comma-separated recipient parsing, optional env parsing, daily lookback windows, 4 a.m. America/New_York target hour, and review-mode lookback.
 - `src/sources.mjs`: source registry validation and disabled-source filtering.
 - `src/google-news.mjs`: Google News RSS URL construction.
-- `src/fetch-feeds.mjs`: RSS fetch/parse with `rss-parser`, built-in `fetch`, 15-second source timeout, and source-level error capture.
+- `src/fetch-feeds.mjs`: RSS fetch/parse with `rss-parser`, built-in `fetch`, 15-second source timeout, safe error code/fingerprint, per-source duration events, and aggregate source health.
+- `src/observability/*`: versioned compact JSONL contract, AsyncLocalStorage run context, automatic component discovery, recursive redaction, atomic manifests/summaries/latest pointer, standalone command events, exact-run query/verification, and SHA-256/byte integrity.
+- `src/run-health.mjs`: pipeline/content/deployment/live health separation and failed-pipeline command gating.
+- `src/run-receipt.mjs`: explicit nested allowlist plus recursive sanitization for public `site/run.json`.
 - `src/normalize.mjs`: normalized RSS item shape, actual RSS outlet extraction, tag stripping, display-text neutralization, escaping helpers, and URL safety.
 - `src/filter-score.mjs`: strict title/summary inclusion/exclusion using word/phrase-boundary matching so source categories or substrings like `ai` inside `retail`/`openai` cannot admit generic news.
 - `src/dedupe.mjs`: canonical URL and title-overlap dedupe.
@@ -43,15 +48,18 @@ Components:
 - `src/summarize.mjs`: deterministic RSS-only headline, outlet suffix cleanup, non-duplicative summary fallback, issue-level copy rotation, business-facing why-it-matters, and category fields.
 - `src/render-html.mjs` and `src/render-text.mjs`: escaped/neutralized email-style HTML and text rendering.
 - `src/review-status.mjs`: review readiness and limited-yield state from selected item count.
-- `src/automation-status.mjs`: workflow automation detection for schedule, artifact upload, Pages deploy support, and manual-push status.
+- `src/automation-status.mjs`: workflow automation detection for daily 4 a.m. retry/watchdog schedules, retained machine evidence, artifact upload, Pages deploy support, and manual-push status.
+- `src/live-freshness.mjs`: local-date freshness evaluation for the live Pages `run.json`, with exact expected run ID, mode/lookback/automation/pipeline/all-source/send-disabled checks.
 - `src/render-review-page.mjs`: escaped static review page rendering for `site/index.html`, including noindex metadata, status badges, review status, selected-signal label, lead story, story grid when available, actual outlet source labels, scan labels, visually secondary technical diagnostics, source fetch status, automation status, and `newsletter.txt` link.
-- `src/send-resend.mjs`: optional Resend HTTP API send gate, disabled by default, minimum-item check, recipient validation, and idempotency header.
-- `src/time-guard.mjs`: weekday 8 a.m. America/New_York guard.
-- `src/run-newsletter.mjs`: orchestrator and output writer.
-- `scripts/*.mjs`: npm script entrypoints for preview, public daily refresh, build, explicit send, and deploy checks.
-- `.github/workflows/newsletter.yml`: manual/scheduled CI, tests, daily public output for scheduled `auto`, review build for manual preview, deploy checks, artifact upload, optional Pages deployment gated by `DEPLOY_GITHUB_PAGES=true`.
+- `src/send-resend.mjs`: optional Resend HTTP API send gate, disabled by default, minimum-item check, recipient validation, idempotency header, and fingerprint-only provider message evidence.
+- `src/time-guard.mjs`: 4 a.m. America/New_York daily target guard for non-forced auto sends.
+- `src/run-newsletter.mjs`: correlated phase/event orchestrator, detailed private output writer, sanitized public receipt writer, and terminal run finalizer.
+- `scripts/*.mjs`: npm entrypoints for preview, persistent schedule decision, public daily refresh, build, explicit send, deploy/live checks, and machine status/integrity/query.
+- `.github/workflows/newsletter.yml`: manual/scheduled CI, persistent freshness gate, tests, daily public output for scheduled `auto`, exact-run log verification under `always()`, fresh-date/health deploy checks, 30-day private evidence artifacts, optional Pages deployment gated by `DEPLOY_GITHUB_PAGES=true`, and live verification evidence.
 
-Data flow: enabled sources -> Google News RSS URLs -> RSS metadata -> normalized items with outlet source -> strict filter/score -> dedupe -> story-diversity selection in preview mode or top-score daily selection in auto mode -> deterministic summaries -> review-readiness and automation-status calculation -> neutralized newsletter HTML/text plus static review page -> outbox + site -> deploy check enforcing `reviewReady`, scheduled automation, and expected daily mode/lookback when configured -> artifact upload and optional GitHub Pages -> optional gated send outside the default public workflow.
+Data flow: enabled sources -> RSS fetch/parse with source events -> normalized items -> strict filter/score -> dedupe/selection/summaries -> four-axis health + review/automation status -> rendered outputs -> detailed private outbox + integrity-checked private JSONL/manifest/summary + sanitized public receipt/site -> exact-run log verification -> deploy guard -> retained artifact and optional GitHub Pages -> live verification event -> optional gated send outside the default public workflow.
+
+Trust boundaries: external RSS/live JSON is untrusted; credentials and recipients remain private env inputs; `.newsletter-logs` and detailed outbox are private operational evidence; `site/` receives only allowlisted state; configured deployment is not treated as live proof.
 
 ## 4. Entrypoints and run commands
 
@@ -63,7 +71,13 @@ npm run daily
 npm test
 npm run build
 npm run check:deploy
+npm run logs:status
+npm run logs:verify
+npm run logs:query -- --run latest --level error
+npm run logs:query -- --stream commands --run all --level error
 NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
+npm run check:live
 ```
 
 Explicit send failure proof:
@@ -85,11 +99,12 @@ npm run send
 Environment:
 - Default mode requires no secrets.
 - `.env.example` documents optional email settings and defaults to `NEWSLETTER_SEND_ENABLED=false`.
+- `.env.example` documents optional `NEWSLETTER_LOG_DIR=.newsletter-logs`; the log root is gitignored and must remain outside `site/`.
 - Preview/build mode uses `NEWSLETTER_REVIEW_LOOKBACK_HOURS=168` by default so the review page can show enough qualifying signals. Scheduled `auto` mode keeps `NEWSLETTER_LOOKBACK_HOURS=36` and `NEWSLETTER_MONDAY_LOOKBACK_HOURS=84`.
 - `npm run daily` is the public scheduled page path: it forces `auto` mode, keeps sending disabled, and uses the normal daily lookback windows so delayed GitHub cron starts still publish generated output.
 - Preview mode cannot send.
 - Email cannot send unless all gates pass: `NEWSLETTER_SEND_ENABLED=true`, send/auto mode, `RESEND_API_KEY`, `NEWSLETTER_FROM`, valid `NEWSLETTER_TO`, and enough items.
-- Default GitHub Actions workflow runs from the default branch on weekday schedules at `17 12 * * 1-5` and `17 13 * * 1-5`, supports manual dispatch with `mode`, uses `npm run daily` plus mode/lookback deploy guards for scheduled public output, supports Pages deploy when `DEPLOY_GITHUB_PAGES=true`, and keeps email disabled by default.
+- Default GitHub Actions workflow runs from the default branch every day on redundant 4 a.m. America/New_York coverage schedules `2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *` and watchdog schedule `17 10,11,12 * * *`, supports manual dispatch with `mode`, runs `npm run should:refresh` to skip duplicate retries once the live page is fresh, uses `npm run daily` plus mode/lookback/fresh-date deploy guards for scheduled public output, supports Pages deploy when `DEPLOY_GITHUB_PAGES=true`, verifies live freshness after deploy, and keeps email disabled by default.
 
 ## 5. Dependencies and toolchain summary
 
@@ -114,12 +129,13 @@ Known risky areas:
 - Optional email requires careful secret and recipient setup.
 - Strict scheduled-daily filters may produce low item count; review mode uses a wider lookback and supplemental market scan sources to demonstrate 6-8 qualifying signals without admitting generic news.
 - GitHub Actions emitted a non-blocking hosted-runner warning that Node 20-backed actions are being deprecated; the manual preview workflow still passed and uploaded artifacts.
+- Local observability code is verified but not published; hosted artifact retention and public receipt parity remain unverified until a separately authorized push/deploy.
 
 ## 6. Current implementation status
 
 Implemented:
 - Prompt 2 project structure and `.mjs` module names.
-- Root `newsletter-sources.json` with all nine enabled sources.
+- `config/source-registry.json` (canonical registry v2) with all 12 enabled sources (nine original plus three review-yield market-scan queries). Root `newsletter-sources.json` is a deprecated reference and is no longer read by the pipeline.
 - `.env.example` placeholders only.
 - RSS ingestion, filtering, scoring, dedupe, deterministic summaries, rendering, send gate, time guard, scripts, fixtures, tests, docs, workflow, and state files.
 - Safety hardening for preview/send/auto gates, missing env behavior, idempotency header, recipient validation, malicious fixture rendering, no hard-coded real-looking emails, and docs.
@@ -128,27 +144,30 @@ Implemented:
 - Cyril verification pack and QA receipt.
 - Shareable static review page at `site/index.html`, share instructions, Pages-gated workflow, deploy-check review-page marker validation, and live public Pages mirror.
 - Review-mode lookback, review readiness metadata, deploy-check `reviewReady` enforcement, client-facing source diagnostics, title suffix cleanup, and business-facing deterministic summary copy.
-- Automatic refresh metadata, workflow schedule checks, Pages deploy support checks, review-page Automation status section, and `site/run.json` `manualPushRequiredAfterSetup=false`.
+- Automatic refresh metadata, daily 4 a.m. retry/watchdog schedule checks, Pages deploy support checks, review-page Automation status section, live freshness checks, and `site/run.json` `manualPushRequiredAfterSetup=false`.
 - Public live repo now contains the no-secret app and scheduled workflow; Pages is configured to GitHub Actions and deploys when `DEPLOY_GITHUB_PAGES=true`.
 - Final Cyril polish: review story diversity limits repeated topic clusters, cards show actual outlet source separately from scan label, deterministic summaries and why-it-matters copy repeat less, diagnostics are visually secondary, and `SHARE_WITH_CYRIL.md` contains the requested copy/paste message.
-- Daily public refresh fix: scheduled/public output now uses `npm run daily` with forced `auto` mode and deploy guards that fail if preview-mode or 168-hour review output is about to be published as the daily page.
+- Daily public refresh fix: scheduled/public output now uses `npm run daily` with forced `auto` mode and deploy guards that fail if preview-mode, stale-date, or 168-hour review output is about to be published as the daily page.
+- 4 a.m. daily refresh hardening: public workflow now runs daily retry/watchdog schedules around 4 a.m. America/New_York, skips duplicate scheduled retries when the live page is already fresh, fails open when live freshness cannot be fetched, allows limited-story current daily output, and verifies live Pages freshness after deploy.
+- Agent-first observability: compact schema-versioned JSONL, dynamic component discovery, exact-run correlation and hosted proof, recursive redaction, integrity manifests, machine readers, scheduler/command receipts, four-axis health, all-source/same-day-live false-green prevention, public/private receipt split, and 30-day failure/skip artifact wiring.
 
 Deferred:
 - Real email sending until explicit approval and secrets.
 - Source repo Pages until plan/settings support private repo Pages; public workflow-capable Pages repo is live and auto-refresh enabled.
+- Push/deploy of the 2026-07-22 observability changes and hosted artifact/live-receipt verification until explicit authorization.
 
 ## 7. Recent change log, rolling last 10
 
+- 2026-07-22T18:43:00Z | Implemented and locally verified agent-first observability with dynamic components, compact JSONL, exact-run integrity checks, recursive redaction, false-green health separation, persistent scheduler/command events, public receipt allowlisting, CI retention wiring, docs, and regression tests; no push/deploy | `src/observability/*`, `src/run-health.mjs`, `src/run-receipt.mjs`, `src/run-newsletter.mjs`, `src/fetch-feeds.mjs`, `scripts/*`, `.github/workflows/newsletter.yml`, `test/*`, `docs/*`, `final_build/*`
+- 2026-05-15T12:46:58Z | Published and verified 4 a.m. daily refresh hardening: daily retry/watchdog crons, scheduled freshness gate, fresh-date deploy guard, live Pages freshness checker, docs/tests, source push, public push, and live `auto` workflow proof | `.github/workflows/newsletter.yml`, `src/live-freshness.mjs`, `scripts/should-refresh.mjs`, `scripts/check-live-freshness.mjs`, `scripts/check-deploy.mjs`, `src/time-guard.mjs`, `src/config.mjs`, `src/automation-status.mjs`, `test/*`, `docs/*`, `final_build/*`, public repo `nk-ai-market-brief-review`
+- 2026-05-15T12:08:53Z | Manually dispatched the public `auto` workflow before the scheduled 8:17 a.m. ET run and verified the live page refreshed to May 15 daily output | public repo `nk-ai-market-brief-review`, `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__auto_refresh_deploy.txt`, `FULL_TECH_BUILD.txt`
+- 2026-05-14T15:36:51Z | Published daily refresh fix to source and public Pages repo, dispatched manual `auto` workflow, and verified live `run.json` uses `mode=auto`, 36-hour lookback, automation enabled, and send disabled | `.github/workflows/newsletter.yml`, `scripts/daily.mjs`, `scripts/check-deploy.mjs`, `src/automation-status.mjs`, `test/*`, `final_build/*`, public repo `nk-ai-market-brief-review`
 - 2026-05-13T00:05:40Z | Implemented daily public refresh fix: added `npm run daily`, removed scheduled preview overwrite, added expected-mode/lookback deploy guards, updated tests/docs/build tracking, and verified daily auto output locally | `.github/workflows/newsletter.yml`, `scripts/daily.mjs`, `scripts/check-deploy.mjs`, `src/automation-status.mjs`, `test/*`, `README.md`, `docs/*`, `final_build/*`, `_codex_build/*`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T18:56:29Z | Final Cyril polish: added topic-cluster diversity selection, actual outlet source labels, scan labels, less repetitive deterministic copy, secondary diagnostics, updated share message, pushed source, refreshed public Pages mirror, and verified live `reviewReady=true` output | `src/story-diversity.mjs`, `src/summarize.mjs`, `src/render-review-page.mjs`, `src/normalize.mjs`, `src/filter-score.mjs`, `src/run-newsletter.mjs`, `SHARE_WITH_CYRIL.md`, `test/*`, `final_build/*`, public repo `nk-ai-market-brief-review`
 - 2026-05-08T18:25:06Z | Enabled automatic refresh on the public live repo: pushed the no-secret app/workflow, set `DEPLOY_GITHUB_PAGES=true`, switched Pages to workflow build type, ran workflow dispatch, and verified live `run.json` automation flags | public repo `nk-ai-market-brief-review`, `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__auto_refresh_deploy.txt`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T18:22:46Z | Implemented automatic refresh verification and Pages deploy support: workflow dispatch inputs, weekday cron checks, automation metadata in run JSON, review-page automation section, deploy-check workflow enforcement, docs, and tests | `.github/workflows/newsletter.yml`, `src/automation-status.mjs`, `src/run-newsletter.mjs`, `src/render-review-page.mjs`, `scripts/check-deploy.mjs`, `test/*`, `README.md`, `docs/*`, `SHARE_WITH_CYRIL.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
 - 2026-05-08T18:14:40Z | Published the polished 8-item review page to the public Pages mirror and verified the live URL returns `reviewReady=true` with no unsafe output matches | `final_build/CURRENT_GAPS.txt`, `FULL_TECH_BUILD.txt`, public repo `nk-ai-market-brief-review`
 - 2026-05-08T18:13:19Z | Polished the shareable review page before Cyril: widened review lookback, added review readiness, expanded review sources, cleaned title suffixes, improved summaries and why-it-matters copy, enforced ready-state deploy checks, and verified 8 selected signals | `.env.example`, `newsletter-sources.json`, `src/config.mjs`, `src/review-status.mjs`, `src/run-newsletter.mjs`, `src/summarize.mjs`, `src/render-review-page.mjs`, `scripts/check-deploy.mjs`, `test/*`, `docs/RUNBOOK.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
-- 2026-05-08T16:40:55Z | Enabled a live Pages review link through a public site-only repo, verified HTTP 200, and documented the private source-repo Pages plan blocker | `SHARE_WITH_CYRIL.md`, `CYRIL_VERIFICATION_PACK.md`, `final_build/*`, `FULL_TECH_BUILD.txt`
-- 2026-05-08T16:28:56Z | Added the shareable static review page, Cyril share instructions, Pages-gated workflow build path, deploy checks, tests, and living component docs | `src/render-review-page.mjs`, `src/run-newsletter.mjs`, `scripts/check-deploy.mjs`, `.github/workflows/newsletter.yml`, `SHARE_WITH_CYRIL.md`, `test/*`, `docs/*`, `final_build/*`, `FULL_TECH_BUILD.txt`
-- 2026-05-08T14:58:15Z | Verified the MVP with fresh proof commands and created the Cyril evidence pack plus QA receipt | `CYRIL_VERIFICATION_PACK.md`, `final_build/QA__newsletter_mvp.txt`, `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__newsletter_mvp.txt`, `FULL_TECH_BUILD.txt`
-- 2026-05-08T14:51:34Z | Published the private GitHub repository, verified the manual preview workflow, and recorded remaining deployment watch items | `final_build/CURRENT_GAPS.txt`, `final_build/COMPONENT__newsletter_mvp.txt`, `FULL_TECH_BUILD.txt`
 
 ## 8. Refresh procedure
 
@@ -160,9 +179,15 @@ npm install
 npm run preview
 npm run daily
 NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy
+NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 NEWSLETTER_EXPECT_FRESH_DATE=true npm run check:deploy
 npm test
 npm run build
 npm run check:deploy
+npm run logs:verify
+npm run logs:status
+npm run logs:query -- --run latest --event source.fetch.summary
+npm run should:refresh
+npm run check:live
 find .newsletter-outbox -maxdepth 3 -type f | sort | tail -20
 find site -maxdepth 2 -type f | sort
 cat site/run.json
@@ -170,35 +195,18 @@ grep -R "RESEND_API_KEY\\|CRON_SECRET\\|<script\\|onerror\\|onclick\\|javascript
 grep -R "@.*\\." .env.example src scripts .github docs README.md 2>/dev/null || true
 ```
 
-Latest verification:
-- Remote repository: `https://github.com/OsanGen/nk-ai-market-newsletter` (private, default branch `main`).
-- Latest public live workflow run before this local fix: `https://github.com/OsanGen/nk-ai-market-brief-review/actions/runs/25745558706`, conclusion `success`, artifact `nk-ai-market-brief`, Pages deploy completed, head `291e9816eb0774875fb1e93ce4a4a830f0ffaa55`.
-- Public Pages settings: build type `workflow`, URL `https://osangen.github.io/nk-ai-market-brief-review/`, status `built`, repository variable `DEPLOY_GITHUB_PAGES=true`.
-- `git status --short || true`: dirty with local daily refresh implementation and build-log/doc updates; push/deploy not performed in this run.
-- `node --version`: `v22.22.0`.
-- `npm --version`: `10.9.4`.
-- `npm install`: pass, 0 vulnerabilities.
-- `npm run preview`: pass, 8 selected items, 12 sources, 0 source errors, send disabled.
-- `npm test`: pass, 50 tests.
-- `npm run daily`: pass, generated `.newsletter-outbox/2026-05-12`, `mode=auto`, `activeLookbackHours=36`, 8 selected items, 12 sources, 0 source errors, send disabled.
-- `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy`: pass after `npm run daily`.
-- `npm run build`: pass, generated review output with `mode=preview`, `activeLookbackHours=168`, 8 selected items, static review page generated.
-- `npm run check:deploy`: pass after `npm run build`.
-- Guard negative proof after `npm run build`: `NEWSLETTER_EXPECT_MODE=auto NEWSLETTER_MAX_ACTIVE_LOOKBACK_HOURS=84 npm run check:deploy` fails as intended with `Expected site/run.json mode auto, got preview`.
-- `find .newsletter-outbox -maxdepth 3 -type f | sort | tail -20`: pass, dated HTML/text/run JSON present.
-- `find site -maxdepth 2 -type f | sort`: pass, `site/index.html`, `site/newsletter.txt`, and `site/run.json` present.
-- `cat site/run.json`: pass, `reviewReady=true`, `automationConfigured=true`, `scheduledRefreshConfigured=true`, `githubPagesDeployConfigured=true`, `manualPushRequiredAfterSetup=false`, `itemCount=8`, `selectedItemCount=8`, `sourceCount=12`, `candidateItemCount=920`, `emailEnabled=false`, `send.sent=false`; max topic-cluster repeat is 2, max summary repeat is 2, and max why-it-matters repeat is 2.
-- `site/index.html` markers: pass, includes `NK AI Market Brief`, `Ready for review`, `Internal review`, `Email disabled`, `newsletter.txt`, lead-story section, story-grid section, actual outlet `Source` labels, configured `Scan` labels, secondary Technical diagnostics, Source fetch status, Automation status, and noindex metadata.
-- `.github/workflows/newsletter.yml`: pass, includes manual dispatch input, both weekday cron entries, `npm ci`, `npm test`, `npm run daily`, manual preview `npm run build`, guarded daily deploy check, artifact upload, Pages upload/deploy, and Pages permissions.
-- Unsafe search over `site`, `.newsletter-outbox`, and `.github`: no matches for secret names, scripts, event handlers, or `javascript:` links.
-- Live Pages URL: pass, `https://osangen.github.io/nk-ai-market-brief-review/` returned HTTP 200 and includes the review-page markers.
-- Live `run.json`: pass, `reviewReady=true`, `mode=preview`, `itemCount=8`, `selectedItemCount=8`, `sourceCount=12`, `candidateItemCount=920`, `emailEnabled=false`, `send.sent=false`, `automationConfigured=true`, `scheduledRefreshConfigured=true`, `githubPagesDeployConfigured=true`; max topic-cluster repeat is 2.
-- Source repo push: pass, `main` pushed through `40a8765c0bdcb3bfcc74e882493d8a9316944a80`.
-- Public Pages mirror push: pass, `nk-ai-market-brief-review` pushed through `291e9816eb0774875fb1e93ce4a4a830f0ffaa55`.
-- Source repo automation push: pass, `main` pushed through `0691b3a2113f28444d0806c7ba911dbf6ddeba90`.
-- Public workflow-capable repo push: pass, `nk-ai-market-brief-review` pushed through `291e9816eb0774875fb1e93ce4a4a830f0ffaa55`.
-- Public live workflow run: pass, `25573732601` completed `npm ci`, `npm test`, build, deploy check, artifact upload, Pages artifact upload, and Pages deploy.
-- Live `run.json` automation check: pass, `automationConfigured=true`, `scheduledRefreshConfigured=true`, `githubPagesDeployConfigured=true`, `manualPushRequiredAfterSetup=false`.
-- Explicit no-secret send test: pass, send skipped safely with `missing_resend_api_key`.
-- Generated-output unsafe search: no matches.
-- Hard-coded recipient grep: safe matches only, CSS `@media` and email-validation regex.
+Latest local verification (2026-07-22; no provider mutation):
+- Branch/HEAD: `main` / `7f1e538c06d80aba1445820d78d2f2aa2cc864c8`; working tree intentionally dirty with this implementation and pre-existing `_codex_build/`.
+- Runtime: Node `v22.22.0`, npm `10.9.4`.
+- `TMPDIR=/Volumes/data/.codex-runtime/newsletter-tests npm test`: pass, 81/81 tests.
+- `NEWSLETTER_RUN_ID=acceptance-20260722-logging-v2 npm run build`: pass; 38 ordered events, 12/12 sources successful, 958 fetched items, 8 selected items, healthy pipeline, ready content, send disabled.
+- `NEWSLETTER_RUN_ID=acceptance-20260722-logging-v2 npm run logs:verify`: pass; one terminal `run.completed`, SHA-256 digest `7a6803dafc225cb4d9f3ecac16c6465964c4e9cc040e4967a6cade4ddfce291f`, no verifier errors.
+- `npm run logs:status`: pass; compact latest manifest/health/summary resolved.
+- `npm run logs:query -- --stream all --run acceptance-20260722-logging-v2 --event source.fetch.summary`: pass; returned the single aggregate source event.
+- `npm run logs:query -- --stream commands --run acceptance-20260722-logging-v2`: pass; returned correlated command completion, integrity verification, and deployment-candidate verification evidence.
+- `npm run check:deploy`: pass; public receipt allowlist, workflow observability requirements, review output, and automation checks passed.
+- Regression coverage: dynamic/unregistered components, redaction, URL credential/query removal, exact terminal count, post-terminal rejection, failed-run verification, tamper/byte/digest detection, traversal rejection, command persistence/unique IDs, public receipt allowlist, partial/all-source health, valid empty content, and live/deploy false-green rejection.
+- `git diff --check` and targeted `node --check`: pass.
+- Secrets used locally: none.
+
+Hosted state: the prior May 15 workflow/Pages evidence above is cached historical context only. The 2026-07-22 observability changes were not pushed, deployed, or live-verified in this run.

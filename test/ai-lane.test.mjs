@@ -227,3 +227,26 @@ test("synthesis prompt carries only public projections inside evidence delimiter
   assert.doesNotMatch(request.messages[0].content, /example\.com|token=|matchSignals|secretish/);
   assert.match(request.messages[0].content, new RegExp(EVIDENCE_CLOSE));
 });
+
+test("reader_headline validation: hype, overlength, and URLs drop the field, never the story", () => {
+  const allowed = { allowedStoryIds: new Set(["a", "b", "c", "d"]) };
+  const entry = (id, readerHeadline) => ({
+    story_id: id, summary: "Good.", why_it_matters: "Real.", relevance: "high",
+    next_move: "Audit it.", reader_headline: readerHeadline
+  });
+  const data = { content: [{ type: "text", text: JSON.stringify({
+    week_overview: "A week.",
+    stories: [
+      entry("a", "Shop filters can now rearrange themselves for each shopper"),
+      entry("b", "This game-changing update transforms ecommerce forever"),
+      entry("c", "x".repeat(140)),
+      entry("d", "Read more at https://example.com now")
+    ]
+  }) }] };
+  const { overrides } = parseSynthesis(data, allowed);
+  assert.equal(overrides.length, 4, "all stories survive");
+  assert.equal(overrides[0].reader_headline, "Shop filters can now rearrange themselves for each shopper");
+  assert.equal(overrides[1].reader_headline, "", "hype dropped");
+  assert.equal(overrides[2].reader_headline, "", "overlength dropped");
+  assert.equal(overrides[3].reader_headline, "", "URL dropped");
+});

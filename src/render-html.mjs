@@ -48,7 +48,7 @@ export function renderHtml({ stories, generatedAt }) {
 function renderLead(story) {
   return `<section class="lead">
   <p class="meta">${meta(story)}</p>
-  <h2>${escapeHtml(story.headline)}</h2>
+  <h2>${escapeHtml(story.readerHeadline || story.headline)}</h2>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
   ${readLink(story)}
@@ -63,7 +63,7 @@ function renderCards(stories) {
 function renderCard(story) {
   return `<article class="card">
   <p class="meta">${meta(story)}</p>
-  <h3>${escapeHtml(story.headline)}</h3>
+  <h3>${escapeHtml(story.readerHeadline || story.headline)}</h3>
   <p>${escapeHtml(story.summary)}</p>
   <p>${escapeHtml(story.whyItMatters)}</p>
   ${readLink(story)}

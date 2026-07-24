@@ -1,10 +1,11 @@
 NK AI Market Brief
-Generated 2026-07-24T22:06:00.981Z
+Generated 2026-07-24T22:27:11.385Z
 
 AI, fashion, beauty, e-commerce, AI shopping, and agentic commerce signals.
 
 LEAD STORY
-Google declares its Universal Commerce Protocol the standard for agentic commerce, with Target and Steve Madden live
+Google just set the rules for AI shopping, and fashion brands are already on board
+Filed as: Google declares its Universal Commerce Protocol the standard for agentic commerce, with Target and Steve Madden live
 Source: Alphabet Q2 2026 earnings call
 Category: agentic_commerce
 Scan: Weekly Editorial Curation
@@ -14,7 +15,8 @@ Why it matters: Google is building the rails that decide which catalogs its shop
 Read source: https://stockanalysis.com/stocks/googl/transcripts/657320-q2-2026/
 
 STORY 2
-Michaels formally launches Ask Mike, a Gemini-built AI shopping assistant, and reports early usage data
+A big retailer's new AI shopping helper is converting shoppers at double the rate, it says
+Filed as: Michaels formally launches Ask Mike, a Gemini-built AI shopping assistant, and reports early usage data
 Source: Michaels / Google Cloud newsroom
 Category: retail_ai
 Scan: Weekly Editorial Curation
@@ -24,7 +26,8 @@ Why it matters: This is the closest public benchmark for an AI assistant on a br
 Read source: https://www.googlecloudpresscorner.com/2026-07-20-Michaels-Unveils-Ask-Mike-AI-Assistant-Built-With-Google-Clouds-Gemini-Enterprise-for-Customer-Experience
 
 STORY 3
-New consumer survey: shoppers now narrowly prefer AI tools over brand websites
+For the first time, shoppers say they'd rather buy through AI than on a brand's own website
+Filed as: New consumer survey: shoppers now narrowly prefer AI tools over brand websites
 Source: Bloomreach newsroom
 Category: consumer_research
 Scan: Weekly Editorial Curation
@@ -34,7 +37,8 @@ Why it matters: If product discovery keeps shifting into AI assistants, a brand'
 Read source: https://www.bloomreach.com/en/news/2026/from-novelty-to-necessity-new-bloomreach-consumer-survey-finds-shoppers-now-prefer-ai-tools-to-shop/
 
 STORY 4
-Algolia makes Dynamic Facets generally available, auto-prioritizing search filters by shopper context
+Shop-page filters can now rearrange themselves to match what each shopper wants
+Filed as: Algolia makes Dynamic Facets generally available, auto-prioritizing search filters by shopper context
 Source: Algolia newsroom
 Category: search_discovery
 Scan: Weekly Editorial Curation
@@ -44,7 +48,8 @@ Why it matters: Facet quality is disproportionately important in fashion search,
 Read source: https://www.algolia.com/about/news/algolia-launches-dynamic-facets-to-make-product-discovery-faster-smarter-and-more-relevant
 
 STORY 5
-Ulta Beauty runs its first major TikTok Shop campaign: an Ice Spice livestream fragrance debut
+Ulta launched a fragrance on a TikTok livestream first, before it ever hits stores
+Filed as: Ulta Beauty runs its first major TikTok Shop campaign: an Ice Spice livestream fragrance debut
 Source: Glossy
 Category: social_commerce
 Scan: Weekly Editorial Curation

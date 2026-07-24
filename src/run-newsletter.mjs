@@ -342,6 +342,11 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
         story.summary = override.summary;
         story.whyItMatters = override.why_it_matters;
         if (override.next_move) story.nextMove = override.next_move;
+        // Translation layer: only adopt a reader headline that actually differs.
+        if (override.reader_headline
+          && override.reader_headline.toLowerCase() !== String(story.headline ?? "").toLowerCase()) {
+          story.readerHeadline = override.reader_headline;
+        }
         story.aiWritten = true;
         story.aiRelevance = override.relevance;
       }
@@ -463,6 +468,7 @@ function publicStory(story) {
     topicCluster: story.topicCluster,
     title: story.title,
     headline: story.headline,
+    readerHeadline: story.readerHeadline ?? null,
     url: story.url,
     publishedAt: story.publishedAt,
     summary: story.summary,

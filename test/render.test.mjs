@@ -358,3 +358,29 @@ test("external source links open in a new tab with noopener; internal anchors st
   const internal = html.match(/href="#story-\d"[^>]*/g) || [];
   for (const link of internal) assert.doesNotMatch(link, /target=/);
 });
+
+test("Translation layer: reader headline leads, wire line keeps the factual original, absent field is byte-safe", () => {
+  const base = {
+    summary: "S.",
+    whyItMatters: "W.",
+    sourceName: "Scan",
+    sourceOutlet: "Outlet",
+    category: "fashion",
+    publishedAt: "2026-07-24T04:00:00.000Z",
+    url: "https://example.com/a"
+  };
+  const withReader = renderReviewPage({
+    stories: [
+      { ...base, headline: "Vendor ships Facet Engine v2 GA", readerHeadline: "Shop filters can now rearrange themselves for each shopper" },
+      { ...base, headline: "Plain headline stays", url: "https://example.com/b" }
+    ],
+    run: { mode: "preview" },
+    generatedAt: "2026-07-24T08:00:00.000Z"
+  });
+
+  assert.match(withReader, /<h2>Shop filters can now rearrange themselves for each shopper<\/h2>/);
+  assert.match(withReader, /class="wire-line">Filed as: Vendor ships Facet Engine v2 GA</);
+  assert.match(withReader, /href="#story-1">Shop filters can now rearrange themselves for each shopper</);
+  assert.equal((withReader.match(/wire-line">/g) || []).length, 1, "no wire line without a reader headline");
+  assert.match(withReader, /<h3>Plain headline stays<\/h3>/);
+});

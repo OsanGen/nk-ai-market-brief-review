@@ -64,6 +64,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .callout-line { display: block; }
     .callout-line + .callout-line { margin-top: 8px; }
     .next-move { font-weight: 700; }
+    .wire-line { font-size: 12px; color: #333; margin: 2px 0 8px; }
     /* G: weekly standfirst */
     .the-week .standfirst { font-size: 19px; line-height: 1.5; max-width: 62ch; margin: 6px 0 4px; }
     /* №1: curation-funnel colophon (masthead folio spec echoed) */
@@ -228,11 +229,23 @@ function signalGlyph(story) {
   return `<span class="sig" role="img" title="Signal: ${level} (AI-assessed)" aria-label="Signal: ${level}, ${filled} of 3, AI-assessed">${cells}</span>`;
 }
 
+// Translation layer: the plain-language reader headline leads wherever reading
+// happens; the factual original never leaves the page (wire line below).
+function displayHeadline(story) {
+  return story.readerHeadline || story.headline;
+}
+
+function wireLine(story) {
+  if (!story.readerHeadline || story.readerHeadline === story.headline) return "";
+  return `
+  <p class="wire-line">Filed as: ${escapeHtml(story.headline)}</p>`;
+}
+
 // B: numbered one-line index of the issue, anchor-linked to each story.
 function renderWeekInFive(stories) {
   if (!stories.length) return "";
   const items = stories.map((story, index) =>
-    `    <li><span class="five-num">${padNum(index + 1)}</span><a href="#story-${index + 1}">${escapeHtml(story.headline)}</a>${signalGlyph(story)}</li>`
+    `    <li><span class="five-num">${padNum(index + 1)}</span><a href="#story-${index + 1}">${escapeHtml(displayHeadline(story))}</a>${signalGlyph(story)}</li>`
   ).join("\n");
   return `<ol class="week-five">
 ${items}
@@ -254,7 +267,7 @@ function renderLead(story) {
   return `<section class="lead-story" id="story-1">
   <p class="meta"><span class="story-num">01</span>Lead story${signalGlyph(story)}</p>
   ${renderStoryMeta(story)}
-  <h2>${escapeHtml(story.headline)}</h2>
+  <h2>${escapeHtml(displayHeadline(story))}</h2>${wireLine(story)}
   <p class="story-body">${escapeHtml(story.summary)}</p>
   ${whyCallout(story)}
   ${readLink(story)}
@@ -279,7 +292,7 @@ function renderCard(story, index) {
   return `<article class="story-card" id="story-${index + 2}">
   <p class="story-num">${padNum(index + 2)}${signalGlyph(story)}</p>
   ${renderStoryMeta(story)}
-  <h3>${escapeHtml(story.headline)}</h3>
+  <h3>${escapeHtml(displayHeadline(story))}</h3>${wireLine(story)}
   <p class="story-body">${escapeHtml(story.summary)}</p>
   ${whyCallout(story)}
   ${readLink(story)}

@@ -11,7 +11,8 @@ export function renderText({ stories, generatedAt, curation }) {
 
   stories.forEach((story, index) => {
     lines.push(index === 0 ? "LEAD STORY" : `STORY ${index + 1}`);
-    lines.push(clean(story.headline));
+    lines.push(clean(story.readerHeadline || story.headline));
+    if (story.readerHeadline && story.readerHeadline !== story.headline) lines.push(`Filed as: ${clean(story.headline)}`);
     lines.push(`Source: ${clean(story.sourceOutlet || story.sourceName)}`);
     lines.push(`Category: ${clean(story.category ?? "market")}`);
     if (story.scanLabel || story.sourceOutlet) lines.push(`Scan: ${clean(story.scanLabel || story.sourceName)}`);

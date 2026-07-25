@@ -41,6 +41,7 @@ export function publicRunReceipt(run) {
     timezone: run.timezone || run.config?.timezone || "",
     targetHourLocal: run.targetHourLocal ?? run.config?.targetHourLocal,
     manualPushRequiredAfterSetup: Boolean(run.manualPushRequiredAfterSetup),
+    gated: Boolean(run.gated),
     modelPolicy: publicModelPolicy(run.modelPolicy),
     stackProfile: publicStackProfile(run.stackProfile),
     aiLane: publicAiLane(run.aiLane),

@@ -319,3 +319,47 @@ async function withEnv(values, callback) {
     }
   }
 }
+
+test("check-deploy accepts a gated page with no newsletter.txt link (Velvet Rope)", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-gated-"));
+  await mkdir(path.join(root, "site"), { recursive: true });
+  await mkdir(path.join(root, ".github", "workflows"), { recursive: true });
+  await Promise.all([
+    // Gated index: has the other markers, but deliberately NO newsletter.txt link.
+    writeFile(
+      path.join(root, "site", "index.html"),
+      '<!doctype html><title>NK AI Market Brief</title><body><p>Internal review</p><p>Email disabled</p><a>Read source</a></body>',
+      "utf8"
+    ),
+    // newsletter.txt still on disk at check time (deleted later in the workflow).
+    writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"gated\":true,\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow, "utf8"),
+    writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
+    writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
+    writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")
+  ]);
+
+  await assert.doesNotReject(checkDeploy(root));
+});
+
+test("check-deploy still requires the newsletter.txt link when the page is NOT gated", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "nk-review-ungated-"));
+  await mkdir(path.join(root, "site"), { recursive: true });
+  await mkdir(path.join(root, ".github", "workflows"), { recursive: true });
+  await Promise.all([
+    writeFile(
+      path.join(root, "site", "index.html"),
+      '<!doctype html><title>NK AI Market Brief</title><body><p>Internal review</p><p>Email disabled</p><a>Read source</a></body>',
+      "utf8"
+    ),
+    writeFile(path.join(root, "site", "newsletter.txt"), "NK AI Market Brief\n", "utf8"),
+    writeFile(path.join(root, "site", "run.json"), "{\"gated\":false,\"reviewReady\":true,\"automationConfigured\":true,\"scheduledRefreshConfigured\":true,\"observabilityConfigured\":true,\"liveVerificationConfigured\":true}\n", "utf8"),
+    writeFile(path.join(root, ".github", "workflows", "newsletter.yml"), workflow, "utf8"),
+    writeFile(path.join(root, ".env.example"), "NEWSLETTER_SEND_ENABLED=false\n", "utf8"),
+    writeFile(path.join(root, "SHARE_WITH_CYRIL.md"), "# Share\n", "utf8"),
+    writeFile(path.join(root, "FULL_TECH_BUILD.txt"), "# Snapshot\n", "utf8")
+  ]);
+
+  await assert.rejects(checkDeploy(root), /newsletter\.txt/);
+});

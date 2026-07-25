@@ -16,9 +16,10 @@
     "targetHourLocal": 4,
     "timezone": "America/New_York"
   },
-  "correlationId": "manual-editorial-2026-07-24",
+  "correlationId": "manual-editorial-2026-07-25",
   "fetchedItemCount": 5,
-  "generatedAt": "2026-07-24T23:51:29.471Z",
+  "gated": true,
+  "generatedAt": "2026-07-25T00:55:43.434Z",
   "githubActionsWorkflowFound": true,
   "githubPagesDeployConfigured": true,
   "githubPagesDeployGatedBy": "DEPLOY_GITHUB_PAGES",
@@ -40,10 +41,10 @@
   "mode": "preview",
   "modelPolicy": null,
   "observability": {
-    "correlationId": "manual-editorial-2026-07-24",
+    "correlationId": "manual-editorial-2026-07-25",
     "events": "",
     "manifest": "",
-    "runId": "manual-editorial-2026-07-24",
+    "runId": "manual-editorial-2026-07-25",
     "schemaVersion": 1,
     "summary": ""
   },
@@ -54,7 +55,7 @@
   "reviewReasons": [
     "Weekly edition, July 17-24: curated against Norma Kamali's current platform architecture (normakamali.com + normakamali.ai) and ranked for highest business impact. Every story verified at its primary source."
   ],
-  "runId": "manual-editorial-2026-07-24",
+  "runId": "manual-editorial-2026-07-25",
   "schedule": [
     "2,7,12,17,22,27,32,37,42,47,52,57 8,9 * * *",
     "17 10,11,12 * * *"

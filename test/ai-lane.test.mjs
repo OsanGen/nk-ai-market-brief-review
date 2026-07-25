@@ -354,3 +354,53 @@ test("connections-not-commands: directive language drops in editorial voice, quo
   r = attempt({ connection: "A major opportunity to leverage the new rails." });
   assert.equal(r.overrides[0].connection, "");
 });
+
+test("batch-2 anti-drift: week_overview is gated, headlines ground only on trusted text, provenance edges", () => {
+  const trusted = "Michaels launched Ask Mike, an AI shopping assistant, built with Google. The company says conversion doubled.";
+  const storyTextById = new Map([["s1", trusted]]);
+  const allowed = { allowedStoryIds: new Set(["s1"]), storyTextById };
+  const run = (fields) => parseSynthesis({ content: [{ type: "text", text: JSON.stringify({
+    week_overview: fields.week_overview ?? "A calm descriptive week across shopping and Google.",
+    stories: [{ story_id: "s1", summary: fields.summary ?? "Michaels shipped an assistant.", why_it_matters: "It relates to NK's stylist.",
+      connection: "This overlaps NK's build.", reader_headline: fields.reader_headline ?? "", relevance: "high" }]
+  }) }] }, allowed);
+
+  // week_overview: hype dropped
+  assert.equal(run({ week_overview: "A revolutionary, groundbreaking week for shopping." }).weekOverview, "");
+  // week_overview: fabricated number dropped (900 absent from corpus)
+  assert.equal(run({ week_overview: "Agentic commerce surged 900% across Google shopping." }).weekOverview, "");
+  // week_overview: clean + grounded survives
+  assert.match(run({}).weekOverview, /calm descriptive week/);
+
+  // self-laundering blocked: invented brand in the summary must NOT validate the headline
+  const laundered = run({ summary: "Klarna launched an agent that lifted sales 60%.", reader_headline: "Klarna's new agent lifts sales 60%" });
+  assert.equal(laundered.overrides[0].reader_headline, "", "headline grounds on trusted text, not the model's own summary");
+
+  // position-0 distinctive brand still checked
+  const lead = run({ reader_headline: "Klarna doubles shopper conversion, it says" });
+  assert.equal(lead.overrides[0].reader_headline, "");
+  assert.equal(lead.headlineStats.drops[0].reason, "ungrounded_entity");
+
+  // grounded headline (all entities/numbers in trusted text) survives
+  const ok = run({ reader_headline: "Michaels' AI assistant reaches more shoppers, built with Google" });
+  assert.equal(ok.overrides[0].reader_headline, "Michaels' AI assistant reaches more shoppers, built with Google");
+});
+
+test("batch-2 voice gates: midline directives and ought-to blocked; quoted market opinion survives", () => {
+  const allowed = { allowedStoryIds: new Set(["s1"]), storyTextById: new Map([["s1", "A story about agentic checkout and Google."]]) };
+  const run = (f) => parseSynthesis({ content: [{ type: "text", text: JSON.stringify({
+    week_overview: "A descriptive week.",
+    stories: [{ story_id: "s1", summary: f.summary ?? "A thing happened.", why_it_matters: "W.",
+      connection: f.connection ?? "This overlaps NK.", reader_headline: "", relevance: "high" }]
+  }) }] }, allowed);
+
+  // midline directive in connection -> dropped
+  assert.equal(run({ connection: "The smart move here is to pilot these rails now." }).overrides[0].connection, "");
+  assert.equal(run({ connection: "Worth building agentic checkout into the roadmap." }).overrides[0].connection, "");
+  // NK-directed with a long gap + ought-to in summary -> dropped
+  assert.equal(run({ summary: "NK, given its Shopify storefront and stylist roadmap, ought to adopt these rails." }).overrides[0].summary, "");
+  assert.equal(run({ summary: "NK should move fast." }).overrides[0].summary, "");
+  // quoted market opinion in a summary -> KEPT (reports, does not direct NK)
+  assert.equal(run({ summary: "Analysts say retailers should prepare for agentic checkout." }).overrides[0].summary,
+    "Analysts say retailers should prepare for agentic checkout.");
+});

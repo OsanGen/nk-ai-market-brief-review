@@ -342,16 +342,22 @@ async function recordAiLane({ telemetry, stories, env, stack }) {
       for (const story of stories) {
         const override = byId.get(String(story.id));
         if (!override) continue;
-        if (override.summary) story.summary = override.summary;
-        if (override.why_it_matters) story.whyItMatters = override.why_it_matters;
-        if (override.connection) story.connection = override.connection;
+        let applied = false;
+        if (override.summary) { story.summary = override.summary; applied = true; }
+        if (override.why_it_matters) { story.whyItMatters = override.why_it_matters; applied = true; }
+        if (override.connection) { story.connection = override.connection; applied = true; }
         // Translation layer: only adopt a reader headline that actually differs.
         if (override.reader_headline
           && override.reader_headline.toLowerCase() !== String(story.headline ?? "").toLowerCase()) {
           story.readerHeadline = override.reader_headline;
+          applied = true;
         }
-        story.aiWritten = true;
-        story.aiRelevance = override.relevance;
+        // Provenance only when Opus copy was actually adopted; if every field was
+        // gate-dropped, the story keeps its deterministic template copy and label.
+        if (applied) {
+          story.aiWritten = true;
+          story.aiRelevance = override.relevance;
+        }
       }
     }
     return { summary: result.summary, weekOverview: result.weekOverview ?? "" };

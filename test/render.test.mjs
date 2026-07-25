@@ -385,3 +385,14 @@ test("Translation layer: reader headline leads, wire line keeps the factual orig
   assert.equal((withReader.match(/wire-line">/g) || []).length, 1, "no wire line without a reader headline");
   assert.match(withReader, /<h3>Plain headline stays<\/h3>/);
 });
+
+test("gated render omits the plaintext newsletter.txt side-door", () => {
+  const story = {
+    headline: "Story", summary: "S.", whyItMatters: "W.", sourceName: "Scan", sourceOutlet: "Outlet",
+    category: "fashion", publishedAt: "2026-07-24T04:00:00.000Z", url: "https://example.com/a"
+  };
+  const ungated = renderReviewPage({ stories: [story], run: { mode: "preview" }, generatedAt: "2026-07-24T08:00:00.000Z" });
+  const gated = renderReviewPage({ stories: [story], run: { mode: "preview", gated: true }, generatedAt: "2026-07-24T08:00:00.000Z" });
+  assert.match(ungated, /href="newsletter\.txt"/);
+  assert.doesNotMatch(gated, /newsletter\.txt/);
+});

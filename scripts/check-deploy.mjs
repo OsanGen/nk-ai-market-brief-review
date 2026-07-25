@@ -80,10 +80,14 @@ function checkPublicRunReceipt(run) {
 }
 
 function indexMarkersFor(run, expectsDaily) {
+  let markers = indexMarkers;
+  // Gated (Velvet Rope) editions omit the plaintext newsletter.txt side-door,
+  // so the in-page link marker must not be required.
+  if (run.gated) markers = markers.filter((marker) => marker !== "newsletter.txt");
   if (expectsDaily && Number(run.itemCount ?? run.selectedItemCount ?? 0) === 0) {
-    return indexMarkers.filter((marker) => marker !== "Read source");
+    markers = markers.filter((marker) => marker !== "Read source");
   }
-  return indexMarkers;
+  return markers;
 }
 
 function checkExpectedMode(run) {

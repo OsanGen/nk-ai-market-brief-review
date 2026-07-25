@@ -56,7 +56,7 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .week-five a { text-decoration: none; font-weight: 600; font-size: 16px; line-height: 1.3; }
     .week-five a:hover { text-decoration: underline; }
     .five-num, .story-num { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: #000; }
-    /* C: editorial numerals + why-it-matters callout + source-type badge */
+    /* C: editorial numerals + why-it-matters callout */
     .story-num { font-size: 26px; line-height: 1; margin: 0 0 8px; }
     .lead-story .story-num { display: inline-block; margin-right: 10px; font-size: 15px; }
     .why-callout { border-left: 4px solid #000; background: #f6f6f6; padding: 10px 12px; margin: 10px 0; }
@@ -82,7 +82,6 @@ export function renderReviewPage({ stories = [], run = {}, generatedAt } = {}) {
     .sig .on { background: #000; }
     .week-five .sig { margin-left: auto; padding-left: 14px; }
     .story-num .sig, .lead-story .meta .sig { margin-left: 10px; }
-    .source-type { display: inline-block; border: 1px solid #000; padding: 1px 6px; margin-right: 10px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; vertical-align: 1px; }
     /* D: pull-stat hero */
     .pull-stat { text-align: center; padding: 26px 12px 30px; }
     .pull-stat-value { font-size: clamp(64px, 12vw, 128px); font-weight: 700; letter-spacing: -0.02em; line-height: 1; margin: 0; }
@@ -317,17 +316,6 @@ function padNum(value) {
   return String(value).padStart(2, "0");
 }
 
-// C: compact claim-fit badge, shown only when the edition supplies sourceType.
-const SOURCE_TYPE_LABELS = {
-  official_primary: "Official",
-  premium_independent: "Independent press",
-  verified_expert: "Verified expert"
-};
-
-function sourceTypeBadge(story) {
-  const label = SOURCE_TYPE_LABELS[story.sourceType];
-  return label ? `<span class="source-type">${escapeHtml(label)}</span>` : "";
-}
 
 function renderRunSummary(run, sendLabel) {
   const sourceErrorCount = Number(run.sourceErrorCount ?? (Array.isArray(run.sourceErrors) ? run.sourceErrors.length : 0));
@@ -397,13 +385,12 @@ function readLink(story) {
 
 function renderStoryMeta(story) {
   const source = story.sourceOutlet || story.sourceName || "source unavailable";
-  const scan = story.scanLabel || (story.sourceOutlet ? story.sourceName : "");
+  // Reader-facing byline only: who said it and when. Internal desk metadata
+  // (scan label, source-type, raw category slug) stays out of Norma's view.
   return `<p class="story-meta">
-    <span><strong>Source:</strong> ${escapeHtml(source)}</span>${sourceTypeBadge(story)}
-    <span><strong>Category:</strong> ${escapeHtml(story.category ?? "market")}</span>
-    ${scan ? `<span><strong>Scan:</strong> ${escapeHtml(scan)}</span>` : ""}
+    <span><strong>Source:</strong> ${escapeHtml(source)}</span>
     <span><strong>Date:</strong> ${escapeHtml(formatDate(story.publishedAt))}</span>
-  </p>${story.aiWritten ? `<p class="story-meta"><span><strong>Analysis:</strong> AI-written (Opus), evidence-bound</span></p>` : ""}${renderNormaBadge(story.normaRelevance)}`;
+  </p>${renderNormaBadge(story.normaRelevance)}`;
 }
 
 // NK-relevance badge: names the House capabilities this story touches, derived

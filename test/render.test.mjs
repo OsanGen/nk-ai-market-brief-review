@@ -87,7 +87,8 @@ test("Review page renderer creates shareable static page", () => {
   assert.match(html, /class="story-card"/);
   assert.match(html, /href="newsletter.txt"/);
   assert.match(html, /Source:.*Glossy/s);
-  assert.match(html, /Scan:.*AI Fashion and Beauty Market Scan/s);
+  assert.doesNotMatch(html, /Scan:/);
+  assert.doesNotMatch(html, /Category:/);
   assert.match(html, /Source fetch status/);
   assert.match(html, /Technical diagnostics/);
   assert.match(html, /Automation status/);
@@ -269,8 +270,7 @@ test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and colla
   assert.match(withExtras, /id="story-1"/);
   assert.match(withExtras, /id="story-3"/);
   assert.match(withExtras, /class="callout-line"><strong>Why it matters<\/strong> Matters 1\./);
-  assert.match(withExtras, /class="source-type">Official</);
-  assert.equal((withExtras.match(/class="source-type"/g) || []).length, 1, "badge only where sourceType provided");
+  assert.doesNotMatch(withExtras, /class="source-type"/, "source-type badges removed from the reader byline");
   assert.match(withExtras, /class="pull-stat-value">41\.4%/);
   assert.match(withExtras, /Survey, July 22/);
   assert.match(withExtras, /<details class="ops">/);
@@ -284,7 +284,6 @@ test("B-F upgrades: week-in-five index, numerals, callouts, pull-stat, and colla
   });
   assert.doesNotMatch(withoutExtras, /class="week-five"/);
   assert.doesNotMatch(withoutExtras, /class="pull-stat-value"/);
-  assert.doesNotMatch(withoutExtras, /class="source-type"/);
 });
 
 test("Trust & Action bundle: curation folio, moves ledger, and signal glyphs are data-conditional and coherent", () => {

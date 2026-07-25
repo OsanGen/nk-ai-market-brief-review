@@ -77,9 +77,7 @@ function readLink(story) {
 
 function meta(story) {
   const source = story.sourceOutlet || story.sourceName || "source unavailable";
-  const scan = story.scanLabel || (story.sourceOutlet ? story.sourceName : "");
-  const scanText = scan ? ` | Scan: ${escapeHtml(scan)}` : "";
-  return `Source: ${escapeHtml(source)} | Category: ${escapeHtml(story.category ?? "market")}${scanText} | Date: ${escapeHtml(formatDate(story.publishedAt))}`;
+  return `Source: ${escapeHtml(source)} | Date: ${escapeHtml(formatDate(story.publishedAt))}`;
 }
 
 function formatDate(value) {
